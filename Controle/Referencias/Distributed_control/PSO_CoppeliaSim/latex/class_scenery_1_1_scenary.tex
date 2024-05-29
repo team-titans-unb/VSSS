@@ -1,0 +1,64 @@
+\doxysection{Scenery.\+Scenary Class Reference}
+\hypertarget{class_scenery_1_1_scenary}{}\label{class_scenery_1_1_scenary}\index{Scenery.Scenary@{Scenery.Scenary}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_scenery_1_1_scenary_aba0f030cf42e3773be08f9644468a0c7}{scenario\+\_\+test\+\_\+factory}} (self, plot\+\_\+scenario=0, best\+\_\+neighbor=\mbox{[}$\,$\mbox{]}, Historic\+\_\+particles\+\_\+x=\mbox{[}\mbox{[}$\,$\mbox{]}\mbox{]}, Historic\+\_\+particles\+\_\+y=\mbox{[}\mbox{[}$\,$\mbox{]}\mbox{]}, active\+\_\+animation=0)
+\item 
+\mbox{\hyperlink{class_scenery_1_1_scenary_a6fafa05700e8f804bb3f4d46e0585e33}{generar\+\_\+puntos}} (self, puntos\+\_\+x, puntos\+\_\+y, espacio)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}"
+The Scenary class implement the scenarios used on the EVA-MARIA project. This class just only one scenary called
+scenario_test_factory and the generar_puntos that create more artificial point to simulated the robots.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_scenery_1_1_scenary_a6fafa05700e8f804bb3f4d46e0585e33}\label{class_scenery_1_1_scenary_a6fafa05700e8f804bb3f4d46e0585e33} 
+\index{Scenery.Scenary@{Scenery.Scenary}!generar\_puntos@{generar\_puntos}}
+\index{generar\_puntos@{generar\_puntos}!Scenery.Scenary@{Scenery.Scenary}}
+\doxysubsubsection{\texorpdfstring{generar\_puntos()}{generar\_puntos()}}
+{\footnotesize\ttfamily Scenery.\+Scenary.\+generar\+\_\+puntos (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{puntos\+\_\+x,  }\item[{}]{puntos\+\_\+y,  }\item[{}]{espacio }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}"
+Function used to obtain more points between the lines
+
+Arguments:
+
+    puntos_x    (Float List)= List with X points
+    puntos_y    (Float List)= List with Y points
+    espacio     (Float)     = space between the new artificials points
+
+Return:
+
+    x_puntos_send (Float List) = New list with more points in X axis
+    y_puntos_send (Float List) = New list with more points in Y axis\end{DoxyVerb}
+ \Hypertarget{class_scenery_1_1_scenary_aba0f030cf42e3773be08f9644468a0c7}\label{class_scenery_1_1_scenary_aba0f030cf42e3773be08f9644468a0c7} 
+\index{Scenery.Scenary@{Scenery.Scenary}!scenario\_test\_factory@{scenario\_test\_factory}}
+\index{scenario\_test\_factory@{scenario\_test\_factory}!Scenery.Scenary@{Scenery.Scenary}}
+\doxysubsubsection{\texorpdfstring{scenario\_test\_factory()}{scenario\_test\_factory()}}
+{\footnotesize\ttfamily Scenery.\+Scenary.\+scenario\+\_\+test\+\_\+factory (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{plot\+\_\+scenario = {\ttfamily 0},  }\item[{}]{best\+\_\+neighbor = {\ttfamily \mbox{[}\mbox{]}},  }\item[{}]{Historic\+\_\+particles\+\_\+x = {\ttfamily \mbox{[}\mbox{[}\mbox{]}\mbox{]}},  }\item[{}]{Historic\+\_\+particles\+\_\+y = {\ttfamily \mbox{[}\mbox{[}\mbox{]}\mbox{]}},  }\item[{}]{active\+\_\+animation = {\ttfamily 0} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}"
+The best_value_bioinspired_histograma is used to find the histogram in a specific space
+
+Arguments:
+
+    plot_scenario       (Integer)       = active the plot
+    best_neighbor       (Float List)    = Best path find for the leader robot
+    Historic_particles_x(Float Matriz)  = Matriz with all position of the robots in the X axis 
+    Historic_particles_y(Float Matriz)  = Matriz with all position of the robots in the Y axis
+    active_animation    (Integer)       = Active the animation
+
+Return:
+
+    square_value_x (Float Matriz) = Objects present on the scenary (X axis)
+    square_value_y (Float Matriz) = Objects present on the scenary (Y axis)\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Libraries/\mbox{\hyperlink{_scenery_8py}{Scenery.\+py}}\end{DoxyCompactItemize}

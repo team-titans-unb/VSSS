@@ -1,0 +1,249 @@
+\doxysection{Bioinspired\+\_\+\+Algorithm.\+MFO Class Reference}
+\hypertarget{class_bioinspired___algorithm_1_1_m_f_o}{}\label{class_bioinspired___algorithm_1_1_m_f_o}\index{Bioinspired\_Algorithm.MFO@{Bioinspired\_Algorithm.MFO}}
+\doxysubsubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_bioinspired___algorithm_1_1_m_f_o_ab948a39c95bb1d5329c271ef7318b46e}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self)
+\item 
+\mbox{\hyperlink{class_bioinspired___algorithm_1_1_m_f_o_afb3b93fa5c50a4918e396bfb927bebc9}{initialization}} (self, Search\+Agents\+\_\+no, dim, ub, lb)
+\item 
+\mbox{\hyperlink{class_bioinspired___algorithm_1_1_m_f_o_a0903b8a5f544e3b04fe9c43f10bbc3e0}{MFO\+\_\+\+PP}} (self, x\+\_\+init, y\+\_\+init, xend, yend, objects\+\_\+x, objects\+\_\+y)
+\item 
+\mbox{\hyperlink{class_bioinspired___algorithm_1_1_m_f_o_a09e146bc088838fe16717ef86ef1ea30}{MFO\+\_\+\+Controller}} (self, position\+\_\+robot, ideal\+\_\+distance, actual\+\_\+robot, neighbor\+\_\+final)
+\item 
+\mbox{\hyperlink{class_bioinspired___algorithm_1_1_m_f_o_a268f8f0b0f803d61f3a4325c8b70b0c2}{fitness\+\_\+function\+\_\+\+PP}} (self, x, x\+\_\+init, y\+\_\+init, objects\+\_\+x, objects\+\_\+y, xend, yend, lock\+\_\+\+G4)
+\item 
+\mbox{\hyperlink{class_bioinspired___algorithm_1_1_m_f_o_a4a433fb634ed36a1fb8a52720f4cccac}{function\+\_\+swarm\+\_\+controller\+\_\+line}} (self, robots, ideal, k, x, neighbor\+\_\+final)
+\end{DoxyCompactItemize}
+\doxysubsubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{class_bioinspired___algorithm_1_1_m_f_o_a143af4471ee3348c31828d9791b6deff}{fit\+Vector}}
+\item 
+\mbox{\hyperlink{class_bioinspired___algorithm_1_1_m_f_o_a33cc03f62f79ad4d7dd042e0d527ab7f}{ys}}
+\item 
+\mbox{\hyperlink{class_bioinspired___algorithm_1_1_m_f_o_a5ad204ee6e09c595c1793f8526753519}{position\+\_\+y}}
+\item 
+\mbox{\hyperlink{class_bioinspired___algorithm_1_1_m_f_o_aa50a2372429f87530f623a43b50a0168}{position\+\_\+x}}
+\begin{DoxyCompactList}\small\item\em Return the best position on the axis Y and X \#\#\#. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_bioinspired___algorithm_1_1_m_f_o_a904840fc0ba8fb5a1c4dba39cf1c2300}{Tolerance}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}""
+Class MFO have tree differents functions the first function is MFO_PP that obtain the best path planing for the
+EVA-MARIA robot; the second funtion is MFO_Controller, this function obtain the best position to keep the ideal
+position; Finally, the function_swarm_controller_line and fitness_function_PP are the fitness function to 
+PSO_Controller and the MFO_PP respectivelly.
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\Hypertarget{class_bioinspired___algorithm_1_1_m_f_o_ab948a39c95bb1d5329c271ef7318b46e}\label{class_bioinspired___algorithm_1_1_m_f_o_ab948a39c95bb1d5329c271ef7318b46e} 
+\index{Bioinspired\_Algorithm.MFO@{Bioinspired\_Algorithm.MFO}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!Bioinspired\_Algorithm.MFO@{Bioinspired\_Algorithm.MFO}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily Bioinspired\+\_\+\+Algorithm.\+MFO.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}    Initializations global variables
+    self.fitVector  = Is a vector with best position 
+    self.ys         = Best solution of the particles
+    self.position_y = Is a list with the best position in the PSO_PP lagorithm in the Y axis
+    self.position_x = Is a list with the best position in the PSO_PP lagorithm in the X axis
+    self.Tolerance  = Tolerance factor between the objects in meters
+\end{DoxyVerb}
+ 
+
+\doxysubsection{Member Function Documentation}
+\Hypertarget{class_bioinspired___algorithm_1_1_m_f_o_a268f8f0b0f803d61f3a4325c8b70b0c2}\label{class_bioinspired___algorithm_1_1_m_f_o_a268f8f0b0f803d61f3a4325c8b70b0c2} 
+\index{Bioinspired\_Algorithm.MFO@{Bioinspired\_Algorithm.MFO}!fitness\_function\_PP@{fitness\_function\_PP}}
+\index{fitness\_function\_PP@{fitness\_function\_PP}!Bioinspired\_Algorithm.MFO@{Bioinspired\_Algorithm.MFO}}
+\doxysubsubsection{\texorpdfstring{fitness\_function\_PP()}{fitness\_function\_PP()}}
+{\footnotesize\ttfamily Bioinspired\+\_\+\+Algorithm.\+MFO.\+fitness\+\_\+function\+\_\+\+PP (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{x,  }\item[{}]{x\+\_\+init,  }\item[{}]{y\+\_\+init,  }\item[{}]{objects\+\_\+x,  }\item[{}]{objects\+\_\+y,  }\item[{}]{xend,  }\item[{}]{yend,  }\item[{}]{lock\+\_\+\+G4 }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}"
+The ffitness_function_PP is the fitness function to PSO_PP.
+
+Arguments:
+
+    x                   (Float)        = movement in the X and Y axis positions
+    x_init              (Float)        = Init position of the robot in the X axis
+    y_init              (Float)        = Init position of the robot in the Y axis
+    objects_x           (Float List)   = List with all the position in the X axis of the objects
+    objects_y           (Float List)   = List with all the position in the Y axis of the objects
+    xend                (Float)        = End point of the robot in the X axis
+    yend                (Float)        = End point of the robot in the Y axis
+    lock_G4             (Integer)      = Lock for the PSO algorithm
+
+Return:
+
+    f (Float)      = fitness function value
+    lock_G4 (Integer) = Lock in the PSO algorithm 
+    H_new (Float)  = Distance between the robot and the end point\end{DoxyVerb}
+ Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_bioinspired___algorithm_1_1_m_f_o_a268f8f0b0f803d61f3a4325c8b70b0c2_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_bioinspired___algorithm_1_1_m_f_o_a4a433fb634ed36a1fb8a52720f4cccac}\label{class_bioinspired___algorithm_1_1_m_f_o_a4a433fb634ed36a1fb8a52720f4cccac} 
+\index{Bioinspired\_Algorithm.MFO@{Bioinspired\_Algorithm.MFO}!function\_swarm\_controller\_line@{function\_swarm\_controller\_line}}
+\index{function\_swarm\_controller\_line@{function\_swarm\_controller\_line}!Bioinspired\_Algorithm.MFO@{Bioinspired\_Algorithm.MFO}}
+\doxysubsubsection{\texorpdfstring{function\_swarm\_controller\_line()}{function\_swarm\_controller\_line()}}
+{\footnotesize\ttfamily Bioinspired\+\_\+\+Algorithm.\+MFO.\+function\+\_\+swarm\+\_\+controller\+\_\+line (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{robots,  }\item[{}]{ideal,  }\item[{}]{k,  }\item[{}]{x,  }\item[{}]{neighbor\+\_\+final }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}"
+The function_swarm_controller_line is the fitness function to PSO_Controller.
+
+Arguments:
+
+    robots          (Integer)        = Position of the current robot in the X or Y axis
+    ideal           (Float)          = End ideal position for the current robot in the X or Y axis
+    k               (Integer)        = Current robot
+    x               (Float list)     = Posible new position in the X or Y axis
+    neighbor_final  (Float list)     = Neighbor to the current robot
+
+Return:
+
+    f (Float) = Error between the posible new position and the ideal distance\end{DoxyVerb}
+ Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_bioinspired___algorithm_1_1_m_f_o_a4a433fb634ed36a1fb8a52720f4cccac_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_bioinspired___algorithm_1_1_m_f_o_afb3b93fa5c50a4918e396bfb927bebc9}\label{class_bioinspired___algorithm_1_1_m_f_o_afb3b93fa5c50a4918e396bfb927bebc9} 
+\index{Bioinspired\_Algorithm.MFO@{Bioinspired\_Algorithm.MFO}!initialization@{initialization}}
+\index{initialization@{initialization}!Bioinspired\_Algorithm.MFO@{Bioinspired\_Algorithm.MFO}}
+\doxysubsubsection{\texorpdfstring{initialization()}{initialization()}}
+{\footnotesize\ttfamily Bioinspired\+\_\+\+Algorithm.\+MFO.\+initialization (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{Search\+Agents\+\_\+no,  }\item[{}]{dim,  }\item[{}]{ub,  }\item[{}]{lb }\end{DoxyParamCaption})}
+
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_bioinspired___algorithm_1_1_m_f_o_afb3b93fa5c50a4918e396bfb927bebc9_icgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_bioinspired___algorithm_1_1_m_f_o_a09e146bc088838fe16717ef86ef1ea30}\label{class_bioinspired___algorithm_1_1_m_f_o_a09e146bc088838fe16717ef86ef1ea30} 
+\index{Bioinspired\_Algorithm.MFO@{Bioinspired\_Algorithm.MFO}!MFO\_Controller@{MFO\_Controller}}
+\index{MFO\_Controller@{MFO\_Controller}!Bioinspired\_Algorithm.MFO@{Bioinspired\_Algorithm.MFO}}
+\doxysubsubsection{\texorpdfstring{MFO\_Controller()}{MFO\_Controller()}}
+{\footnotesize\ttfamily Bioinspired\+\_\+\+Algorithm.\+MFO.\+MFO\+\_\+\+Controller (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{position\+\_\+robot,  }\item[{}]{ideal\+\_\+distance,  }\item[{}]{actual\+\_\+robot,  }\item[{}]{neighbor\+\_\+final }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}"
+MFO_Controller, this function obtain the best position to keep the ideal position
+
+Arguments:
+
+    position_robot (Float)        = Current position robot in the X or Y axis
+    ideal_distance (Float)        = ideal position robot in the X or Y axis
+    actual_robot   (Integer)      = current robot
+    neighbor_final (Integer)      = Neighbot of the current robot
+
+Init Variables:
+
+    N               = Number of particles
+    dim             = Number of dimensions
+    Max_iteration   = Number of iterations
+    lb              = Init search space top
+    ub              = Init search space bottom
+
+Return:
+
+    self.ys[0] (Float) = Best postion in the X or Y axis\end{DoxyVerb}
+ Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_bioinspired___algorithm_1_1_m_f_o_a09e146bc088838fe16717ef86ef1ea30_cgraph}
+\end{center}
+\end{figure}
+\Hypertarget{class_bioinspired___algorithm_1_1_m_f_o_a0903b8a5f544e3b04fe9c43f10bbc3e0}\label{class_bioinspired___algorithm_1_1_m_f_o_a0903b8a5f544e3b04fe9c43f10bbc3e0} 
+\index{Bioinspired\_Algorithm.MFO@{Bioinspired\_Algorithm.MFO}!MFO\_PP@{MFO\_PP}}
+\index{MFO\_PP@{MFO\_PP}!Bioinspired\_Algorithm.MFO@{Bioinspired\_Algorithm.MFO}}
+\doxysubsubsection{\texorpdfstring{MFO\_PP()}{MFO\_PP()}}
+{\footnotesize\ttfamily Bioinspired\+\_\+\+Algorithm.\+MFO.\+MFO\+\_\+\+PP (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{x\+\_\+init,  }\item[{}]{y\+\_\+init,  }\item[{}]{xend,  }\item[{}]{yend,  }\item[{}]{objects\+\_\+x,  }\item[{}]{objects\+\_\+y }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}"
+The MFO_PP that obtain the best path planing for the EVA-MARIA robot
+
+Arguments:
+
+   x_init (Integer)        = Init position of the robot leader in the X axis
+   y_init (Integer)        = Init position of the robot leader in the Y axis
+   xend   (Integer)        = End position of the robot leader in the X axis
+   yedn   (Integer)        = End position of the robot leader in the Y axis
+   objects_x (Float list)  = List with all the objects positions in the X axis
+   objects_y (Float list)  = List with all the objects positions in the Y axis
+
+Init Variables:
+
+    N               = Number of particles
+    dim             = Number of dimensions
+    Max_iteration   = Number of iterations
+    lb              = Init search space top
+    ub              = Init search space bottom
+    H_new       = Distance between the robot and the end point
+
+Return:
+
+   self.position_x (Float List) = Best path in the X axis
+   self.position_y (Float List) = Best path in the Y axis\end{DoxyVerb}
+ Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{class_bioinspired___algorithm_1_1_m_f_o_a0903b8a5f544e3b04fe9c43f10bbc3e0_cgraph}
+\end{center}
+\end{figure}
+
+
+\doxysubsection{Member Data Documentation}
+\Hypertarget{class_bioinspired___algorithm_1_1_m_f_o_a143af4471ee3348c31828d9791b6deff}\label{class_bioinspired___algorithm_1_1_m_f_o_a143af4471ee3348c31828d9791b6deff} 
+\index{Bioinspired\_Algorithm.MFO@{Bioinspired\_Algorithm.MFO}!fitVector@{fitVector}}
+\index{fitVector@{fitVector}!Bioinspired\_Algorithm.MFO@{Bioinspired\_Algorithm.MFO}}
+\doxysubsubsection{\texorpdfstring{fitVector}{fitVector}}
+{\footnotesize\ttfamily Bioinspired\+\_\+\+Algorithm.\+MFO.\+fit\+Vector}
+
+\Hypertarget{class_bioinspired___algorithm_1_1_m_f_o_aa50a2372429f87530f623a43b50a0168}\label{class_bioinspired___algorithm_1_1_m_f_o_aa50a2372429f87530f623a43b50a0168} 
+\index{Bioinspired\_Algorithm.MFO@{Bioinspired\_Algorithm.MFO}!position\_x@{position\_x}}
+\index{position\_x@{position\_x}!Bioinspired\_Algorithm.MFO@{Bioinspired\_Algorithm.MFO}}
+\doxysubsubsection{\texorpdfstring{position\_x}{position\_x}}
+{\footnotesize\ttfamily Bioinspired\+\_\+\+Algorithm.\+MFO.\+position\+\_\+x}
+
+
+
+Return the best position on the axis Y and X \#\#\#. 
+
+\Hypertarget{class_bioinspired___algorithm_1_1_m_f_o_a5ad204ee6e09c595c1793f8526753519}\label{class_bioinspired___algorithm_1_1_m_f_o_a5ad204ee6e09c595c1793f8526753519} 
+\index{Bioinspired\_Algorithm.MFO@{Bioinspired\_Algorithm.MFO}!position\_y@{position\_y}}
+\index{position\_y@{position\_y}!Bioinspired\_Algorithm.MFO@{Bioinspired\_Algorithm.MFO}}
+\doxysubsubsection{\texorpdfstring{position\_y}{position\_y}}
+{\footnotesize\ttfamily Bioinspired\+\_\+\+Algorithm.\+MFO.\+position\+\_\+y}
+
+\Hypertarget{class_bioinspired___algorithm_1_1_m_f_o_a904840fc0ba8fb5a1c4dba39cf1c2300}\label{class_bioinspired___algorithm_1_1_m_f_o_a904840fc0ba8fb5a1c4dba39cf1c2300} 
+\index{Bioinspired\_Algorithm.MFO@{Bioinspired\_Algorithm.MFO}!Tolerance@{Tolerance}}
+\index{Tolerance@{Tolerance}!Bioinspired\_Algorithm.MFO@{Bioinspired\_Algorithm.MFO}}
+\doxysubsubsection{\texorpdfstring{Tolerance}{Tolerance}}
+{\footnotesize\ttfamily Bioinspired\+\_\+\+Algorithm.\+MFO.\+Tolerance}
+
+\Hypertarget{class_bioinspired___algorithm_1_1_m_f_o_a33cc03f62f79ad4d7dd042e0d527ab7f}\label{class_bioinspired___algorithm_1_1_m_f_o_a33cc03f62f79ad4d7dd042e0d527ab7f} 
+\index{Bioinspired\_Algorithm.MFO@{Bioinspired\_Algorithm.MFO}!ys@{ys}}
+\index{ys@{ys}!Bioinspired\_Algorithm.MFO@{Bioinspired\_Algorithm.MFO}}
+\doxysubsubsection{\texorpdfstring{ys}{ys}}
+{\footnotesize\ttfamily Bioinspired\+\_\+\+Algorithm.\+MFO.\+ys}
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Libraries/\mbox{\hyperlink{_bioinspired___algorithm_8py}{Bioinspired\+\_\+\+Algorithm.\+py}}\end{DoxyCompactItemize}
