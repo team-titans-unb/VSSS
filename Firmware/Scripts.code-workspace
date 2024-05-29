@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "../../../UnB/03 - Robotica/Scripts"
+		},
+		{
+			"name": "FirmwareV1",
+			"path": "FirmwareV1"
+		},
+		{
+			"name": "motorControl_test",
+			"path": "../../../PlatformIO/Projects/motorControl_test"
+		},
+		{
+			"name": "Firmware_test",
+			"path": "Firmware_test"
+		}
+	],
+	"settings": {}
+}

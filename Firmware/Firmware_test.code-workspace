@@ -1,0 +1,16 @@
+{
+	"folders": [
+		{
+			"path": "Firmware_test"
+		},
+		{
+			"name": "FirmwareV1",
+			"path": "FirmwareV1"
+		}
+	],
+	"settings": {
+		"files.associations": {
+			"bdc_motor.h": "c"
+		}
+	}
+}
