@@ -122,7 +122,7 @@ def plot_robot_path(desired_path_x, desired_path_y, executed_path_x, executed_pa
     # Plot the executed path
     if executed_path:
         xs, ys = zip(*executed_path)
-        ax.plot(xs, ys, color='blue', marker='x', markersize=5, linestyle='-', linewidth=2, label='Executed Path')
+        ax.plot(xs, ys, color='blue', linestyle='-', linewidth=2, label='Executed Path')
 
     ax.legend()
     plt.show()
