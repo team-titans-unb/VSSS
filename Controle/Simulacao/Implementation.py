@@ -22,7 +22,6 @@ try:
     xInit, yInit = crb01.Get_Position()
     xEnd = finalPos[0]
     yEnd = finalPos[1]
-    #best_neighbor(x_init_aux, y_init_aux, x_end, y_end, square_value_x, square_value_y, AU):
     pathX, pathY = pp.best_neighbor(pp, xInit, yInit, xEnd, yEnd, obstacleX, obstacleY, 'PSO')
 
     x = [pos for pos in pathX]
@@ -34,7 +33,6 @@ try:
     plt.show()
 
     for pos in range(len(pathX)):
-        #def Follow_Path(self, pathX, pathY, End_position):
         crb01.Follow_Path(pathX[pos], pathY[pos],[pathX[-1],pathY[-1]])
 
 finally:

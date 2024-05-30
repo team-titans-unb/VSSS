@@ -4,11 +4,34 @@ import numpy as np
 import math as mat
 
 class Corobeu():
+    """
+    Classe para controlar o robô Corobeu simulado no CoppeliaSim.
+    
+    Atributos:
+        clientID: ID da conexão com o CoppeliaSim.
+        robot: Handle do objeto robô no CoppeliaSim.
+        motorE: Handle do motor esquerdo no CoppeliaSim.
+        motorD: Handle do motor direito no CoppeliaSim.
+        yOut: Lista para armazenar a posição Y do robô.
+        xOut: Lista para armazenar a posição X do robô.
+        phi: Ângulo atual do robô.
+        phi_obs: Ângulo observado do robô.
+        v: Velocidade linear do robô.
+        instPosition: Posição instantânea do robô.
+        posError: Lista para armazenar erros de posição.
+    """
 
     def __init__(self, port, name, motor_E, motor_D):
+        """
+        Inicializa a classe Corobeu e estabelece a conexão com o CoppeliaSim.
+        
+        Parâmetros:
+            port (int): Porta usada para conectar ao CoppeliaSim.
+            name (str): Nome do objeto robô no CoppeliaSim.
+            motor_E (str): Nome do motor esquerdo no CoppeliaSim.
+            motor_D (str): Nome do motor direito no CoppeliaSim.
+        """
         self.clientID, self.robot, self.motorE, self.motorD = self.connect_CRB(port, name, motor_E, motor_D)
-        self.Time_sample_print = []
-        self.SP = []
         self.yOut = []
         self.xOut = []
         self.phi = 0
@@ -18,14 +41,18 @@ class Corobeu():
         self.posError = []
 
     def connect_CRB(self, port, name, motor_E, motor_D):
-        """""
-        Function used to communicate with CoppeliaSim
-            arg :
-                - Port used to CoppeliaSim (same CoppeliaSim)
-                
-            out : 
-                - Communication CoppeliaSim
-        """""
+        """
+        Função usada para comunicar-se com o CoppeliaSim.
+        
+        Parâmetros:
+            port (int): Porta usada para conectar ao CoppeliaSim.
+            name (str): Nome do objeto robô no CoppeliaSim.
+            motor_E (str): Nome do motor esquerdo no CoppeliaSim.
+            motor_D (str): Nome do motor direito no CoppeliaSim.
+            
+        Retorna:
+            tuple: Contém o ID da conexão, o handle do robô, e os handles dos motores esquerdo e direito.
+        """
         sim.simxFinish(-1)
         clientID = sim.simxStart('127.0.0.1', port, True, True, 2000, 5)
         if clientID == 0:
@@ -34,14 +61,29 @@ class Corobeu():
             print("no se pudo conectar")
 
         returnCode, robot = sim.simxGetObjectHandle(clientID, name, 
-                                                    sim.simx_opmode_blocking)  # Obteniendo el objeto "Pioneer_p3dx" de v - rep(Robot Movil)
+                                                    sim.simx_opmode_blocking)
         returnCode, MotorE = sim.simxGetObjectHandle(clientID, motor_E,
-                                                     sim.simx_opmode_blocking)  # Obteniendo el objeto "Pioneer_p3dx_leftmotor" de v-rep (motor izquierdo)
+                                                     sim.simx_opmode_blocking)
         returnCode, MotorD = sim.simxGetObjectHandle(clientID, motor_D,
-                                                     sim.simx_opmode_blocking)  # Obteniendo el objeto "Pioneer_p3dx_rightMotor" de v - rep(motor derecho)
+                                                     sim.simx_opmode_blocking)
         return clientID, robot, MotorE, MotorD
     
     def Speed_CRB(self, U, omega, error_distance_relative, error_distance_global):
+        """
+        Calcula e retorna as velocidades dos motores baseadas na velocidade linear U e angular omega.
+        Possui condições de paradas, onde quando o robô chegar no ponto final da trajetória, sua velocidade
+        é zerada, mas ao chegar em posições intermediárias apenas muda o próximo ponto desejado.
+        
+        Speed_CRB(self, U, omega, error_distance_relative, error_distance_global)
+        Parâmetros:
+            U (float): Velocidade linear do robô.
+            omega (float): Velocidade angular do robô.
+            error_distance_relative (float): Erro de distância relativo ao ponto atual.
+            error_distance_global (float): Erro de distância global ao ponto final.
+            
+        Retorna:
+            tuple: Contém as velocidades dos motores esquerdo e direito, e o estado 'a'.
+        """
         vd = (2 * U + omega * 7.5) / 2 * 1.6
         vl = (2 * U - omega * 7.5) / 2 * 1.6
         a = 1
@@ -72,6 +114,23 @@ class Corobeu():
         return vl, vd, a
     
     def PID_Controller_phi(self, kp, ki, kd, deltaT, error, interror, fant, Integral_part):
+        """
+        Controlador PID para o ângulo de orientação do robô.
+        
+        PID_Controller_phi(self, kp, ki, kd, deltaT, error, interror, fant, Integral_part)
+        Parâmetros:
+            kp (float): Constante proporcional do controlador PID.
+            ki (float): Constante integral do controlador PID.
+            kd (float): Constante derivativa do controlador PID.
+            deltaT (float): Intervalo de tempo entre as iterações.
+            error (float): Erro atual.
+            interror (float): Erro integral acumulado.
+            fant (float): Erro filtrado anterior.
+            Integral_part (float): Parte integral do controlador.
+            
+        Retorna:
+            tuple: Contém o valor PID, erro filtrado, erro integral acumulado e parte integral.
+        """
         Integral_saturation = 10
         raizes = np.roots([kd, kp, ki])
         absoluto = abs(raizes)
@@ -97,6 +156,15 @@ class Corobeu():
         return PID, f, interror, Integral_part
 
     def Follow_Path(self, pathX, pathY, End_position):
+        """
+        Faz o robô seguir um caminho especificado por coordenadas.
+        
+        Follow_Path(self, pathX, pathY, End_position)
+        Parâmetros:
+            pathX (float): Coordenada X do próximo ponto do caminho.
+            pathY (float): Coordenada Y do próximo ponto do caminho.
+            End_position (list): Coordenadas X e Y do ponto final.
+        """
         #----------------Constantes
         kp = 2
         ki = 0.01
@@ -181,18 +249,25 @@ class Corobeu():
         # self.yOut.append(positiona[1])
         # self.xOut.append(positiona[0])
 
+    def Micro_Behaviors(self, pathX, pathY, End_position):
+        s, positiona = sim.simxGetObjectPosition(self.clientID, self.robot, -1, sim.simx_opmode_streaming)
+        while positiona == [0, 0, 0]:
+            s, positiona = sim.simxGetObjectPosition(self.clientID, self.robot, -1, sim.simx_opmode_streaming) 
+        self.yOut.append(positiona[1])
+        self.xOut.append(positiona[0])
+
     def Get_Position(self):
+        """
+        Obtém a posição atual do robô no simulador. Salva as posições no
+        atributo 'instPosition' do objeto e retorna estes valores em um tupla
+        
+        Get_Position(self)
+        Retorna:
+            tuple: Contém as coordenadas X e Y da posição atual do robô.
+        """
         s, positiona = sim.simxGetObjectPosition(self.clientID, self.robot, -1, sim.simx_opmode_streaming)
         while positiona == [0, 0, 0]:
             s, positiona = sim.simxGetObjectPosition(self.clientID, self.robot, -1, sim.simx_opmode_streaming) 
         self.instPosition[0] = positiona[0]
         self.instPosition[1] = positiona[1] 
         return positiona[0], positiona[1]
-        
-
-        # if (error_phi > 0.1):
-                    #     U = 0
-                    # elif (error_phi < -0.1):
-                    #     U = 0 
-                    # else:
-                    #     U = self.v

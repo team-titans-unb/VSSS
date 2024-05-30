@@ -6,6 +6,12 @@ field_length = 150
 field_width = 130
 
 def draw_field(ax):
+    """
+    Desenha o campo de futebol no gráfico fornecido.
+    
+    Parâmetros:
+        ax (matplotlib.axes.Axes): O objeto Axes onde o campo será desenhado.
+    """
     # Draw the outer boundary
     ax.plot([-field_length / 2, -field_length / 2], [-field_width / 2, field_width / 2], color="black")
     ax.plot([-field_length / 2, field_length / 2], [field_width / 2, field_width / 2], color="black")
@@ -31,13 +37,6 @@ def draw_field(ax):
     ax.add_patch(left_semi_circle)
     ax.add_patch(right_semi_circle)
     
-
-    # Draw the goal areas
-    # goal_area_left = patches.Rectangle((0, (field_width / 2) - 15), 10, 30, linewidth=1, edgecolor='black', facecolor='none')
-    # ax.add_patch(goal_area_left)
-    # goal_area_right = patches.Rectangle((field_length - 10, (field_width / 2) - 15), 10, 30, linewidth=1, edgecolor='black', facecolor='none')
-    # ax.add_patch(goal_area_right)
-
     # Draw the goals
     goal_left = patches.Rectangle((-field_length / 2 - 10, -20), 10, 40, linewidth=1, edgecolor='black', facecolor='none')
     ax.add_patch(goal_left)
@@ -98,10 +97,19 @@ def draw_field(ax):
     ax.set_aspect('equal')
     ax.set_xlim(-field_length / 2 - 10, field_length / 2 + 10)
     ax.set_ylim(-field_width / 2 - 10, field_width / 2 + 10)
-    ax.axis('on')  # Turn off the axis
+    ax.axis('on')  # Turn on the axis
 
 # Function to plot the robot path
 def plot_robot_path(desired_path_x, desired_path_y, executed_path_x, executed_path_y):
+    """
+    Plota o caminho desejado e o caminho executado pelo robô no campo.
+    
+    Parâmetros:
+        desired_path_x (list): Lista de coordenadas X do caminho desejado.
+        desired_path_y (list): Lista de coordenadas Y do caminho desejado.
+        executed_path_x (list): Lista de coordenadas X do caminho executado.
+        executed_path_y (list): Lista de coordenadas Y do caminho executado.
+    """
     fig, ax = plt.subplots(figsize=(10, 8))
 
     # Draw the soccer field
