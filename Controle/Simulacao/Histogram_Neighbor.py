@@ -167,9 +167,9 @@ class Histograma_Neighbor:
         criterio_stop = 1
         cadjanela = 0
         janela = 2
-        max_janela = 3
+        max_janela = 2
         min_janela = 1
-        umbral_histograma = 100
+        umbral_histograma = 10
 
         ### Loop to find the best path planning ###
 

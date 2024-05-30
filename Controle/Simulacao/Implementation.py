@@ -1,6 +1,8 @@
 import CorobeuClass as crb
 import Histogram_Neighbor as hist
 import matplotlib.pyplot as plt
+from DrawField import draw_field
+from DrawField import plot_robot_path
 import math
 import sim
 import csv
@@ -36,11 +38,16 @@ try:
         crb01.Follow_Path(pathX[pos], pathY[pos],[pathX[-1],pathY[-1]])
 
 finally:
-    x = [pos for pos in crb01.xOut]
-    y = [pos for pos in crb01.yOut]
-    # plt.scatter(x, y, color='blue', marker='x')
+    plot_robot_path(pathX, pathY, crb01.xOut, crb01.yOut)
+    # draw_field()
+    # x = [pos for pos in pathX]
+    # y = [pos for pos in pathY]
+    # plt.plot(x, y, color='red', marker='o')
+    # x = [pos for pos in crb01.xOut]
+    # y = [pos for pos in crb01.yOut]
+    # plt.plot(x, y, color='blue')
     # plt.grid(True)
-    # plt.xlim(0, 1.7)
-    # plt.ylim(0, 1.3)
+    # plt.xlim(-0.90, 0.9)
+    # plt.ylim(-0.7, 0.7)
     # plt.show()
 #except KeyboardInterrupt:

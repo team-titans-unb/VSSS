@@ -98,7 +98,7 @@ class Corobeu():
 
     def Follow_Path(self, pathX, pathY, End_position):
         #----------------Constantes
-        kp = 2
+        kp = 1.5
         ki = 0.1
         kd = 7
         deltaT = 0.01
@@ -173,10 +173,13 @@ class Corobeu():
                     Number_Iterations = Number_Iterations + 1
                     Time_Sample.append(Number_Iterations * deltaT)
 
+                    self.yOut.append(positiona[1])
+                    self.xOut.append(positiona[0])
+
                 # print(Number_Iterations)
 
-        self.yOut.append(positiona[1])
-        self.xOut.append(positiona[0])
+        # self.yOut.append(positiona[1])
+        # self.xOut.append(positiona[0])
 
     def Get_Position(self):
         s, positiona = sim.simxGetObjectPosition(self.clientID, self.robot, -1, sim.simx_opmode_streaming)
