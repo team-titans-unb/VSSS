@@ -98,8 +98,8 @@ class Corobeu():
 
     def Follow_Path(self, pathX, pathY, End_position):
         #----------------Constantes
-        kp = 1.5
-        ki = 0.1
+        kp = 2
+        ki = 0.05
         kd = 7
         deltaT = 0.01
         #---------------------------
