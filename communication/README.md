@@ -2,6 +2,29 @@
 
 Este documento descreve um exemplo de código em C++ que utiliza a biblioteca WiFi para estabelecer comunicação entre um microcontrolador ESP32 e uma rede WiFi. O objetivo é receber dados de posição de robôs de uma aplicação como o CoppeliaSim e processá-los. Cada robô terá um endereço IP fixo, configurado através de um modem usando DHCP.
 
+## Como Rodar o Projeto?
+
+1. **Compilação e Upload do Código para o ESP32:**
+   - Entre na pasta **main**.
+   - Abra o arquivo `main.ino` usando o Arduino IDE.
+   - Compile o código e faça o upload para o ESP32.
+
+2. **Configuração no CoppeliaSim:**
+   - Abra o CoppeliaSim e carregue o arquivo de simulação `campoVss.ttt`.
+   - Inicie a simulação.
+
+3. **Configuração da Comunicação com Python:**
+   - Navegue até a pasta **api**.
+   - Abra o arquivo `oneRobot.py`.
+   - Certifique-se de configurar a rede no código `oneRobot.py` para a mesma do servidor ESP32, garantindo que a comunicação seja realizada corretamente.
+   - No arquivo `oneRobot.py`, troque o endereço IP e a porta para os mesmos utilizados pelo servidor ESP32 (no exemplo, estamos utilizando a porta 80).
+
+4. **Envio de Dados:**
+   - Utilize a função `send_and_receive(x, y, z, ip, porta)` no `oneRobot.py` para enviar e receber dados.
+   - Substitua `ip` pelo endereço IP do servidor ESP32 e `porta` pela porta configurada (80).
+
+Seguindo esses passos, você estará pronto para rodar o projeto e estabelecer a comunicação entre o CoppeliaSim e o ESP32 através do Python.
+
 ## Explicação do Código do Cliente(Python e Coppelia)
 
 ### Função `send_and_receive_esp32`
@@ -27,7 +50,7 @@ def send_and_receive_esp32(x, y, z, esp32_ip, esp32_port):
 4. **Recebimento de Dados:** A função espera uma resposta do ESP32, que contém os dados modificados. Estes dados são recebidos como uma string e, em seguida, convertidos de volta para números de ponto flutuante.
 5. **Retorno dos Dados Modificados:** A função retorna os valores modificados de x e y, além do valor de z.
 
-## Estrutura Geral do Código do Servidor(ROBÔS FÍSICOS)
+## Estrutura Geral do Código do Servidor main.ino (ROBÔS FÍSICOS)
 
 ### Bibliotecas Incluídas
 
@@ -40,8 +63,8 @@ Esta biblioteca permite a conexão do ESP32 a redes WiFi e a criação de um ser
 ### Declaração de Variáveis e Objetos
 
 ```cpp
-const char* ssid = "Wifi";
-const char* password = "luiz$123";
+const char* ssid = "Wifi"; // Nome da sua rede
+const char* password = "luiz$123"; // Mude a senha para a senha da sua rede 
 bool processing = false;
 WiFiServer server(80);
 ```
