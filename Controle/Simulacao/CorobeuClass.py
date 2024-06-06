@@ -2,6 +2,7 @@ import math
 import sim
 import numpy as np
 import math as mat
+import ANNClass
 
 class Corobeu():
     """
@@ -250,11 +251,42 @@ class Corobeu():
         # self.xOut.append(positiona[0])
 
     def Micro_Behaviors(self, pathX, pathY, End_position):
-        s, positiona = sim.simxGetObjectPosition(self.clientID, self.robot, -1, sim.simx_opmode_streaming)
-        while positiona == [0, 0, 0]:
-            s, positiona = sim.simxGetObjectPosition(self.clientID, self.robot, -1, sim.simx_opmode_streaming) 
-        self.yOut.append(positiona[1])
-        self.xOut.append(positiona[0])
+        spd = ANNClass.ArtificialNeuralNetwork()
+        a = 1
+
+        W_B = [-0.61527031,  4.26351357,  8.02454637,  8.86525811, -0.07557302, -4.04240221,
+            -0.66625844,  9.72744805, -5.49293393,  2.59305191,  4.6565288,  -4.84052701,
+            8.3442199 , -9.95954638, -8.28347364,  9.77667899, -8.20642214,  8.84937387,
+            1.98877979,  9.06933104,  9.70728711, -9.35055125,  9.21540164, -9.52326091,
+            9.49407271,  7.48711443, -7.00183737,  5.48817771,  6.01121161,  8.46946011,
+            2.79370128,  6.3425013,  -9.35223057, -9.45187308,  9.82736502,  9.3826862,
+            -8.93482925, -8.90673744,  3.26189841,  6.04955897,  7.25176997, -4.04181312,
+            8.24601369, -0.18449317,  9.48016339, -9.7055639,  -1.51550246]
+        
+        if (sim.simxGetConnectionId(self.clientID) != -1):
+
+            print("Connect")
+            while (a == 1):
+
+                s, positiona = sim.simxGetObjectPosition(self.clientID, self.robot, -1, sim.simx_opmode_streaming)
+                while positiona == [0, 0, 0]:
+                    s, positiona = sim.simxGetObjectPosition(self.clientID, self.robot, -1, sim.simx_opmode_streaming) 
+                y_atual = positiona[1]
+                x_atual = positiona[0]
+                
+                s, angle = sim.simxGetObjectOrientation(self.clientID, self.robot, -1, sim.simx_opmode_blocking)
+                phi_atual = angle[2]
+
+                error_distance = math.sqrt((pathY - positiona[1])**2 + (pathX - positiona[0])**2)
+                self.posError.append(error_distance)
+                
+                while error_distance > 0.02:
+                    wheelSpeeds = spd.mlp432([x_atual, y_atual, phi_atual, pathX, pathY], W_B[:38], W_B[38:])
+                    sim.simxSetJointTargetVelocity(self.clientID, self.motorE, wheelSpeeds[1], sim.simx_opmode_blocking)
+                    sim.simxSetJointTargetVelocity(self.clientID, self.motorD, wheelSpeeds[0], sim.simx_opmode_blocking)
+
+
+        
 
     def Get_Position(self):
         """
@@ -271,3 +303,7 @@ class Corobeu():
         self.instPosition[0] = positiona[0]
         self.instPosition[1] = positiona[1] 
         return positiona[0], positiona[1]
+    
+if __name__ == "__main__":
+    crb01 = Corobeu(19999, 'robot01', 'motorL01', 'motorR01')
+    crb01.Micro_Behaviors(0, 0.2, 0.4)
