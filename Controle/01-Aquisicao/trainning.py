@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import os
 
 def main():
-    folder_name = 'training_data'
+    folder_name = '/Controle/training_data'
     file_name = 'dados01.csv'
     file_path = os.path.join(folder_name, file_name)
 
@@ -21,7 +21,7 @@ def main():
     bio_alg = bia.Bioinspired_algorithms()
     fitnessVector, weigths_biases = bio_alg.PSO(inputs, outputs)
 
-    fig_folder = 'figures'
+    fig_folder = '\Controle\figures'
     fig_name = '1stBehaviorFitness.pdf'
     fig_path = os.path.join(fig_folder, fig_name)
     os.makedirs(fig_folder, exist_ok=True)
@@ -33,7 +33,7 @@ def main():
     plt.legend()
     plt.savefig(fig_path, format='pdf')
 
-    wb_folder = 'weights'
+    wb_folder = '/Controle/weights'
     wb_file = '1stBehaviorWB.csv'
     wb_path = os.path.join(wb_folder, wb_file)
     os.makedirs(wb_folder, exist_ok=True)
