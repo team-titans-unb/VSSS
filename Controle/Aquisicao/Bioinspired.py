@@ -183,7 +183,8 @@ class Bioinspired_algorithms:
         plt.plot(self.fit_vector)
         plt.title("PSO")
         plt.show()
-        dframedata = [self.fit_vector[-1],self.out_pso]
-        index = ['Best fit', 'Pesos Bias']
-        dfd = pd.DataFrame(dframedata, index=index)
-        dfd.to_csv("PesosPSO_23.csv")
+        # dframedata = [self.fit_vector[-1],self.out_pso]
+        # index = ['Best fit', 'Pesos Bias']
+        # dfd = pd.DataFrame(dframedata, index=index)
+        # dfd.to_csv("PesosPSO_23.csv")
+        return self.fit_vector, self.out_pso

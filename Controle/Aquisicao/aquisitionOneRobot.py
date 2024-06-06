@@ -1,10 +1,7 @@
 import sim
-import numpy as np
+import os
 import pandas as pd
-import scipy
 import matplotlib.pyplot as plt
-import CorobeuClass
-# from coppeliasim_zmqremoteapi_client import RemoteAPIClient
 
 Xd = 0 #-0.85 0.85
 Yd = 0.2 #-0.65 0.65
@@ -74,10 +71,15 @@ class Simulation():
                 self.desiredY.append(Yd)
                 i = i + 1
             print('Fim da Aquisição')
+            #Cria diretorio e arquivo para armazenar os dados de treinamento
+            folder_name = 'training_data'
+            file_name = 'dados23.csv'
+            os.makedirs(folder_name, exist_ok=True)
+            file_path = os.path.join(folder_name, file_name)
             dfr01 = [self.xOut, self.yOut, self.angle, self.rWheelSpeed, self.lWheelSpeed, self.desiredX, self.desiredY]
             ir01 = ['X', 'Y', 'Gama', 'Vr', 'Vl', 'Xd', 'Yd']
             dfd = pd.DataFrame(dfr01, index=ir01)
-            dfd.to_csv("dados23.csv", sep=';')
+            dfd.to_csv(file_path, sep=';')
             print("Arquivo Gerado")
 
 if __name__ == "__main__":
