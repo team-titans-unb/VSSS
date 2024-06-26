@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 import matplotlib.patches as patches
+import pandas as pd
 
 # Field dimensions in centimeters
 field_length = 150
@@ -136,9 +137,20 @@ def plot_robot_path(desired_path_x, desired_path_y, executed_path_x, executed_pa
     plt.show()
 
 if __name__ == '__main__':
+    #Plotting the Path Points
+    data = pd.read_csv('bancoPosicoes.csv')
+    # Extract x and y coordinates
+    x = data.iloc[:, 1] * 100  # Convert to cm
+    y = data.iloc[:, 2] * 100  # Convert to cm
+    fig, ax = plt.subplots(figsize=(10, 8))
+    # Draw the soccer field
+    draw_field(ax)
+    # Plot the points using scatter
+    ax.scatter(x, y, color='green', marker='o')
+    plt.show()
     # Example usage
-    pathX = [0, 0.1, 0.2, 0.3, 0.4]
-    pathY = [0, 0.1, 0.2, 0.3, 0.4]
-    crb01_xOut = [0, 0.08, 0.18, 0.28, 0.38]
-    crb01_yOut = [0, 0.09, 0.19, 0.29, 0.39]
-    plot_robot_path(pathX, pathY, crb01_xOut, crb01_yOut)
+    # pathX = [0, 0.1, 0.2, 0.3, 0.4]
+    # pathY = [0, 0.1, 0.2, 0.3, 0.4]
+    # crb01_xOut = [0, 0.08, 0.18, 0.28, 0.38]
+    # crb01_yOut = [0, 0.09, 0.19, 0.29, 0.39]
+    # plot_robot_path(pathX, pathY, crb01_xOut, crb01_yOut)

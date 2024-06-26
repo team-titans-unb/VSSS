@@ -4,11 +4,12 @@ import matplotlib.pyplot as plt
 import os
 
 def main():
-    folder_name = '/Controle/training_data'
+    folder_name = '\Controle\Training_data'
     file_name = 'dados01.csv'
-    file_path = os.path.join(folder_name, file_name)
+    # file_path = os.path.join(folder_name, file_name)
+    # print(file_path)
 
-    data = pd.read_csv(file_path, delimiter=";", index_col=0)  # Definimos a primeira coluna como índice
+    data = pd.read_csv(file_name, delimiter=";", index_col=0)  # Definimos a primeira coluna como índice
 
     # Renomeia as colunas para facilitar o acesso
     data.index = ["X", "Y", "Gama", "Vr", "Vl", "Xd", "Yd"]
@@ -21,7 +22,7 @@ def main():
     bio_alg = bia.Bioinspired_algorithms()
     fitnessVector, weigths_biases = bio_alg.PSO(inputs, outputs)
 
-    fig_folder = '\Controle\figures'
+    fig_folder = '\Controle\Figures'
     fig_name = '1stBehaviorFitness.pdf'
     fig_path = os.path.join(fig_folder, fig_name)
     os.makedirs(fig_folder, exist_ok=True)

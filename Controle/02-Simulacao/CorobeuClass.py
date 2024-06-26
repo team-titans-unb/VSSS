@@ -251,17 +251,19 @@ class Corobeu():
         # self.xOut.append(positiona[0])
 
     def Micro_Behaviors(self, pathX, pathY, End_position):
-        spd = ANNClass.ArtificialNeuralNetwork()
+        spd = ANNClass.ArtificialNeuralNetwork(50)
         a = 1
 
-        W_B = [-0.61527031,  4.26351357,  8.02454637,  8.86525811, -0.07557302, -4.04240221,
-            -0.66625844,  9.72744805, -5.49293393,  2.59305191,  4.6565288,  -4.84052701,
-            8.3442199 , -9.95954638, -8.28347364,  9.77667899, -8.20642214,  8.84937387,
-            1.98877979,  9.06933104,  9.70728711, -9.35055125,  9.21540164, -9.52326091,
-            9.49407271,  7.48711443, -7.00183737,  5.48817771,  6.01121161,  8.46946011,
-            2.79370128,  6.3425013,  -9.35223057, -9.45187308,  9.82736502,  9.3826862,
-            -8.93482925, -8.90673744,  3.26189841,  6.04955897,  7.25176997, -4.04181312,
-            8.24601369, -0.18449317,  9.48016339, -9.7055639,  -1.51550246]
+        W_B = [9.500083770798813,-7.048627638470341,4.565488868373927,-5.15839098004682,-7.11988327448397,
+               -7.6933471362981045,-0.14967111968939162,1.0420280553245673,0.8761360270602279,-3.866038265961346,
+               0.5931729498128842,9.821738780052467,0.6563196857398859,-5.040705533657092,9.421486950658625,
+               9.667540551394271,3.6015678012753103,-0.5384525569128837,-9.751039010975445,7.897070448108166,
+               6.84392299931182,9.496435129583695,9.299146157514846,-4.187356898904916,9.40934922346995,
+               -1.2164707154317387,2.7673767687534525,-9.450181373743986,5.094346503769871,-9.018196837298047,
+               -8.38212908212964,-8.735346088346722,-9.223047036412842,-3.5364913998666907,9.462482203953911,
+               4.503284243322762,-6.517604944062597,-6.164227873409657,5.197536016784519,-4.458222483103241,
+               -9.642454038016586,-4.223866851757718,8.82594815865603,2.6554039166930044,-9.261887586253152,
+               -9.163007567236807,-5.402219031661269]
         
         if (sim.simxGetConnectionId(self.clientID) != -1):
 
@@ -278,12 +280,16 @@ class Corobeu():
                 phi_atual = angle[2]
 
                 error_distance = math.sqrt((pathY - positiona[1])**2 + (pathX - positiona[0])**2)
+
+                if error_distance <= 0.02:
+                    a = 0
+
                 self.posError.append(error_distance)
-                
-                while error_distance > 0.02:
-                    wheelSpeeds = spd.mlp432([x_atual, y_atual, phi_atual, pathX, pathY], W_B[:38], W_B[38:])
-                    sim.simxSetJointTargetVelocity(self.clientID, self.motorE, wheelSpeeds[1], sim.simx_opmode_blocking)
-                    sim.simxSetJointTargetVelocity(self.clientID, self.motorD, wheelSpeeds[0], sim.simx_opmode_blocking)
+            
+                wheelSpeeds = spd.mlp432([x_atual, y_atual, phi_atual, pathX, pathY], W_B[:38], W_B[38:])
+                print(wheelSpeeds)
+                sim.simxSetJointTargetVelocity(self.clientID, self.motorE, 10000 * wheelSpeeds[1], sim.simx_opmode_blocking)
+                sim.simxSetJointTargetVelocity(self.clientID, self.motorD, 1000 * wheelSpeeds[0], sim.simx_opmode_blocking)
 
 
         
@@ -306,4 +312,4 @@ class Corobeu():
     
 if __name__ == "__main__":
     crb01 = Corobeu(19999, 'robot01', 'motorL01', 'motorR01')
-    crb01.Micro_Behaviors(0, 0.2, 0.4)
+    crb01.Micro_Behaviors(0, 0.2, [0.4, 0.2])
