@@ -3,7 +3,6 @@ import sim
 import matplotlib.pyplot as plt
 import numpy as np
 import math as mat
-import csv
 
 class Corobeu():
 
@@ -107,45 +106,62 @@ class Corobeu():
             while (a == 1):
 
                 ################Go to Goal ######################  
-                while cont0 < 5:
-                    s, positiona = sim.simxGetObjectPosition(clientID, robot, -1, sim.simx_opmode_streaming)
-                    s, ballPos = sim.simxGetObjectPosition(clientID, ball, -1, sim.simx_opmode_streaming)
+                while cont0 < 3:
+                    if cont0 <= 1:
+
+                        s, positiona = sim.simxGetObjectPosition(clientID, robot, -1, sim.simx_opmode_streaming)
+                        s, ballPos = sim.simxGetObjectPosition(clientID, ball, -1, sim.simx_opmode_streaming)
+                        sim.simxSetJointTargetVelocity(clientID, motorE, 0, sim.simx_opmode_blocking)
+                        sim.simxSetJointTargetVelocity(clientID, motorD, 0, sim.simx_opmode_blocking)
+                    else:
+
+                        s, positiona = sim.simxGetObjectPosition(clientID, robot, -1, sim.simx_opmode_streaming)
+                        s, ballPos = sim.simxGetObjectPosition(clientID, ball, -1, sim.simx_opmode_streaming)
+
+                        phid = math.atan2(ballPos[1] - positiona[1], ballPos[0] - positiona[0])
+
+                        error_phi = phid - self.phi
+
+                        error_distance = math.sqrt((ballPos[1] - positiona[1]) ** 2 + (ballPos[0] - positiona[0]) ** 2)
+                        self.posError.append(error_distance)
+                        omega, fant_phi, interror_phi, Integral_part_phi = self.PID_Controller_phi(kpi, kii, kdi, deltaT,
+                                                                                               error_phi, interror_phi,
+                                                                                               fant_phi,
+                                                                                               Integral_part_phi)
+                        self.phi = self.phi + omega * deltaT
+
                     cont0 = cont0 + 1
-                # print(positiona)
-                if positiona == [0, 0, 0]:
-                    s, positiona = sim.simxGetObjectPosition(clientID, robot, -1, sim.simx_opmode_streaming)
-                    s, ballPos = sim.simxGetObjectPosition(clientID, ball, -1, sim.simx_opmode_streaming)
-                else:
-                    s, positiona = sim.simxGetObjectPosition(clientID, robot, -1, sim.simx_opmode_streaming)
-                    s, ballPos = sim.simxGetObjectPosition(clientID, ball, -1, sim.simx_opmode_streaming)
-                    # print(f'positions = {positiona}')
+                
+                s, positiona = sim.simxGetObjectPosition(clientID, robot, -1, sim.simx_opmode_streaming)
+                s, ballPos = sim.simxGetObjectPosition(clientID, ball, -1, sim.simx_opmode_streaming)
+                # print(f'positions = {positiona}')
 
 
-                    phid = math.atan2(ballPos[1] - positiona[1], ballPos[0] - positiona[0])
+                phid = math.atan2(ballPos[1] - positiona[1], ballPos[0] - positiona[0])
 
-                    error_phi = phid - self.phi
+                error_phi = phid - self.phi
 
-                    if error_phi <= 5:
-                        a = 0
+                # if error_phi <= 5:
+                #     a = 0
 
-                    error_distance = math.sqrt((ballPos[1] - positiona[1])**2 + (ballPos[0] - positiona[0])**2)
-                    self.posError.append(error_distance)
-                    omega, fant_phi, interror_phi, Integral_part_phi = self.PID_Controller_phi(kpi, kii, kdi, deltaT,
-                                                                                            error_phi, interror_phi,
-                                                                                            fant_phi, Integral_part_phi)
+                error_distance = math.sqrt((ballPos[1] - positiona[1])**2 + (ballPos[0] - positiona[0])**2)
+                self.posError.append(error_distance)
+                omega, fant_phi, interror_phi, Integral_part_phi = self.PID_Controller_phi(kpi, kii, kdi, deltaT,
+                                                                                        error_phi, interror_phi,
+                                                                                        fant_phi, Integral_part_phi)
 
-                    U = self.v
-                    self.phi = self.phi + omega * deltaT
+                U = self.v
+                self.phi = self.phi + omega * deltaT
 
-                    vl, vd, a = self.Speed_CRB(U, omega, error_distance)
-                    
-                    sim.simxSetJointTargetVelocity(clientID, motorE, vl, sim.simx_opmode_blocking)
-                    sim.simxSetJointTargetVelocity(clientID, motorD, vd, sim.simx_opmode_blocking)
-                    print("------")
-                    print(vl)
-                    print(vd)
-                    Number_Iterations = Number_Iterations + 1
-                    Time_Sample.append(Number_Iterations * deltaT)
+                vl, vd, a = self.Speed_CRB(U, omega, error_distance)
+                
+                sim.simxSetJointTargetVelocity(clientID, motorE, vl, sim.simx_opmode_blocking)
+                sim.simxSetJointTargetVelocity(clientID, motorD, vd, sim.simx_opmode_blocking)
+                print("------")
+                print(vl)
+                print(vd)
+                Number_Iterations = Number_Iterations + 1
+                Time_Sample.append(Number_Iterations * deltaT)
 
                 # print(Number_Iterations)
 
@@ -155,9 +171,9 @@ class Corobeu():
 if __name__ == "__main__":
 
     crb01 = Corobeu()
-    kpi = 2
-    kii = 0.001
-    kdi = 5
+    kpi = 20
+    kii = 10
+    kdi = 0.01
     deltaT = 0.05
 
     crb01.Robot_CRB(kpi, kii, kdi, deltaT)

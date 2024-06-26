@@ -5,8 +5,8 @@ import os
 
 def main():
     folder_name = '\Controle\Training_data'
-    file_name = 'dados01.csv'
-    # file_path = os.path.join(folder_name, file_name)
+    file_name = 'dados101.csv'
+    file_path = os.path.join(folder_name, file_name)
     # print(file_path)
 
     data = pd.read_csv(file_name, delimiter=";", index_col=0)  # Definimos a primeira coluna como índice
@@ -20,7 +20,7 @@ def main():
 
     # Cria o objeto BioinspiredAlgorithms e executa o PSO
     bio_alg = bia.Bioinspired_algorithms()
-    fitnessVector, weigths_biases = bio_alg.PSO(inputs, outputs)
+    fitnessVector, weigths_biases = bio_alg.PSO(inputs, (100*outputs))
 
     fig_folder = '\Controle\Figures'
     fig_name = '1stBehaviorFitness.pdf'
@@ -35,7 +35,7 @@ def main():
     plt.savefig(fig_path, format='pdf')
 
     wb_folder = '/Controle/weights'
-    wb_file = '1stBehaviorWB.csv'
+    wb_file = '1stBehaviorWB101.csv'
     wb_path = os.path.join(wb_folder, wb_file)
     os.makedirs(wb_folder, exist_ok=True)
     dfr01 = [weigths_biases]

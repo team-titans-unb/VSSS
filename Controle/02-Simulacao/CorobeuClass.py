@@ -167,10 +167,10 @@ class Corobeu():
             End_position (list): Coordenadas X e Y do ponto final.
         """
         #----------------Constantes
-        kp = 2
-        ki = 0.01
-        kd = 7.9
-        deltaT = 0.01
+        kp = 20
+        ki = 10
+        kd = 0.01
+        deltaT = 0.05
         #---------------------------
         a = 1
         Number_Iterations = 0
@@ -186,64 +186,80 @@ class Corobeu():
             while (a == 1):
 
                 ################Go to Goal ######################  
-                while cont0 < 5:
-                    s, positiona = sim.simxGetObjectPosition(self.clientID, self.robot, -1, sim.simx_opmode_streaming)
+                while cont0 < 3:
+                    if cont0 <= 1:
+                        s, positiona = sim.simxGetObjectPosition(self.clientID, self.robot, -1, sim.simx_opmode_streaming)
+                        # s, ballPos = sim.simxGetObjectPosition(self.clientID, self.ball, -1, sim.simx_opmode_streaming)
+                        sim.simxSetJointTargetVelocity(self.clientID, self.motorE, 0, sim.simx_opmode_blocking)
+                        sim.simxSetJointTargetVelocity(self.clientID, self.motorD, 0, sim.simx_opmode_blocking)
+                    else:
+                        s, positiona = sim.simxGetObjectPosition(self.clientID, self.robot, -1, sim.simx_opmode_streaming)
+                        
+                        phid = math.atan2(pathY - positiona[1], pathX - positiona[0])
+
+                        error_phi = phid - self.phi
+
+                        error_distance = math.sqrt((pathY - positiona[1])**2 + (pathX - positiona[0])**2)
+                        self.posError.append(error_distance)
+                        omega, fant_phi, interror_phi, Integral_part_phi = self.PID_Controller_phi(kp, ki, kd, deltaT,
+                                                                                               error_phi, interror_phi,
+                                                                                               fant_phi,
+                                                                                               Integral_part_phi)
+                        self.phi = self.phi + omega * deltaT
                     cont0 = cont0 + 1
-                # print(positiona)
-                if positiona == [0, 0, 0]:
-                    s, positiona = sim.simxGetObjectPosition(self.clientID, self.robot, -1, sim.simx_opmode_streaming)
-                else:
-                    s, positiona = sim.simxGetObjectPosition(self.clientID, self.robot, -1, sim.simx_opmode_streaming)
-                    # print(f'positions = {positiona}')
-                    phid = math.atan2((pathY - positiona[1]), (pathX - positiona[0]))
+            
+                s, positiona = sim.simxGetObjectPosition(self.clientID, self.robot, -1, sim.simx_opmode_streaming)
+                # print(f'positions = {positiona}')
+                phid = math.atan2((pathY - positiona[1]), (pathX - positiona[0]))
 
-                    error_phi = phid - self.phi
-                    omega, fant_phi, interror_phi, Integral_part_phi = self.PID_Controller_phi(kp, ki, kd, deltaT,
-                                                                                            error_phi, interror_phi,
-                                                                                            fant_phi, Integral_part_phi)
+                error_phi = phid - self.phi
+                omega, fant_phi, interror_phi, Integral_part_phi = self.PID_Controller_phi(kp, ki, kd, deltaT,
+                                                                                        error_phi, interror_phi,
+                                                                                        fant_phi, Integral_part_phi)
 
-                    error_distance = math.sqrt((pathY - positiona[1])**2 + (pathX - positiona[0])**2)
-                    self.posError.append(error_distance)
-                    
-                    #### Error distance next point and the global is calculate ###
-                    
-                    error_distance_global = math.sqrt(
-                        (End_position[1] - positiona[1]) ** 2 + (End_position[0] - positiona[0]) ** 2)
+                self.phi = self.phi + omega * deltaT
+                error_distance = math.sqrt((pathY - positiona[1])**2 + (pathX - positiona[0])**2)
+                self.posError.append(error_distance)
+                
+                #### Error distance next point and the global is calculate ###
+                
+                error_distance_global = math.sqrt(
+                    (End_position[1] - positiona[1]) ** 2 + (End_position[0] - positiona[0]) ** 2)
 
-                    #### speed profiles ####
+                #### speed profiles ####
 
-                    U = self.v
+                U = self.v
 
-                    ### calculate new phi robot integrating the angular speed ###
+                ### calculate new phi robot integrating the angular speed ###
 
-                    self.phi = self.phi + omega * deltaT
+                self.phi = self.phi + omega * deltaT
 
-                    #### Calculate the right and left speed values ###
-                    # #### Check if the angular error is within the threshold ###
-                    # if abs(error_phi) > 0.3:
-                    #     # Rotate in place to correct orientation
-                    #     vl = -omega if omega < 0 else omega  # Rotate in place
-                    #     vd = omega if omega < 0 else -omega  # Rotate in place
-                    # else:
-                    #     # Move towards the waypoint
-                    #     vl, vd, a = self.Speed_CRB(U, omega, error_distance, error_distance_global)
+                #### Calculate the right and left speed values ###
+                # #### Check if the angular error is within the threshold ###
+                # if abs(error_phi) > 0.3:
+                #     # Rotate in place to correct orientation
+                #     vl = -omega if omega < 0 else omega  # Rotate in place
+                #     vd = omega if omega < 0 else -omega  # Rotate in place
+                # else:
+                #     # Move towards the waypoint
+                #     vl, vd, a = self.Speed_CRB(U, omega, error_distance, error_distance_global)
 
-                    vl, vd, a = self.Speed_CRB(U, omega, error_distance, error_distance_global)
+                vl, vd, a = self.Speed_CRB(U, omega, error_distance, error_distance_global)
 
-                    #### Send the speed values ####
+                #### Send the speed values ####
 
-                    sim.simxSetJointTargetVelocity(self.clientID, self.motorE, vl, sim.simx_opmode_blocking)
-                    sim.simxSetJointTargetVelocity(self.clientID, self.motorD, vd, sim.simx_opmode_blocking)
-                    print("------")
-                    print(vl)
-                    print(vd)
-                    ### Save values to plot ###
+                sim.simxSetJointTargetVelocity(self.clientID, self.motorE, vl, sim.simx_opmode_blocking)
+                sim.simxSetJointTargetVelocity(self.clientID, self.motorD, vd, sim.simx_opmode_blocking)
+                print("------")
+                print(vl)
+                print(vd)
+                ### Save values to plot ###
 
-                    Number_Iterations = Number_Iterations + 1
-                    Time_Sample.append(Number_Iterations * deltaT)
+                Number_Iterations = Number_Iterations + 1
+                Time_Sample.append(Number_Iterations * deltaT)
 
-                    self.yOut.append(positiona[1])
-                    self.xOut.append(positiona[0])
+                self.yOut.append(positiona[1])
+                self.xOut.append(positiona[0])
 
                 # print(Number_Iterations)
 
@@ -253,46 +269,67 @@ class Corobeu():
     def Micro_Behaviors(self, pathX, pathY, End_position):
         spd = ANNClass.ArtificialNeuralNetwork(50)
         a = 1
+        i = 0
+        positiona = []
+        omega =[]
+        Vd = []
+        Ve = []
 
-        W_B = [9.500083770798813,-7.048627638470341,4.565488868373927,-5.15839098004682,-7.11988327448397,
-               -7.6933471362981045,-0.14967111968939162,1.0420280553245673,0.8761360270602279,-3.866038265961346,
-               0.5931729498128842,9.821738780052467,0.6563196857398859,-5.040705533657092,9.421486950658625,
-               9.667540551394271,3.6015678012753103,-0.5384525569128837,-9.751039010975445,7.897070448108166,
-               6.84392299931182,9.496435129583695,9.299146157514846,-4.187356898904916,9.40934922346995,
-               -1.2164707154317387,2.7673767687534525,-9.450181373743986,5.094346503769871,-9.018196837298047,
-               -8.38212908212964,-8.735346088346722,-9.223047036412842,-3.5364913998666907,9.462482203953911,
-               4.503284243322762,-6.517604944062597,-6.164227873409657,5.197536016784519,-4.458222483103241,
-               -9.642454038016586,-4.223866851757718,8.82594815865603,2.6554039166930044,-9.261887586253152,
-               -9.163007567236807,-5.402219031661269]
+        W_B = [-5.01741035,  7.3015568  , 3.74523337 , 8.27068089 ,-6.46508538 , -6.55563277,
+                -2.5995025,   3.52918937,  7.89099878,  9.9663086 ,  7.30504368,  -3.38570642,
+                -2.91147369,  2.52139964 , 9.08486877 ,-8.76833578 , 8.871959   , -9.46906964,
+                -4.77931204,  9.20620595 , 0.32505323 ,-0.94674904 , 8.99310604 ,  8.23423603,
+                9.59171953, -8.62683762 , 5.00605245 ,-4.75819819 ,-8.77414539 , -4.30479759,
+                9.65273876, -6.82077998 ,-9.63130215 , 9.08246552 ,-7.74973591 , -9.65986285,
+                -0.95544853,  9.58712966 ,-6.1828829  , 9.29140431 , 9.61270472 , -5.29675332,
+                -5.47583421,  2.7313302  ,-1.70503075 , 3.42999507 , 1.53887427]
         
         if (sim.simxGetConnectionId(self.clientID) != -1):
+            print("Iniciando Imitacao")
+            
+            sim.simxSetJointTargetVelocity(self.clientID, self.motorE, 0, sim.simx_opmode_blocking)
+            sim.simxSetJointTargetVelocity(self.clientID, self.motorD, 0, sim.simx_opmode_blocking)
 
-            print("Connect")
             while (a == 1):
+                print(i)
+                positiona.append([])
+                #condiçao de parada a = 2
 
-                s, positiona = sim.simxGetObjectPosition(self.clientID, self.robot, -1, sim.simx_opmode_streaming)
-                while positiona == [0, 0, 0]:
-                    s, positiona = sim.simxGetObjectPosition(self.clientID, self.robot, -1, sim.simx_opmode_streaming) 
-                y_atual = positiona[1]
-                x_atual = positiona[0]
+                s, positiona[i] = sim.simxGetObjectPosition(self.clientID, self.robot, -1, sim.simx_opmode_streaming)
+                while positiona[i] == [0, 0, 0]:
+                    s, positiona[i] = sim.simxGetObjectPosition(self.clientID, self.robot, -1, sim.simx_opmode_streaming) 
+                
+                y_atual = positiona[i][1]
+                x_atual = positiona[i][0]
                 
                 s, angle = sim.simxGetObjectOrientation(self.clientID, self.robot, -1, sim.simx_opmode_blocking)
-                phi_atual = angle[2]
+                omega.append(angle[2])
+                phi_atual = omega[i]
 
                 error_distance = math.sqrt((pathY - positiona[1])**2 + (pathX - positiona[0])**2)
 
-                if error_distance <= 0.02:
+                # if error_distance <= 0.02:
+                #     a = 0
+                
+                error_distance_global = math.sqrt(
+                    (End_position[1] - positiona[1]) ** 2 + (End_position[0] - positiona[0]) ** 2)
+                
+                if error_distance_global <= 0.02:
                     a = 0
 
                 self.posError.append(error_distance)
             
-                wheelSpeeds = spd.mlp432([x_atual, y_atual, phi_atual, pathX, pathY], W_B[:38], W_B[38:])
+                Speeds = spd.mlp432([x_atual, y_atual, phi_atual, pathX, pathY], W_B[:38], W_B[38:])
+                wheelSpeeds = Speeds/0.008
                 print(wheelSpeeds)
-                sim.simxSetJointTargetVelocity(self.clientID, self.motorE, 10000 * wheelSpeeds[1], sim.simx_opmode_blocking)
-                sim.simxSetJointTargetVelocity(self.clientID, self.motorD, 1000 * wheelSpeeds[0], sim.simx_opmode_blocking)
+                sim.simxSetJointTargetVelocity(self.clientID, self.motorE, wheelSpeeds[1], sim.simx_opmode_blocking)
+                sim.simxSetJointTargetVelocity(self.clientID, self.motorD, wheelSpeeds[0], sim.simx_opmode_blocking)
+                i = i + 1
+            sim.simxSetJointTargetVelocity(self.clientID, self.motorE, 0, sim.simx_opmode_blocking)
+            sim.simxSetJointTargetVelocity(self.clientID, self.motorD, 0, sim.simx_opmode_blocking)
 
+            #criar data frame aqui
 
-        
 
     def Get_Position(self):
         """
@@ -312,4 +349,4 @@ class Corobeu():
     
 if __name__ == "__main__":
     crb01 = Corobeu(19999, 'robot01', 'motorL01', 'motorR01')
-    crb01.Micro_Behaviors(0, 0.2, [0.4, 0.2])
+    crb01.Micro_Behaviors(0, 0, [0, 0])

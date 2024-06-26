@@ -2,6 +2,7 @@ import sim
 import matplotlib.pyplot as plt
 import numpy as np
 import math as math
+import scipy
 # import AlgorithmAStart
 
 class Corobeu():
@@ -277,6 +278,8 @@ class Corobeu():
         return positiona[0], positiona[1]
     
     def Aquire_Data(self):
+        mdg = []
+        meg = []
         s, positiona = sim.simxGetObjectPosition(self.clientID, self.robot, -1, sim.simx_opmode_streaming)
         while positiona == [0, 0, 0]:
             s, positiona = sim.simxGetObjectPosition(self.clientID, self.robot, -1, sim.simx_opmode_streaming) 
@@ -286,11 +289,15 @@ class Corobeu():
         self.yOut.append(positiona[1])
         s, angle = sim.simxGetObjectOrientation(self.clientID, self.robot, -1, sim.simx_opmode_blocking)
         self.angle.append(angle[2])
-        s, __, lw = sim.simxGetObjectVelocity(self.clientID, self.motorE, sim.simx_opmode_blocking)
-        s, __, rw = sim.simxGetObjectVelocity(self.clientID, self.motorD, sim.simx_opmode_blocking)
-        self.rWheelSpeed.append(rw[2])
-        self.lWheelSpeed.append(lw[2])
-        return [positiona[0], positiona[1]], [lw[2], rw[2]], angle[2]
+        s, lw, __ = sim.simxGetObjectVelocity(self.clientID, self.motorE, sim.simx_opmode_blocking)
+        s, rw, __ = sim.simxGetObjectVelocity(self.clientID, self.motorD, sim.simx_opmode_blocking)
+
+        mdg.append((rw[1]**2 + rw[0]**2)**(1/2))
+        self.rWheelSpeed = scipy.signal.medfilt(mdg, kernel_size=3)
+        meg.append((lw[1]**2 + lw[0]**2)**(1/2))
+        self.lWheelSpeed = scipy.signal.medfilt(meg, kernel_size=3)
+
+        return positiona[0], positiona[1], lw[2], rw[2], angle[2]
 
 if __name__ == "__main__":
 

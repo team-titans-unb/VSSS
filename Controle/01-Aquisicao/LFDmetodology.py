@@ -2,7 +2,7 @@ import math
 import sim
 import numpy as np
 import math as mat
-import ANNClass
+from ANNClass import *
 import pandas as pd
 import scipy
 import Bioinspired as bia
@@ -94,6 +94,42 @@ class LFDmetodology():
         print("Treinando")
         trainObj = bia.Bioinspired_algorithms()
         self.fitVector, self.ys = trainObj.PSO()
+
+    def imitation(self):
+        clientID = self.connect(19999)
+        a = 1
+        i = 0
+        Vd = []
+        Ve = []
+        positions = []
+        omega = []
+
+        if(sim.simxGetConnectionId(clientID) != -1):
+            print("Iniciando Imitacao")
+
+            while(a == 1):
+                print(i)
+                positions.append()
+                if i == self.nSamples * 5:
+                    a = 2
+                else:
+                    a = 1
+                _, motorE = sim.simxGetObjectHandle(clientID, 'motorL01', sim.simx_opmode_blocking)
+                _, motorD = sim.simxGetObjectHandle(clientID, 'motorR01', sim.simx_opmode_blocking)
+                _, corpo = sim.simxGetObjectHandle(clientID, 'robot01', sim.simx_opmode_blocking)
+
+                positions.append([])
+                _, positions[i] = sim.simxGetObjectPosition(clientID, corpo, -1, sim.simx_opmode_streaming)
+                while positions[i] == [0,0,0]:
+                    _, positions[i] = sim.simxGetObjectPosition(clientID, corpo, -1, sim.simx_opmode_streaming)
+                    _, angles = sim.simxGetObjectOrientation(clientID, corpo, -1, sim.simx_opmode_blocking)
+                _, positions[i] = sim.simxGetObjectPosition(clientID, corpo, -1, sim.simx_opmode_streaming)
+                _, angles = sim.simxGetObjectOrientation(clientID, corpo, -1, sim.simx_opmode_blocking)
+                omega.append(angles[2])
+
+                
+                mlp = ArtificialNeuralNetwork(self.nSamples)
+                speeds = mlp.mlp432()
 
 if __name__ == "__main__":
     crb = LFDmetodology()

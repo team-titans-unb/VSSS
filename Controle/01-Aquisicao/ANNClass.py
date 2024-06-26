@@ -3,10 +3,11 @@ from scipy.special import expit
 
 class ArtificialNeuralNetwork:
     
-    def __init__(self, nSamples):
+    def __init__(self, nSamples=50, vmax = 8):
         self.outputVr = 0
         self.outputVl = 0
         self.nSamples = nSamples
+        self.vmax = vmax
 
     def sigmoid(self, x):
         return expit(x)
@@ -26,6 +27,8 @@ class ArtificialNeuralNetwork:
         sndB = biases[4:7]
         trdW = [weights[i:i + 3] for i in range(32, 38, 3)]
         trdB = biases[7:9]
+
+        
 
         fstLayer = [0] * 4
         sndLayer = [0] * 3
