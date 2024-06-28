@@ -2,7 +2,7 @@ import math
 import sim
 import numpy as np
 import math as mat
-import ANNClass
+import ANNClass as ann
 
 class Corobeu():
     """
@@ -170,7 +170,7 @@ class Corobeu():
         kp = 20
         ki = 10
         kd = 0.01
-        deltaT = 0.05
+        deltaT = 0.01
         #---------------------------
         a = 1
         Number_Iterations = 0
@@ -267,13 +267,6 @@ class Corobeu():
         # self.xOut.append(positiona[0])
 
     def Micro_Behaviors(self, pathX, pathY, End_position):
-        spd = ANNClass.ArtificialNeuralNetwork(50)
-        a = 1
-        i = 0
-        positiona = []
-        omega =[]
-        Vd = []
-        Ve = []
 
         W_B = [-5.01741035,  7.3015568  , 3.74523337 , 8.27068089 ,-6.46508538 , -6.55563277,
                 -2.5995025,   3.52918937,  7.89099878,  9.9663086 ,  7.30504368,  -3.38570642,
@@ -284,17 +277,25 @@ class Corobeu():
                 -0.95544853,  9.58712966 ,-6.1828829  , 9.29140431 , 9.61270472 , -5.29675332,
                 -5.47583421,  2.7313302  ,-1.70503075 , 3.42999507 , 1.53887427]
         
+        
+        spd = ann.ArtificialNeuralNetwork(50)
+        a = 1
+        i = 0
+        positiona = []
+        omega =[]
+        Vd = []
+        Ve = []
+      
         if (sim.simxGetConnectionId(self.clientID) != -1):
             print("Iniciando Imitacao")
-            
+
             sim.simxSetJointTargetVelocity(self.clientID, self.motorE, 0, sim.simx_opmode_blocking)
             sim.simxSetJointTargetVelocity(self.clientID, self.motorD, 0, sim.simx_opmode_blocking)
 
             while (a == 1):
                 print(i)
                 positiona.append([])
-                #condiçao de parada a = 2
-
+                
                 s, positiona[i] = sim.simxGetObjectPosition(self.clientID, self.robot, -1, sim.simx_opmode_streaming)
                 while positiona[i] == [0, 0, 0]:
                     s, positiona[i] = sim.simxGetObjectPosition(self.clientID, self.robot, -1, sim.simx_opmode_streaming) 
@@ -306,29 +307,33 @@ class Corobeu():
                 omega.append(angle[2])
                 phi_atual = omega[i]
 
-                error_distance = math.sqrt((pathY - positiona[1])**2 + (pathX - positiona[0])**2)
-
-                # if error_distance <= 0.02:
-                #     a = 0
+                error_distance = math.sqrt((pathY - y_atual)**2 + (pathX - x_atual)**2)
+                self.posError.append(error_distance)
+                
+                #### Error distance next point and the global is calculate ###
                 
                 error_distance_global = math.sqrt(
-                    (End_position[1] - positiona[1]) ** 2 + (End_position[0] - positiona[0]) ** 2)
-                
-                if error_distance_global <= 0.02:
+                    (End_position[1] - y_atual) ** 2 + (End_position[0] - x_atual) ** 2)
+
+                if error_distance <= 0.02:
                     a = 0
 
-                self.posError.append(error_distance)
+                if error_distance_global <= 0.02:
+                    sim.simxSetJointTargetVelocity(self.clientID, self.motorE, 0, sim.simx_opmode_blocking)
+                    sim.simxSetJointTargetVelocity(self.clientID, self.motorD, 0, sim.simx_opmode_blocking)
+                    a = 0
             
                 Speeds = spd.mlp432([x_atual, y_atual, phi_atual, pathX, pathY], W_B[:38], W_B[38:])
-                wheelSpeeds = Speeds/0.008
-                print(wheelSpeeds)
-                sim.simxSetJointTargetVelocity(self.clientID, self.motorE, wheelSpeeds[1], sim.simx_opmode_blocking)
-                sim.simxSetJointTargetVelocity(self.clientID, self.motorD, wheelSpeeds[0], sim.simx_opmode_blocking)
-                i = i + 1
-            sim.simxSetJointTargetVelocity(self.clientID, self.motorE, 0, sim.simx_opmode_blocking)
-            sim.simxSetJointTargetVelocity(self.clientID, self.motorD, 0, sim.simx_opmode_blocking)
+                Vd.append(Speeds[0]/0.08)
+                Ve.append(Speeds[1]/0.08)
+                print([Vd[i], Ve[i]])
+                sim.simxSetJointTargetVelocity(self.clientID, self.motorE, Ve[i], sim.simx_opmode_blocking)
+                sim.simxSetJointTargetVelocity(self.clientID, self.motorD, Vd[i], sim.simx_opmode_blocking)
 
-            #criar data frame aqui
+                self.yOut.append(y_atual)
+                self.xOut.append(x_atual)
+
+                i = i + 1
 
 
     def Get_Position(self):
@@ -347,6 +352,10 @@ class Corobeu():
         self.instPosition[1] = positiona[1] 
         return positiona[0], positiona[1]
     
+    def Stop_bot(self):
+        sim.simxSetJointTargetVelocity(self.clientID, self.motorE, 0, sim.simx_opmode_blocking)
+        sim.simxSetJointTargetVelocity(self.clientID, self.motorD, 0, sim.simx_opmode_blocking)
+
 if __name__ == "__main__":
     crb01 = Corobeu(19999, 'robot01', 'motorL01', 'motorR01')
     crb01.Micro_Behaviors(0, 0, [0, 0])

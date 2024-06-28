@@ -25,7 +25,6 @@ Finally comment:
 
 import math
 import Bioinspired_Algorithm as Bioinspired_Algorithm
-import Scenery as Scenery
 
 class Histograma_Neighbor:
 
@@ -334,7 +333,7 @@ class Histograma_Neighbor:
 
         ### Create the Scenary object ###
 
-        object_SC = Scenery.Scenary()
+        # object_SC = Scenery.Scenary()
 
         ### Read each history robot ###
 
@@ -348,12 +347,12 @@ class Histograma_Neighbor:
             ### Get the new path planning for each robot this PP is for arrive to the machine ###
 
             x_best_neighbor_robot, y_best_neighbor_robot = self.best_neighbor(x_init_robot, y_init_robot, x_end_inspection[robots_number], y_end_inspection[robots_number], square_value_x, square_value_y, 0, AU)
-            path_robot_extended_x, path_robot_extended_y = object_SC.generar_puntos(x_best_neighbor_robot, y_best_neighbor_robot, espacio=0.03)
+            # path_robot_extended_x, path_robot_extended_y = object_SC.generar_puntos(x_best_neighbor_robot, y_best_neighbor_robot, espacio=0.03)
 
             ### Update the variables ###
 
-            Historic_particles_x[robots_number].extend(path_robot_extended_x)
-            Historic_particles_y[robots_number].extend(path_robot_extended_y)
+            # Historic_particles_x[robots_number].extend(path_robot_extended_x)
+            # Historic_particles_y[robots_number].extend(path_robot_extended_y)
             x_init[robots_number] = Historic_particles_x[robots_number][-1]
             y_init[robots_number] = Historic_particles_y[robots_number][-1]
 
@@ -361,8 +360,8 @@ class Histograma_Neighbor:
 
             if robots_number == len(Historic_particles_x) - 1:
 
-                path_leader_extended_x.extend(path_robot_extended_x)
-                path_leader_extended_y.extend(path_robot_extended_y)
+                # path_leader_extended_x.extend(path_robot_extended_x)
+                # path_leader_extended_y.extend(path_robot_extended_y)
                 x_init_aux[-1] = Historic_particles_x[robots_number][-1]
                 y_init_aux[-1] = Historic_particles_y[robots_number][-1]
 
