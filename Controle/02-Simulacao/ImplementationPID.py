@@ -12,10 +12,10 @@ robot = 'robot01'
 leftMotor = 'motorL01'
 rightMotor = 'motorR01'
 port = 19999
-finalPos = [-0.6, 0]
+finalPos = [0.1, 0.3]
 
-obstacleX = [0.5, 0.57]
-obstacleY = [0.7, 0.77]
+obstacleX = [-0.2, 0.2]
+obstacleY = [-0.2, 0.2]
 
 try:
     pp = hist.Histograma_Neighbor

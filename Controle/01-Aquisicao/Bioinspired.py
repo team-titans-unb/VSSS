@@ -104,7 +104,7 @@ class Bioinspired_algorithms:
         self.out_pso = []
         self.fit_vector = []
 
-    def PSO(self, inputs_value, outputs_value):
+    def PSO(self, nSample, inputs_value, outputs_value):
 
         """PSO.
 
@@ -116,7 +116,8 @@ class Bioinspired_algorithms:
 
             """
         S = 20
-        N = 47
+        # N = 47
+        N = 12
         maxIter = 100
         w0 = 0.9
         wf = 0.1
@@ -124,8 +125,8 @@ class Bioinspired_algorithms:
         c2 = 2.05
         vMax = 10
         vIni = vMax / 10
-        xMax = 10
-        xMin = -10
+        xMax = 20
+        xMin = -20
 
         #    PSO Initializations
 
@@ -144,8 +145,8 @@ class Bioinspired_algorithms:
             #    Loop to find the best individual particle
 
             for i in range(S):
-                object_neural_network_sim = ann.ArtificialNeuralNetwork(50)
-                fx = object_neural_network_sim.mse(inputs_value, x[i, :] , outputs_value)
+                object_neural_network_sim = ann.ArtificialNeuralNetwork(nSample)
+                fx = object_neural_network_sim.mse_slp(inputs_value, x[i, :] , outputs_value)
                 print(fx)
                 # print("___________________")
                 if fx < fInd[i]:

@@ -92,7 +92,7 @@ class PSO:
 
         ### Init PSO variables ###
 
-        S = 10
+        S = 20
         N = 2
         maxIter = 100
         w0 = 0.9
@@ -109,9 +109,9 @@ class PSO:
         self.position_y.append(y_init)
         self.position_x.append(x_init)
 
-        ### While the distance betwen the robot and the end point is more that 0.2 meters ###
+        ### While the distance betwen the robot and the end point is more that 0.02 meters ###
 
-        while H_new >= 0.02:
+        while H_new >= 0.2:
 
             ### Init parameers used in the PSO algorithm ###
 

@@ -210,7 +210,7 @@ class Histograma_Neighbor:
             ### Find the best path start in the end and end in the init ####
 
             while fitnees_function >= 0.1:
-
+                print(fitnees_function)
                 best_neig = 1000
 
                 ### For each value in the windows ###

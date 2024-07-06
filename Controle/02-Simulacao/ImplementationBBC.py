@@ -12,10 +12,10 @@ robot = 'robot01'
 leftMotor = 'motorL01'
 rightMotor = 'motorR01'
 port = 19999
-finalPos = [0, 0.6]
+finalPos = [0.1, 0]
 
-obstacleX = [0.5, 0.57]
-obstacleY = [0.7, 0.77]
+obstacleX = [-1.2, 1.2]
+obstacleY = [-1.2, 1.2]
 
 try:
     pp = hist.Histograma_Neighbor
@@ -33,9 +33,11 @@ try:
     plt.xlim(-0.90, 0.9)
     plt.ylim(-0.7, 0.7)
     plt.show()
+
     print("Seguindo trajetoria...")
     for pos in range(len(pathX)):
         crb01.Micro_Behaviors(pathX[pos], pathY[pos],[pathX[-1],pathY[-1]])
+    # crb01.Micro_Behaviors(xEnd, yEnd,finalPos)
 
 finally:
     crb01.Stop_bot()

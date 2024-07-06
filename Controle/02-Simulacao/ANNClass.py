@@ -57,3 +57,25 @@ class ArtificialNeuralNetwork:
         MSER = errorR / self.nSamples
         mse = MSEL + MSER
         return mse
+    
+    def mse_slp(self, inputs, weights_biases, desired):
+        errorL = 0
+        errorR = 0
+        # Extrair pesos e bias para as duas SLPs
+        weightsL = weights_biases[:5]
+        biasL = weights_biases[5]
+        weightsR = weights_biases[6:11]
+        biasR = weights_biases[11]
+        
+        for i in range(self.nSamples):
+            input_vector = []
+            for j in range(5):
+                input_vector.append(inputs[j][i])
+            wspeedL = self.neuron(input_vector, weightsL, biasL)
+            wspeedR = self.neuron(input_vector, weightsR, biasR)
+            errorL += (wspeedL - desired[0][i])**2
+            errorR += (wspeedR - desired[1][i])**2
+        MSEL = errorL / self.nSamples
+        MSER = errorR / self.nSamples
+        mse = MSEL + MSER
+        return mse
