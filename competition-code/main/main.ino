@@ -10,6 +10,7 @@ void setup() {
 }
 
 void loop() {
+    // Debug
     Serial.print("Neymar ip: ");
     Serial.println(neymar.getIp());
 

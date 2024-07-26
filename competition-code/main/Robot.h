@@ -14,6 +14,7 @@ private:
     String ip_;
     uint16_t port_;
     uint8_t num_;
+    uint8_t state_;
     void initializeRobot();
 };
 

@@ -20,13 +20,16 @@ uint8_t Robot::getNum() const {
 
 void Robot::initializeRobot(){
     // Faz uma rotina de testes para saber se o robo se conectou com o controle
-    // Se recebe dados deixa o robo em estado de espera para iniciar, caso n, emite um 
-    // alerta
-
+    if(this->num_1 == 1){
+        // faz configuração do robo 1
+    }
 }
 
 void Robot::setSpeed(){
     // Coloca a velocidade nas rodas do robo
+    if(state==1){
+
+    }
 }
 
 void Robot::Stop(){
