@@ -1,23 +1,12 @@
 #include "Robot.h"
 
-Robot neymar("0",0,11);
-Robot messi("1", 1, 10);
-Robot cristiano("2", 2, 7);
+Robot corobeu(ROBOT_MOTOR_1R, ROBOT_MOTOR_1L, ROBOT_MOTOR_2R, ROBOT_MOTOR_2L);
 
 void setup() {
-      Serial.begin(9600);
-      Serial.print(neymar.getIp());
+    Serial.begin(9600);
 }
 
 void loop() {
-    // Debug
-    Serial.print("Neymar ip: ");
-    Serial.println(neymar.getIp());
-
-    Serial.print("Messi ip: ");
-    Serial.println(messi.getIp());
-
-    Serial.print("Cristiano ip: ");
-    Serial.println(cristiano.getIp());
-    delay(2000);
+    corobeu.setMotorRight(255,1);
+    corobeu.setMotorLeft(255,1);
 }
