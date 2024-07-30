@@ -2,12 +2,19 @@ import sys
 import socket
 import threading
 from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton, QLabel, QTextEdit
+from PyQt5.QtCore import pyqtSignal, QObject
+
+class LogEmitter(QObject):
+    log_signal = pyqtSignal(str)
 
 class MyApp(QWidget):
     def __init__(self, esp_configs):
         super().__init__()
         self.esp_configs = esp_configs
         self.initUI()
+
+        self.log_emitter = LogEmitter()
+        self.log_emitter.log_signal.connect(self.log_message)
 
         # Flags para monitorar as conexões
         self.connection_status = {name: False for name in esp_configs}
@@ -66,7 +73,8 @@ class MyApp(QWidget):
                 s.settimeout(1)
                 s.connect((host, port))
                 return True
-        except:
+        except Exception as e:
+            self.log_emitter.log_signal.emit(f"Erro ao testar conexão com {host}:{port} - {e}")
             return False
 
     def send_start(self):
@@ -74,23 +82,24 @@ class MyApp(QWidget):
             if self.connection_status[name]:
                 threading.Thread(target=self.send_to_esp32, args=(config['ip'], config['port'], config['start_msg'])).start()
             else:
-                self.log_message(f"{name} não conectada. Não foi possível enviar 'Start'.")
+                self.log_emitter.log_signal.emit(f"{name} não conectada. Não foi possível enviar 'Start'.")
 
     def send_stop(self):
         for name, config in self.esp_configs.items():
             if self.connection_status[name]:
                 threading.Thread(target=self.send_to_esp32, args=(config['ip'], config['port'], config['stop_msg'])).start()
             else:
-                self.log_message(f"{name} não conectada. Não foi possível enviar 'Stop'.")
+                self.log_emitter.log_signal.emit(f"{name} não conectada. Não foi possível enviar 'Stop'.")
 
     def send_to_esp32(self, ip, port, msg):
         try:
+            self.log_emitter.log_signal.emit(f"Tentando enviar {msg} para {ip}:{port}")
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.connect((ip, port))
                 s.sendall(bytes([msg]))
-                self.log_message(f"Enviado: {msg} para {ip}:{port}")
+                self.log_emitter.log_signal.emit(f"Enviado: {msg} para {ip}:{port}")
         except Exception as e:
-            self.log_message(f"Erro ao enviar dado para {ip}:{port}: {e}")
+            self.log_emitter.log_signal.emit(f"Erro ao enviar dado para {ip}:{port}: {e}")
 
     def log_message(self, message):
         self.message_area.append(message)
@@ -98,7 +107,7 @@ class MyApp(QWidget):
 
 if __name__ == '__main__':
     esp_configs = {
-        'esp1': {'ip': '192.168.124.165', 'port': 8080, 'start_msg': 1, 'stop_msg': 0},
+        'esp1': {'ip': '192.168.33.253', 'port': 80, 'start_msg': 1, 'stop_msg': 0},
         'esp2': {'ip': '192.168.1.102', 'port': 12345, 'start_msg': 1, 'stop_msg': 0},
         'esp3': {'ip': '192.168.1.103', 'port': 12345, 'start_msg': 1, 'stop_msg': 0}
     }
