@@ -1,16 +1,15 @@
 import math
 import sim
 import numpy as np
-from ANNClass import *
+from ANNClass import ArtificialNeuralNetwork
 import pandas as pd
-import scipy
 import Bioinspired as bia
 import matplotlib.pyplot as plt
 import os
 from DrawField import plot_robot_path
 
 class LFDmetodology():
-    def __init__(self, destiny = [0,0]):
+    def __init__(self, destiny=[0, 0]):
         self.acqSpeed = []
         self.acqPosit = []
         self.acqAngle = []
@@ -18,7 +17,7 @@ class LFDmetodology():
         self.destiny = destiny
         self.objX = []
         self.objY = []
-        self.nSamples = 20
+        self.nSamples = 60
         self.ys = []
         self.fitVector = []
         self.imtSpeed = []
@@ -29,11 +28,11 @@ class LFDmetodology():
         sim.simxFinish(-1)
         clientID = sim.simxStart('127.0.0.1', port, True, True, 2000, 5)
         if clientID == 0:
-            print("conectado a ", port)
+            print("Conectado a", port)
         else:
-            print("n foi possivel conectar")
+            print("Não foi possível conectar")
         return clientID
-    
+
     def dataAquisition(self):
         clientID = self.connect(19999)
         a = 1
@@ -42,11 +41,11 @@ class LFDmetodology():
         omega = []
         mdg = []
         meg = []
-        
+
         conectionID = sim.simxGetConnectionId(clientID)
-        if(sim.simxGetConnectionId(clientID) != -1):
-            print("Iniciando a Aquisicao")
-            while(a == 1):
+        if (sim.simxGetConnectionId(clientID) != -1):
+            print("Iniciando a Aquisição")
+            while (a == 1):
                 print(i)
                 if i == self.nSamples:
                     a = 2
@@ -55,11 +54,10 @@ class LFDmetodology():
                 _, motorE = sim.simxGetObjectHandle(clientID, 'motorL01', sim.simx_opmode_blocking)
                 _, motorD = sim.simxGetObjectHandle(clientID, 'motorR01', sim.simx_opmode_blocking)
                 _, corpo = sim.simxGetObjectHandle(clientID, 'robot01', sim.simx_opmode_blocking)
-                
 
                 positions.append([])
                 _, positions[i] = sim.simxGetObjectPosition(clientID, corpo, -1, sim.simx_opmode_streaming)
-                while positions[i] == [0,0,0]:
+                while positions[i] == [0, 0, 0]:
                     _, positions[i] = sim.simxGetObjectPosition(clientID, corpo, -1, sim.simx_opmode_streaming)
                     _, angles = sim.simxGetObjectOrientation(clientID, corpo, -1, sim.simx_opmode_blocking)
                     _, _, md = sim.simxGetObjectVelocity(clientID, motorD, sim.simx_opmode_blocking)
@@ -69,16 +67,14 @@ class LFDmetodology():
                 _, me, _ = sim.simxGetObjectVelocity(clientID, motorE, sim.simx_opmode_oneshot)
                 _, md, _ = sim.simxGetObjectVelocity(clientID, motorD, sim.simx_opmode_oneshot)
                 omega.append(angles[2])
-                mdg.append((md[1]**2 + md[0]**2) ** 1/2)
-                meg.append((me[1]**2 + me[0]**2) ** 1/2)
-                # mdg.append(md[1])
-                # meg.append(me[1])
+                mdg.append((md[1] ** 2 + md[0] ** 2) ** 0.5)
+                meg.append((me[1] ** 2 + me[0] ** 2) ** 0.5)
                 self.objX.append(self.destiny[0])
                 self.objY.append(self.destiny[1])
-                i = i+1
-            
-            # Vd = scipy.signal.medfilt(mdg, kernel_size=3)
-            # Ve = scipy.signal.medfilt(meg, kernel_size=3)
+                # if math.sqrt((pathY - y_atual) ** 2 + (pathX - x_atual) ** 2) < 0.05:
+                #     a = 0
+                i = i + 1
+            self.nSamples = i
             Vd = mdg
             Ve = meg
             self.acqSpeed = [Vd, Ve]
@@ -86,24 +82,25 @@ class LFDmetodology():
             acqY = [coord[1] for coord in positions]
             self.acqPosit = [acqX, acqY]
             self.acqAngle = omega
-            self.acqInputs = [acqX, acqY, omega, self.objX, self.objY]
+            # phid = [math.atan2(self.destiny[1] - y, self.destiny[0] - x) - o for x, y, o in zip(acqX, acqY, omega)]
+            phid = [math.atan2(self.destiny[1] - y, self.destiny[0] - x) for x, y in zip(acqX, acqY)]
+            self.acqInputs = [omega, phid]
             dataframe = [acqX, acqY, omega, self.objX, self.objY, Vd, Ve]
             index = ['PosX', 'PosY', 'Omega', 'DesX', 'DesY', 'VelD', 'VelE']
             df = pd.DataFrame(dataframe, index=index)
             df.to_csv("Acquired_data.csv")
 
-            print("Fim da Aquisicao")
+            print("Fim da Aquisição")
 
     def training(self):
         a = 0
-        
-        while a==0:
+
+        while a == 0:
             print("Treinando")
             trainObj = bia.Bioinspired_algorithms()
             self.fitVector, self.ys = trainObj.PSO(self.nSamples, self.acqInputs, self.acqSpeed)
-            
-            print("Validacao")
-            # test = []
+
+            print("Validação")
             speedL = []
             speedR = []
             val = ArtificialNeuralNetwork(self.nSamples)
@@ -111,45 +108,39 @@ class LFDmetodology():
             errorR = 0
             for i in range(self.nSamples):
                 input_vector = []
-                # test.append([])
                 speedL.append([])
                 speedR.append([])
-                for j in range(5):
+                for j in range(2):
                     input_vector.append(self.acqInputs[j][i])
-                # test[i] = val.mlp432(input_vector, self.ys[:38], self.ys[38:])
-                # errorL = (test[i][0] - self.acqSpeed[0][i])**2 + errorL
-                # errorR = (test[i][1] - self.acqSpeed[1][i])**2 + errorR
-                weightsL = self.ys[:5]
-                biasL = self.ys[5]
-                weightsR = self.ys[6:11]
-                biasR = self.ys[11]
+                weightsL = self.ys[:2]
+                biasL = self.ys[2]
+                weightsR = self.ys[3:5]
+                biasR = self.ys[5]
 
                 speedL[i] = val.neuron(input_vector, weightsL, biasL)
-                errorL = (speedL[i] - self.acqSpeed[0][i])**2 + errorL
+                errorL = (speedL[i] - self.acqSpeed[0][i]) ** 2 + errorL
                 speedR[i] = val.neuron(input_vector, weightsR, biasR)
-                errorR = (speedR[i] - self.acqSpeed[1][i])**2 + errorR
+                errorR = (speedR[i] - self.acqSpeed[1][i]) ** 2 + errorR
 
-            print(errorL/self.nSamples)
-            print(errorR/self.nSamples)
-            plt.figure()
-            plt.plot(self.acqSpeed[0], label='Velocidades roda direita')
-            plt.plot(self.acqSpeed[1], label='Velocidades roda esquerda')
-            # vd = [vel[0] for vel in test]
-            # ve = [vel[1] for vel in test]
+            print(f'error L : {errorL / self.nSamples}')
+            print(f'error R : {errorR / self.nSamples}')
+            # plt.figure()
+            # plt.plot(((speedL - self.acqSpeed[0]) ** 2), label='Erro de treinamento da roda direita')
+            # plt.plot(((speedR - self.acqSpeed[1]) ** 2), label='Erro de treinamento da roda esquerda')
             vd = [vel for vel in speedL]
             ve = [vel for vel in speedR]
             plt.figure()
             plt.plot(self.acqSpeed[0], label='Velocidades roda direita')
             plt.plot(self.acqSpeed[1], label='Velocidades roda esquerda')
-            plt.plot(vd, marker='o', label='Velocidades calculadas da roda direita')
-            plt.plot(ve, marker='x', label='Velocidades calculadas da roda esquerda')
+            plt.plot(vd, label='Velocidades calculadas da roda direita')
+            plt.plot(ve, label='Velocidades calculadas da roda esquerda')
             plt.legend()
-            plt.ylim(-0.001, 0.01)
+            # plt.ylim(-0.001, 0.01)
+            plt.savefig('t_c03_0023_00N23.pdf')
             plt.show()
             resposta = input("Ficou bom? (s/n)").strip().lower()
             if resposta == 's':
                 a = 1
-
 
     def imitation(self):
         clientID = self.connect(19999)
@@ -157,15 +148,16 @@ class LFDmetodology():
         a = 1
         i = 0
         positiona = []
-        omega =[]
+        omega = []
+        phid = []
         Vd = []
         Ve = []
         pathX = self.destiny[0]
         pathY = self.destiny[1]
-      
+
         if (sim.simxGetConnectionId(clientID) != -1):
-            print("Iniciando Imitacao")
-            
+            print("Iniciando Imitação")
+
             _, motorE = sim.simxGetObjectHandle(clientID, 'motorL01', sim.simx_opmode_blocking)
             _, motorD = sim.simxGetObjectHandle(clientID, 'motorR01', sim.simx_opmode_blocking)
             _, corpo = sim.simxGetObjectHandle(clientID, 'robot01', sim.simx_opmode_blocking)
@@ -176,61 +168,60 @@ class LFDmetodology():
             while (a == 1):
                 print(i)
                 positiona.append([])
-                
+                phid.append(0)
+
                 s, positiona[i] = sim.simxGetObjectPosition(clientID, corpo, -1, sim.simx_opmode_streaming)
                 while positiona[i] == [0, 0, 0]:
-                    s, positiona[i] = sim.simxGetObjectPosition(clientID, corpo, -1, sim.simx_opmode_streaming) 
-                
+                    s, positiona[i] = sim.simxGetObjectPosition(clientID, corpo, -1, sim.simx_opmode_streaming)
+
                 y_atual = positiona[i][1]
                 x_atual = positiona[i][0]
-                
+
                 s, angle = sim.simxGetObjectOrientation(clientID, corpo, -1, sim.simx_opmode_blocking)
                 omega.append(angle[2])
                 phi_atual = omega[i]
 
-                error_distance = math.sqrt((pathY - y_atual)**2 + (pathX - x_atual)**2)
+                error_distance = math.sqrt((pathY - y_atual) ** 2 + (pathX - x_atual) ** 2)
+                # phid = math.atan2(pathY - y_atual, pathX - x_atual) - phi_atual
+                phid[i] = math.atan2(pathY - y_atual, pathX - x_atual)
 
                 if error_distance <= 0.05:
                     a = 0
 
                 self.imtError.append(error_distance)
-            
-                # Speeds = spd.mlp432([x_atual, y_atual, phi_atual, pathX, pathY], self.ys[:38], self.ys[38:])
-                # Vd.append(Speeds[0]/0.008)
-                # Ve.append(Speeds[1]/0.008)
 
-                weightsL = self.ys[:5]
-                biasL = self.ys[5]
-                weightsR = self.ys[6:11]
-                biasR = self.ys[11]
+                weightsL = self.ys[:2]
+                biasL = self.ys[2]
+                weightsR = self.ys[3:5]
+                biasR = self.ys[5]
 
-                speedL = spd.neuron([x_atual, y_atual, phi_atual, pathX, pathY], weightsL, biasL)
-                speedR = spd.neuron([x_atual, y_atual, phi_atual, pathX, pathY], weightsR, biasR)
+                speedL = spd.neuron([phi_atual, phid[i]], weightsL, biasL)
+                speedR = spd.neuron([phi_atual, phid[i]], weightsR, biasR)
 
-                Vd.append(speedL/0.008)
-                Ve.append(speedR/0.008)
-                
-                if Vd[i] > 0.6:
-                    Vd[i] = 0.6
-                else:
-                    pass
-                if Ve[i] > 0.6:
-                    Ve[i] = 0.6
-                else:
-                    pass
-                
+                Vd.append(speedL / 0.008)
+                Ve.append(speedR / 0.008)
+
+                if Vd[i] > 2:
+                    Vd[i] = 2
+                if Ve[i] > 2:
+                    Ve[i] = 2
+
                 print([Vd[i], Ve[i]])
                 sim.simxSetJointTargetVelocity(clientID, motorE, Ve[i], sim.simx_opmode_blocking)
                 sim.simxSetJointTargetVelocity(clientID, motorD, Vd[i], sim.simx_opmode_blocking)
                 i = i + 1
+                if i > 2*self.nSamples:
+                    a = 0
             imtX = [coord[0] for coord in positiona]
             imtY = [coord[1] for coord in positiona]
             self.imtPosit = [imtX, imtY]
             sim.simxSetJointTargetVelocity(clientID, motorE, 0, sim.simx_opmode_blocking)
             sim.simxSetJointTargetVelocity(clientID, motorD, 0, sim.simx_opmode_blocking)
+            # plt.figure()
+            # plt.plot(phid)
+            # plt.show()
 
-    def calculate_errors(self):
-        # Interpolate acqPosit to match imtPosit size
+    def calculate_errors(self, filename='LFDmetodology_errors.txt'):
         acqX, acqY = self.acqPosit
         imtX, imtY = self.imtPosit
 
@@ -241,23 +232,34 @@ class LFDmetodology():
         interpolated_acqX = np.interp(target_indices, original_indices, acqX)
         interpolated_acqY = np.interp(target_indices, original_indices, acqY)
 
-        # Calculate errors
         squared_diff_x = [(ix - ax) ** 2 for ix, ax in zip(imtX, interpolated_acqX)]
         squared_diff_y = [(iy - ay) ** 2 for iy, ay in zip(imtY, interpolated_acqY)]
         
-        mean_squared_diff = np.mean(squared_diff_x + squared_diff_y)
-        mse = np.sqrt(mean_squared_diff)
-        
-        absolute_error = np.mean([math.sqrt(sx + sy) for sx, sy in zip(squared_diff_x, squared_diff_y)])
+        mse = np.mean(squared_diff_x + squared_diff_y)
+        mae = np.mean([math.sqrt(sx + sy) for sx, sy in zip(squared_diff_x, squared_diff_y)])
+        max_error = np.max([math.sqrt(sx + sy) for sx, sy in zip(squared_diff_x, squared_diff_y)])
 
-        print(f'Absolute Error: {absolute_error}')
-        print(f'Root Mean Square Error (RMSE): {mse}')
-        
+        planned_path_length = np.sum([math.sqrt((imtX[i + 1] - imtX[i]) ** 2 + (imtY[i + 1] - imtY[i]) ** 2) for i in range(num_points - 1)])
+        executed_path_length = np.sum([math.sqrt((interpolated_acqX[i + 1] - interpolated_acqX[i]) ** 2 + (interpolated_acqY[i + 1] - interpolated_acqY[i]) ** 2) for i in range(num_points - 1)])
+        path_length_deviation = abs(planned_path_length - executed_path_length) / planned_path_length
+
+        with open(filename, 'w') as file:
+            file.write(f'W_B = [{self.ys[0]}, {self.ys[1]}, {self.ys[2]}, {self.ys[3]}, {self.ys[4]}, {self.ys[5]}]\n\n')
+            file.write(f'Erro Absoluto Medio (MAE): {mae} m\n')
+            file.write(f'Erro Quadratico Medio (MSE): {mse} m²\n')
+            file.write(f'Erro Maximo: {max_error} m\n')
+            file.write(f'Desvio Medio ao Longo do Caminho: {path_length_deviation * 100:.2f}%\n')
+
+        print(f'Erro Absoluto Médio (MAE): {mae} m')
+        print(f'Erro Quadrático Médio (MSE): {mse} m²')
+        print(f'Erro Máximo: {max_error} m')
+        print(f'Desvio Médio ao Longo do Caminho: {path_length_deviation * 100:.2f}%')
+
         plot_robot_path(interpolated_acqX, interpolated_acqY, imtX, imtY)
 
 
 if __name__ == "__main__":
-    crb = LFDmetodology(destiny = [0.1, 0])
+    crb = LFDmetodology(destiny=[0, -0.23])
     crb.dataAquisition()
 
     spdD = crb.acqSpeed[0]
@@ -266,34 +268,12 @@ if __name__ == "__main__":
     plt.plot(spdD, label='Velocidades roda direita')
     plt.plot(spdE, label='Velocidades roda esquerda')
     plt.legend()
-    # plt.ylim(-1, 1)
     plt.show()
 
     crb.training()
 
     crb.imitation()
 
-    crb.calculate_errors()
+    crb.calculate_errors('t_c03_0023_00N23.txt')
 
-    print(crb.ys)
-
-
-# --------ys------- Pesos Girar
-# [-4.04069268  1.38744497 -8.99670856 -2.18461956  9.21339113 -2.81178177
-#   0.19637485  9.65459987 -0.40882053  9.85188924 -8.71060887  2.70752698
-#  -9.11125389  6.35079494  0.42378771 -8.92498143 -9.45973626 -1.63194986
-#   1.45867756  9.5526229  -5.24294222  9.76293572 -8.99004702 -5.86192286
-#  -9.64085376 -9.29808582 -7.89428016  8.14154     4.54506868 -0.31774471
-#  -9.36154671  9.2979766  -5.39858819 -1.4530112   2.82265982 -9.56153776
-#   8.26326626  0.67453113 -3.79252777  7.94580785  2.79350686  6.96919699
-#   4.67280037 -6.01191198  2.2566084  -8.06245391 -6.27043557]
-
-# --------ys------- Pesos Diagonal 7060
-# [-4.20425524  1.53444182 -1.67308289 -3.49985773 -9.27890491 -9.83023784
-#  -5.98523535 -1.1642898  -9.47581686 -9.29663792  9.38431104  8.35461558
-#  -9.56177909  7.33893066 -6.16889889 -9.77096521 -8.07213175  9.40863963
-#  -9.41158085  9.00963664 -9.34768925 -6.93329079  1.20393585 -9.60185536
-#   6.02611604 -6.39896894  3.53965985 -3.76426846  9.47240405  9.59747516
-#   3.89011426  8.91652154 -9.1221537   8.44598929  4.17915639 -1.89990752
-#   9.55796972  1.47824176 -6.03950006  5.01836632 -5.97217837 -8.98736598
-#  -1.64457459  0.41973824  2.61157785 -9.50386485 -6.74143624]
+    print(f'W_B = [{crb.ys[0]}, {crb.ys[1]}, {crb.ys[2]}, {crb.ys[3]}, {crb.ys[4]}, {crb.ys[5]}]')

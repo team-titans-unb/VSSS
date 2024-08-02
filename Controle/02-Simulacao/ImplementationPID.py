@@ -12,10 +12,10 @@ robot = 'robot01'
 leftMotor = 'motorL01'
 rightMotor = 'motorR01'
 port = 19999
-finalPos = [0.1, 0.3]
+finalPos = [0.5, 0]
 
-obstacleX = [-0.2, 0.2]
-obstacleY = [-0.2, 0.2]
+obstacleX = [-1.2, 1.2]
+obstacleY = [-1.2, 1.2]
 
 try:
     pp = hist.Histograma_Neighbor
@@ -34,32 +34,13 @@ try:
     plt.ylim(-0.7, 0.7)
     plt.show()
     print("Seguindo trajetoria...")
-    for pos in range(len(pathX)):
-        crb01.Follow_Path(pathX[pos], pathY[pos],[pathX[-1],pathY[-1]])
+    for pos in range(len(pathX)-2):
+        crb01.Follow_Path(pathX[pos+2], pathY[pos+2],[pathX[-1],pathY[-1]])
 
 finally:
     crb01.Stop_bot()
 
-    numPoints = len(crb01.xOut)
-    originalIndices = np.arange(0, len(pathX))
-    targetIndices = np.linspace(0, len(pathX)-1, numPoints)
-    intpolX = np.interp(targetIndices, originalIndices, pathX)
-    intpolY = np.interp(targetIndices, originalIndices, pathY)
-
-    minLength = min(len(intpolX), len(crb01.xOut))
-    intpolX = intpolX[:minLength]
-    intpolY = intpolY[:minLength]
-    xOut = crb01.xOut[:minLength]
-    yOut = crb01.yOut[:minLength]
-    squared_diff_x = [(px - ex) ** 2 for px, ex in zip(intpolX, xOut)]
-    squared_diff_y = [(py - ey) ** 2 for py, ey in zip(intpolY, yOut)]
-    mean_squared_diff = np.mean(squared_diff_x + squared_diff_y)
-    rmse = np.sqrt(mean_squared_diff)
-    print(rmse)
-
-    finalPosX, finalPosY = crb01.Get_Position()
-    absoluteError = np.sqrt(finalPos[0]**2 + finalPos[1]**2) - np.sqrt(finalPosX**2 + finalPosY**2)
-    print(absoluteError)
+    crb01.calculate_errors(pathX, pathY, 'c01_PID_N4000_5000.txt')
     
     plot_robot_path(pathX, pathY, crb01.xOut, crb01.yOut)
     # draw_field()

@@ -117,12 +117,13 @@ class Bioinspired_algorithms:
             """
         S = 20
         # N = 47
-        N = 12
-        maxIter = 100
+        # N = 12
+        N = 6
+        maxIter = 200
         w0 = 0.9
         wf = 0.1
-        c1 = 2.05
-        c2 = 2.05
+        c1 = 1.95
+        c2 = 2.15
         vMax = 10
         vIni = vMax / 10
         xMax = 20

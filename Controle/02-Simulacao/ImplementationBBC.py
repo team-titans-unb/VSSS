@@ -12,7 +12,7 @@ robot = 'robot01'
 leftMotor = 'motorL01'
 rightMotor = 'motorR01'
 port = 19999
-finalPos = [0.1, 0]
+finalPos = [0.6, -0.3]
 
 obstacleX = [-1.2, 1.2]
 obstacleY = [-1.2, 1.2]
@@ -37,42 +37,11 @@ try:
     print("Seguindo trajetoria...")
     for pos in range(len(pathX)):
         crb01.Micro_Behaviors(pathX[pos], pathY[pos],[pathX[-1],pathY[-1]])
-    # crb01.Micro_Behaviors(xEnd, yEnd,finalPos)
+    # crb01.Micro_Behaviors(finalPos[0],finalPos[1],finalPos)
 
 finally:
     crb01.Stop_bot()
 
-    numPoints = len(crb01.xOut)
-    originalIndices = np.arange(0, len(pathX))
-    targetIndices = np.linspace(0, len(pathX)-1, numPoints)
-    intpolX = np.interp(targetIndices, originalIndices, pathX)
-    intpolY = np.interp(targetIndices, originalIndices, pathY)
+    crb01.calculate_errors(pathX, pathY, 'c01_00N23_0023.txt')
 
-    minLength = min(len(intpolX), len(crb01.xOut))
-    intpolX = intpolX[:minLength]
-    intpolY = intpolY[:minLength]
-    xOut = crb01.xOut[:minLength]
-    yOut = crb01.yOut[:minLength]
-    squared_diff_x = [(px - ex) ** 2 for px, ex in zip(intpolX, xOut)]
-    squared_diff_y = [(py - ey) ** 2 for py, ey in zip(intpolY, yOut)]
-    mean_squared_diff = np.mean(squared_diff_x + squared_diff_y)
-    rmse = np.sqrt(mean_squared_diff)
-    print(rmse)
-
-    finalPosX, finalPosY = crb01.Get_Position()
-    absoluteError = np.sqrt(finalPos[0]**2 + finalPos[1]**2) - np.sqrt(finalPosX**2 + finalPosY**2)
-    print(absoluteError)
-    
     plot_robot_path(pathX, pathY, crb01.xOut, crb01.yOut)
-    # draw_field()
-    # x = [pos for pos in pathX]
-    # y = [pos for pos in pathY]
-    # plt.plot(x, y, color='red', marker='o')
-    # x = [pos for pos in crb01.xOut]
-    # y = [pos for pos in crb01.yOut]
-    # plt.plot(x, y, color='blue')
-    # plt.grid(True)
-    # plt.xlim(-0.90, 0.9)
-    # plt.ylim(-0.7, 0.7)
-    # plt.show()
-#except KeyboardInterrupt:
