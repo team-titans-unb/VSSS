@@ -101,7 +101,7 @@ def draw_field(ax):
     ax.axis('on')  # Turn on the axis
 
 # Function to plot the robot path
-def plot_robot_path(desired_path_x, desired_path_y, executed_path_x, executed_path_y):
+def plot_robot_path(desired_path_x, desired_path_y, executed_path_x, executed_path_y, filename):
     """
     Plota o caminho desejado e o caminho executado pelo robô no campo.
     
@@ -134,6 +134,9 @@ def plot_robot_path(desired_path_x, desired_path_y, executed_path_x, executed_pa
         ax.plot(xs, ys, color='blue', linestyle='-', linewidth=2, label='Executed Path')
 
     ax.legend()
+    plt.title("Trajetórias Implementadas no Campo")
+    name = filename + '_Trajectory.pdf'
+    plt.savefig(name)
     plt.show()
 
 if __name__ == '__main__':

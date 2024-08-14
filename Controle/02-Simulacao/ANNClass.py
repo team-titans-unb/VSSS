@@ -12,10 +12,11 @@ class ArtificialNeuralNetwork:
         return expit(x)
     
     def neuron(self, inputs, weights, bias):
-        sumation = 0
-        for i in range(len(weights)):
-            sumation = sumation + (inputs[i] * weights[i])
-        sumation = sumation + bias
+        # sumation = 0
+        # for i in range(len(weights)):
+        #     sumation += inputs[i] * weights[i]
+        # sumation += bias
+        sumation = (inputs * weights) + bias
         return self.sigmoid(sumation)
     
     def mlp432(self, inputs, weights, biases):
@@ -62,20 +63,21 @@ class ArtificialNeuralNetwork:
         errorL = 0
         errorR = 0
         # Extrair pesos e bias para as duas SLPs
-        weightsL = weights_biases[:5]
-        biasL = weights_biases[5]
-        weightsR = weights_biases[6:11]
-        biasR = weights_biases[11]
+        weightsL = weights_biases[0]
+        biasL = weights_biases[1]
+        weightsR = weights_biases[2]
+        biasR = weights_biases[3]
         
         for i in range(self.nSamples):
             input_vector = []
-            for j in range(5):
-                input_vector.append(inputs[j][i])
-            wspeedL = self.neuron(input_vector, weightsL, biasL)
-            wspeedR = self.neuron(input_vector, weightsR, biasR)
+            # for j in range(len(inputs)):
+                # input_vector.append(inputs[j][i])
+            input_vector.append(inputs[i])
+            wspeedL = self.neuron(input_vector[0], weightsL, biasL)
+            wspeedR = self.neuron(input_vector[0], weightsR, biasR)
             errorL += (wspeedL - desired[0][i])**2
             errorR += (wspeedR - desired[1][i])**2
         MSEL = errorL / self.nSamples
         MSER = errorR / self.nSamples
-        mse = MSEL + MSER
+        mse = (MSEL + MSER) * 1000
         return mse

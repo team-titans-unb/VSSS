@@ -5,19 +5,21 @@ from ANNClass import ArtificialNeuralNetwork
 import pandas as pd
 import Bioinspired as bia
 import matplotlib.pyplot as plt
-import os
 from DrawField import plot_robot_path
 
 class LFDmetodology():
-    def __init__(self, destiny=[0, 0]):
+    def __init__(self, destiny=[0, 0], nSamples = 50, filename='wheelSpeeds'):
         self.acqSpeed = []
         self.acqPosit = []
         self.acqAngle = []
         self.acqInputs = []
+        self.acqErrorPhi = []
+        self.acqDistance = []
         self.destiny = destiny
         self.objX = []
         self.objY = []
-        self.nSamples = 60
+        self.nSamples = nSamples
+        self.filename = filename
         self.ys = []
         self.fitVector = []
         self.imtSpeed = []
@@ -66,13 +68,23 @@ class LFDmetodology():
                 _, angles = sim.simxGetObjectOrientation(clientID, corpo, -1, sim.simx_opmode_blocking)
                 _, me, _ = sim.simxGetObjectVelocity(clientID, motorE, sim.simx_opmode_oneshot)
                 _, md, _ = sim.simxGetObjectVelocity(clientID, motorD, sim.simx_opmode_oneshot)
-                omega.append(angles[2])
+
+                omega.append(angles[2] - 1.5708)
+                # print(omega[i])
+                phid = math.atan2((self.destiny[1] - positions[i][1]), (self.destiny[0] - positions[i][0]))
+                error_phi = phid - omega[i]
+                self.acqErrorPhi.append(error_phi)
+
                 mdg.append((md[1] ** 2 + md[0] ** 2) ** 0.5)
                 meg.append((me[1] ** 2 + me[0] ** 2) ** 0.5)
+
                 self.objX.append(self.destiny[0])
                 self.objY.append(self.destiny[1])
-                # if math.sqrt((pathY - y_atual) ** 2 + (pathX - x_atual) ** 2) < 0.05:
-                #     a = 0
+
+                error_distance = math.sqrt((self.destiny[1] - positions[i][1]) ** 2 + (self.destiny[0] - positions[i][0]) ** 2)
+                self.acqDistance.append(error_distance)
+                # print(error_phi)
+                # print(error_distance)
                 i = i + 1
             self.nSamples = i
             Vd = mdg
@@ -82,13 +94,16 @@ class LFDmetodology():
             acqY = [coord[1] for coord in positions]
             self.acqPosit = [acqX, acqY]
             self.acqAngle = omega
-            # phid = [math.atan2(self.destiny[1] - y, self.destiny[0] - x) - o for x, y, o in zip(acqX, acqY, omega)]
-            phid = [math.atan2(self.destiny[1] - y, self.destiny[0] - x) for x, y in zip(acqX, acqY)]
-            self.acqInputs = [omega, phid]
-            dataframe = [acqX, acqY, omega, self.objX, self.objY, Vd, Ve]
-            index = ['PosX', 'PosY', 'Omega', 'DesX', 'DesY', 'VelD', 'VelE']
+            
+            # phid = [math.atan2(self.destiny[1] - y, self.destiny[0] - x) for x, y in zip(acqX, acqY)]
+            # self.acqInputs = [omega, phid]
+            # self.acqInputs = [self.acqErrorPhi, self.acqDistance]
+            self.acqInputs = self.acqErrorPhi
+            dataframe = [acqX, acqY, omega, self.objX, self.objY, self.acqErrorPhi, Vd, Ve]
+            index = ['PosX', 'PosY', 'Omega', 'DesX', 'DesY', 'Error Phi', 'VelD', 'VelE']
             df = pd.DataFrame(dataframe, index=index)
-            df.to_csv("Acquired_data.csv")
+            name = self.filename + "Acquired_data.csv"
+            df.to_csv(name)
 
             print("Fim da Aquisição")
 
@@ -98,7 +113,7 @@ class LFDmetodology():
         while a == 0:
             print("Treinando")
             trainObj = bia.Bioinspired_algorithms()
-            self.fitVector, self.ys = trainObj.PSO(self.nSamples, self.acqInputs, self.acqSpeed)
+            self.fitVector, self.ys = trainObj.PSO(self.nSamples, self.acqInputs, self.acqSpeed, self.filename)
 
             print("Validação")
             speedL = []
@@ -110,12 +125,13 @@ class LFDmetodology():
                 input_vector = []
                 speedL.append([])
                 speedR.append([])
-                for j in range(2):
-                    input_vector.append(self.acqInputs[j][i])
-                weightsL = self.ys[:2]
-                biasL = self.ys[2]
-                weightsR = self.ys[3:5]
-                biasR = self.ys[5]
+                # for j in range(2):
+                #     input_vector.append(self.acqInputs[j][i])
+                input_vector = self.acqInputs[i]
+                weightsL = self.ys[0]
+                biasL = self.ys[1]
+                weightsR = self.ys[2]
+                biasR = self.ys[3]
 
                 speedL[i] = val.neuron(input_vector, weightsL, biasL)
                 errorL = (speedL[i] - self.acqSpeed[0][i]) ** 2 + errorL
@@ -135,8 +151,11 @@ class LFDmetodology():
             plt.plot(vd, label='Velocidades calculadas da roda direita')
             plt.plot(ve, label='Velocidades calculadas da roda esquerda')
             plt.legend()
-            # plt.ylim(-0.001, 0.01)
-            plt.savefig('t_c03_0023_00N23.pdf')
+            plt.xlabel("Iteração")
+            plt.ylabel("Velocidade da Roda")
+            plt.title("Comparação entre as Velocidades Medidas e Calculadas")
+            name = self.filename + '_Speeds.pdf'
+            plt.savefig(name)
             plt.show()
             resposta = input("Ficou bom? (s/n)").strip().lower()
             if resposta == 's':
@@ -168,7 +187,7 @@ class LFDmetodology():
             while (a == 1):
                 print(i)
                 positiona.append([])
-                phid.append(0)
+                # phid.append(0)
 
                 s, positiona[i] = sim.simxGetObjectPosition(clientID, corpo, -1, sim.simx_opmode_streaming)
                 while positiona[i] == [0, 0, 0]:
@@ -178,39 +197,41 @@ class LFDmetodology():
                 x_atual = positiona[i][0]
 
                 s, angle = sim.simxGetObjectOrientation(clientID, corpo, -1, sim.simx_opmode_blocking)
-                omega.append(angle[2])
+                omega.append(angle[2] - 1.5708)
                 phi_atual = omega[i]
+                phid = math.atan2(pathY - y_atual, pathX - x_atual)
+                error_phi = phid - phi_atual
 
-                error_distance = math.sqrt((pathY - y_atual) ** 2 + (pathX - x_atual) ** 2)
-                # phid = math.atan2(pathY - y_atual, pathX - x_atual) - phi_atual
-                phid[i] = math.atan2(pathY - y_atual, pathX - x_atual)
+                error_distance = math.sqrt(((pathY - y_atual) ** 2) + ((pathX - x_atual) ** 2))
 
-                if error_distance <= 0.05:
+                if error_distance <= 0.03:
                     a = 0
 
                 self.imtError.append(error_distance)
 
-                weightsL = self.ys[:2]
-                biasL = self.ys[2]
-                weightsR = self.ys[3:5]
-                biasR = self.ys[5]
+                weightsL = self.ys[0]
+                biasL = self.ys[1]
+                weightsR = self.ys[2]
+                biasR = self.ys[3]
 
-                speedL = spd.neuron([phi_atual, phid[i]], weightsL, biasL)
-                speedR = spd.neuron([phi_atual, phid[i]], weightsR, biasR)
+                speedL = spd.neuron(error_phi, weightsL, biasL)
+                speedR = spd.neuron(error_phi, weightsR, biasR)
 
-                Vd.append(speedL / 0.008)
-                Ve.append(speedR / 0.008)
+                Vd.append(speedL / 0.032)
+                Ve.append(speedR / 0.032)
+                # Vd.append(speedL)
+                # Ve.append(speedR)
 
-                if Vd[i] > 2:
-                    Vd[i] = 2
-                if Ve[i] > 2:
-                    Ve[i] = 2
+                # if Vd[i] > 2:
+                #     Vd[i] = 2
+                # if Ve[i] > 2:
+                #     Ve[i] = 2
 
                 print([Vd[i], Ve[i]])
                 sim.simxSetJointTargetVelocity(clientID, motorE, Ve[i], sim.simx_opmode_blocking)
-                sim.simxSetJointTargetVelocity(clientID, motorD, Vd[i], sim.simx_opmode_blocking)
+                sim.simxSetJointTargetVelocity(clientID, motorD, 0.95*Vd[i], sim.simx_opmode_blocking)
                 i = i + 1
-                if i > 2*self.nSamples:
+                if i > 5*self.nSamples:
                     a = 0
             imtX = [coord[0] for coord in positiona]
             imtY = [coord[1] for coord in positiona]
@@ -221,7 +242,7 @@ class LFDmetodology():
             # plt.plot(phid)
             # plt.show()
 
-    def calculate_errors(self, filename='LFDmetodology_errors.txt'):
+    def calculate_errors(self):
         acqX, acqY = self.acqPosit
         imtX, imtY = self.imtPosit
 
@@ -242,9 +263,9 @@ class LFDmetodology():
         planned_path_length = np.sum([math.sqrt((imtX[i + 1] - imtX[i]) ** 2 + (imtY[i + 1] - imtY[i]) ** 2) for i in range(num_points - 1)])
         executed_path_length = np.sum([math.sqrt((interpolated_acqX[i + 1] - interpolated_acqX[i]) ** 2 + (interpolated_acqY[i + 1] - interpolated_acqY[i]) ** 2) for i in range(num_points - 1)])
         path_length_deviation = abs(planned_path_length - executed_path_length) / planned_path_length
-
-        with open(filename, 'w') as file:
-            file.write(f'W_B = [{self.ys[0]}, {self.ys[1]}, {self.ys[2]}, {self.ys[3]}, {self.ys[4]}, {self.ys[5]}]\n\n')
+        name = self.filename + '.txt'
+        with open(name, 'w') as file:
+            file.write(f'W_B = [{self.ys[0]}, {self.ys[1]}, {self.ys[2]}, {self.ys[3]}]\n\n')
             file.write(f'Erro Absoluto Medio (MAE): {mae} m\n')
             file.write(f'Erro Quadratico Medio (MSE): {mse} m²\n')
             file.write(f'Erro Maximo: {max_error} m\n')
@@ -255,11 +276,16 @@ class LFDmetodology():
         print(f'Erro Máximo: {max_error} m')
         print(f'Desvio Médio ao Longo do Caminho: {path_length_deviation * 100:.2f}%')
 
-        plot_robot_path(interpolated_acqX, interpolated_acqY, imtX, imtY)
+        plot_robot_path(interpolated_acqX, interpolated_acqY, imtX, imtY, self.filename)
 
 
 if __name__ == "__main__":
-    crb = LFDmetodology(destiny=[0, -0.23])
+
+    finalPos = [0.7, 0.3]
+    cen = 'T01'
+    filename = f'{cen}_LfD_{finalPos[0]}_{finalPos[1]}'
+
+    crb = LFDmetodology(destiny=finalPos, nSamples=50, filename=filename)
     crb.dataAquisition()
 
     spdD = crb.acqSpeed[0]
@@ -270,10 +296,19 @@ if __name__ == "__main__":
     plt.legend()
     plt.show()
 
-    crb.training()
+    simulate = True
+    while(simulate):
 
-    crb.imitation()
+        crb.training()
 
-    crb.calculate_errors('t_c03_0023_00N23.txt')
+        crb.imitation()
 
-    print(f'W_B = [{crb.ys[0]}, {crb.ys[1]}, {crb.ys[2]}, {crb.ys[3]}, {crb.ys[4]}, {crb.ys[5]}]')
+        crb.calculate_errors()
+
+        resposta = input("Ficou bom? (s/n)").strip().lower()
+        if resposta == 's':
+            simulate = False
+
+    crb.calculate_errors()
+
+    print(f'W_B = [{crb.ys[0]}, {crb.ys[1]}, {crb.ys[2]}, {crb.ys[3]}]')#, {crb.ys[4]}, {crb.ys[5]}]')

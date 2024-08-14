@@ -1,9 +1,0 @@
-<map id="Bioinspired_Algorithm.MFO.MFO_Controller" name="Bioinspired_Algorithm.MFO.MFO_Controller">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,72,190,115"/>
-<area shape="rect" id="Node000002" href="$class_bioinspired___algorithm_1_1_p_s_o.html#a28a18e8a2b206f4686b07fb01d7cfcec" title=" " alt="" coords="250,5,478,48"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="185,69,260,50,262,55,186,74"/>
-<area shape="rect" id="Node000003" href="$class_bioinspired___algorithm_1_1_m_f_o.html#a4a433fb634ed36a1fb8a52720f4cccac" title=" " alt="" coords="249,72,479,115"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="190,91,234,91,234,96,190,96"/>
-<area shape="rect" id="Node000004" href="$class_bioinspired___algorithm_1_1_m_f_o.html#afb3b93fa5c50a4918e396bfb927bebc9" title=" " alt="" coords="238,139,490,165"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="189,113,238,124,278,132,276,138,237,129,188,118"/>
-</map>

@@ -12,7 +12,9 @@ robot = 'robot01'
 leftMotor = 'motorL01'
 rightMotor = 'motorR01'
 port = 19999
-finalPos = [0.5, 0]
+finalPos = [0, 0]
+cen = 'c01'
+filename = f'{cen}_PID_{finalPos[0]}_{finalPos[1]}'
 
 obstacleX = [-1.2, 1.2]
 obstacleY = [-1.2, 1.2]
@@ -34,24 +36,13 @@ try:
     plt.ylim(-0.7, 0.7)
     plt.show()
     print("Seguindo trajetoria...")
-    for pos in range(len(pathX)-2):
-        crb01.Follow_Path(pathX[pos+2], pathY[pos+2],[pathX[-1],pathY[-1]])
+    # for pos in range(len(pathX)-2):
+    #     crb01.Follow_Path(pathX[pos+2], pathY[pos+2],[pathX[-1],pathY[-1]])
+    crb01.Follow_Path(0, 0, [0,0])
 
 finally:
     crb01.Stop_bot()
 
-    crb01.calculate_errors(pathX, pathY, 'c01_PID_N4000_5000.txt')
+    crb01.calculate_errors(pathX, pathY, filename)
     
-    plot_robot_path(pathX, pathY, crb01.xOut, crb01.yOut)
-    # draw_field()
-    # x = [pos for pos in pathX]
-    # y = [pos for pos in pathY]
-    # plt.plot(x, y, color='red', marker='o')
-    # x = [pos for pos in crb01.xOut]
-    # y = [pos for pos in crb01.yOut]
-    # plt.plot(x, y, color='blue')
-    # plt.grid(True)
-    # plt.xlim(-0.90, 0.9)
-    # plt.ylim(-0.7, 0.7)
-    # plt.show()
-#except KeyboardInterrupt:
+    plot_robot_path(pathX, pathY, crb01.xOut, crb01.yOut, filename)

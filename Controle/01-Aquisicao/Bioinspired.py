@@ -104,7 +104,7 @@ class Bioinspired_algorithms:
         self.out_pso = []
         self.fit_vector = []
 
-    def PSO(self, nSample, inputs_value, outputs_value):
+    def PSO(self, nSample, inputs_value, outputs_value, filename):
 
         """PSO.
 
@@ -116,18 +116,16 @@ class Bioinspired_algorithms:
 
             """
         S = 20
-        # N = 47
-        # N = 12
-        N = 6
+        N = 4
         maxIter = 200
         w0 = 0.9
-        wf = 0.1
-        c1 = 1.95
-        c2 = 2.15
+        wf = 0.2
+        c1 = 1.85
+        c2 = 2.25
         vMax = 10
         vIni = vMax / 10
-        xMax = 20
-        xMin = -20
+        xMax = 5
+        xMin = -5
 
         #    PSO Initializations
 
@@ -183,7 +181,11 @@ class Bioinspired_algorithms:
         print(self.fit_vector)
         print("--------ys-------")
         plt.plot(self.fit_vector)
-        plt.title("PSO")
+        plt.xlabel("Iteração")
+        plt.ylabel("Valor da Função Custo")
+        plt.title("Curva de Convergência do PSO")
+        name = filename + '_PSO.pdf'
+        plt.savefig(name)
         plt.show()
         # dframedata = [self.fit_vector[-1],self.out_pso]
         # index = ['Best fit', 'Pesos Bias']

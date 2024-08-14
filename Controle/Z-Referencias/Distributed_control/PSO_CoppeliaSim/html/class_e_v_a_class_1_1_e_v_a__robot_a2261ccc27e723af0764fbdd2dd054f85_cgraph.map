@@ -1,9 +1,0 @@
-<map id="EVAClass.EVA_robot.connect_EVA_1" name="EVAClass.EVA_robot.connect_EVA_1">
-<area shape="rect" id="Node000001" title=" " alt="" coords="5,48,204,91"/>
-<area shape="rect" id="Node000002" href="$namespacesim.html#aa15b32d604719a02a8fdaf117ee9362a" title=" " alt="" coords="284,5,393,32"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="204,45,268,31,269,36,205,50"/>
-<area shape="rect" id="Node000003" href="$namespacesim.html#ae57afd16049849b87e8772d593dd1123" title=" " alt="" coords="252,56,425,83"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="204,67,236,67,236,72,204,72"/>
-<area shape="rect" id="Node000004" href="$namespacesim.html#aa0278273e11a7dd23bb6924cbd8a128c" title=" " alt="" coords="287,107,390,133"/>
-<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="205,88,273,103,272,108,204,93"/>
-</map>

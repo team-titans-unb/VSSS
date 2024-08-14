@@ -13,10 +13,11 @@ class ArtificialNeuralNetwork:
         return expit(x)
     
     def neuron(self, inputs, weights, bias):
-        sumation = 0
-        for i in range(len(weights)):
-            sumation += inputs[i] * weights[i]
-        sumation += bias
+        # sumation = 0
+        # for i in range(len(weights)):
+        #     sumation += inputs[i] * weights[i]
+        # sumation += bias
+        sumation = (inputs * weights) + bias
         return self.sigmoid(sumation)
     
     def mlp432(self, inputs, weights, biases):
@@ -72,23 +73,6 @@ class ArtificialNeuralNetwork:
 
         return speeds
     
-    def mse(self, inputs, weights_biases, desired):
-        errorL = 0
-        errorR = 0
-        weights = weights_biases[:18]
-        biases = weights_biases[18:]
-        for i in range(self.nSamples):
-            input_vector = []
-            for j in range(2):
-                input_vector.append(inputs[j][i])
-            wspeed = self.mlp432(input_vector, weights, biases)
-            errorL += (wspeed[0] - desired[0][i])**2
-            errorR += (wspeed[1] - desired[1][i])**2
-        MSEL = errorL / self.nSamples
-        MSER = errorR / self.nSamples
-        mse = MSEL + MSER
-        return mse
-    
     def mse_mlp22(self, inputs, weights_biases, desired):
         errorL = 0
         errorR = 0
@@ -113,24 +97,42 @@ class ArtificialNeuralNetwork:
         mse = MSEL + MSER
         return mse
 
-    def mse_slp(self, inputs, weights_biases, desired):
+    def mse(self, inputs, weights_biases, desired):
         errorL = 0
         errorR = 0
-        # Extrair pesos e bias para as duas SLPs
-        weightsL = weights_biases[:2]
-        biasL = weights_biases[2]
-        weightsR = weights_biases[3:5]
-        biasR = weights_biases[5]
-        
+        weights = weights_biases[:18]
+        biases = weights_biases[18:]
         for i in range(self.nSamples):
             input_vector = []
             for j in range(2):
                 input_vector.append(inputs[j][i])
-            wspeedL = self.neuron(input_vector, weightsL, biasL)
-            wspeedR = self.neuron(input_vector, weightsR, biasR)
+            wspeed = self.mlp432(input_vector, weights, biases)
+            errorL += (wspeed[0] - desired[0][i])**2
+            errorR += (wspeed[1] - desired[1][i])**2
+        MSEL = errorL / self.nSamples
+        MSER = errorR / self.nSamples
+        mse = MSEL + MSER
+        return mse
+    
+    def mse_slp(self, inputs, weights_biases, desired):
+        errorL = 0
+        errorR = 0
+        # Extrair pesos e bias para as duas SLPs
+        weightsL = weights_biases[0]
+        biasL = weights_biases[1]
+        weightsR = weights_biases[2]
+        biasR = weights_biases[3]
+        
+        for i in range(self.nSamples):
+            input_vector = []
+            # for j in range(len(inputs)):
+                # input_vector.append(inputs[j][i])
+            input_vector.append(inputs[i])
+            wspeedL = self.neuron(input_vector[0], weightsL, biasL)
+            wspeedR = self.neuron(input_vector[0], weightsR, biasR)
             errorL += (wspeedL - desired[0][i])**2
             errorR += (wspeedR - desired[1][i])**2
         MSEL = errorL / self.nSamples
         MSER = errorR / self.nSamples
-        mse = MSEL + MSER
+        mse = (MSEL + MSER) * 1000
         return mse

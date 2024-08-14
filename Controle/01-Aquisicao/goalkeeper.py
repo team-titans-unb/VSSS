@@ -98,7 +98,7 @@ class Corobeu():
                
         return clientID, robot, MotorE, MotorD, ball
     
-    def Speed_CRB(self, U, omega, error_distance, Number_Iterations):
+    def Speed_CRB(self, U, omega, error_distance, ballY, robotY):
 
         """""
         Function used to calculate the speed for each wheel based on the topology robot
@@ -146,10 +146,14 @@ class Corobeu():
         if vl <= Min_Speed:
             vl = Min_Speed
 
+        if robotY > ballY:
+            vl = -vl
+            vd = -vd
+
         ### When arrive to the goal ###
 
         if error_distance <= 0.03:
-            a = 0
+            # a = 0
             vl = 0
             vd = 0
 
@@ -280,7 +284,7 @@ class Corobeu():
 
                     ### Calculate the phid (see georgia tech course) ###
                     
-                    phid = math.atan2(ballPos[1] - positiona[1], ballPos[0] - positiona[0])
+                    phid = math.atan2(ballPos[1] - positiona[1], -0.7 - positiona[0])
                     ### Phi error to send the PID controller
 
                     error_phi = phid - self.phi
@@ -293,7 +297,7 @@ class Corobeu():
 
                     ### Calculate the distance error, the robot stop when arrive the ball ###
 
-                    error_distance = math.sqrt((ballPos[1] - positiona[1]) ** 2 + (ballPos[0] - positiona[0]) ** 2)
+                    error_distance = math.sqrt((ballPos[1] - positiona[1]) ** 2)
 
                     ### Acumulative distance error ###
 
@@ -307,7 +311,7 @@ class Corobeu():
 
                     ### Calculate the speed right and left based on the topology robot ###
 
-                    vl, vd, a = self.Speed_CRB(self.v_linear, omega, error_distance, Number_Iterations)
+                    vl, vd, a = self.Speed_CRB(self.v_linear, omega, error_distance, ballPos[1], positiona[1])
 
 
                     ### Send the speed values to coppeliasim simulato ###

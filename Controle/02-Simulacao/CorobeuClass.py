@@ -94,7 +94,7 @@ class Corobeu():
         vd = (2 * U + omega * 7.5) / (2 * 3.2)
         vl = (2 * U - omega * 7.5) / (2 * 3.2)
         a = 1
-        print(f'omega={omega}')
+        # print(f'omega={omega}')
 
         if omega >= 1 or omega <= -1:
             Max_Speed = 0.01
@@ -265,30 +265,17 @@ class Corobeu():
                 
                 self.phi = self.phi + omega * deltaT
 
-                # U = self.v
+                U = self.v_linear
                 # if Number_Iterations >= 100:
 
-                #     k = self.v*(1-math.exp(-alfa*(abs(error_distance))**2))/(abs(error_distance))
+                #     k = self.v_linear*(1-math.exp(-alfa*(abs(error_distance))**2))/(abs(error_distance))
                 #     U = k*abs(error_distance)*error_distance + offset_speed
 
                 # else:
-                #     U = (self.v/(100 - Number_Iterations)) * Number_Iterations
-
-                ### calculate new phi robot integrating the angular speed ###
-
-                
+                #     U = (self.v_linear/(100 - Number_Iterations)) * Number_Iterations
 
                 #### Calculate the right and left speed values ###
-                # #### Check if the angular error is within the threshold ###
-                # if abs(error_phi) > 0.3:
-                #     # Rotate in place to correct orientation
-                #     vl = -omega if omega < 0 else omega  # Rotate in place
-                #     vd = omega if omega < 0 else -omega  # Rotate in place
-                # else:
-                #     # Move towards the waypoint
-                #     vl, vd, a = self.Speed_CRB(U, omega, error_distance, error_distance_global)
-
-                vl, vd, a = self.Speed_CRB(self.v_linear, omega, error_distance, error_distance_global)
+                vl, vd, a = self.Speed_CRB(U, omega, error_distance, error_distance_global)
 
                 #### Send the speed values ####
 
@@ -305,15 +292,9 @@ class Corobeu():
                 self.yOut.append(positiona[1])
                 self.xOut.append(positiona[0])
 
-                # print(Number_Iterations)
-
-        # self.yOut.append(positiona[1])
-        # self.xOut.append(positiona[0])
-
     def Micro_Behaviors(self, pathX, pathY, End_position):
 
-        W_B = [-3.938170382087489, -0.6893190807268675, 4.023720166320735, 2.6587927141443624, -0.8714270468713935, -6.230088430414375] # Linha reta show
-        
+        W_B = [0.39894832971087163, -2.105905809136049, 0.31736796205179807, -2.105179399172271]
         
         spd = ann.ArtificialNeuralNetwork(50)
         a = 1
@@ -342,15 +323,13 @@ class Corobeu():
                 
                 s, angle = sim.simxGetObjectOrientation(self.clientID, self.robot, -1, sim.simx_opmode_blocking)
                 omega.append(angle[2])
-                phi_atual = omega[i]
-
-                # print("Posicoes")
-                # print([x_atual, y_atual, phi_atual])
+                phi_atual = omega[i] - 1.5708
 
                 error_distance = math.sqrt((pathY - y_atual)**2 + (pathX - x_atual)**2)
                 self.posError.append(error_distance)
                 # phid = math.atan2(pathY - y_atual, pathX - x_atual) - phi_atual
                 phid = math.atan2(pathY - y_atual, pathX - x_atual)
+                error_phi = phid - phi_atual
                 
                 #### Error distance next point and the global is calculate ###
                 
@@ -368,31 +347,31 @@ class Corobeu():
                     sim.simxSetJointTargetVelocity(self.clientID, self.motorD, 0, sim.simx_opmode_blocking)
                     a = 0
 
-                weightsL = W_B[:2]
-                biasL = W_B[2]
-                weightsR = W_B[3:5]
-                biasR = W_B[5]
+                weightsL = W_B[0]
+                biasL = W_B[1]
+                weightsR = W_B[2]
+                biasR = W_B[3]
 
-                speedL = spd.neuron([phi_atual, phid], weightsL, biasL)
-                speedR = spd.neuron([phi_atual, phid], weightsR, biasR)
+                speedL = spd.neuron(error_phi, weightsL, biasL)
+                speedR = spd.neuron(error_phi, weightsR, biasR)
 
-                Vd.append(speedL/0.08)
-                Ve.append(speedR/0.08)
+                Vd.append(speedL/0.032)
+                Ve.append(speedR/0.032)
                 
-                if Vd[i] > 8:
-                    Vd[i] = 8
-                else:
-                    pass
-                if Ve[i] > 8:
-                    Ve[i] = 8
-                else:
-                    pass
+                # if Vd[i] > 8:
+                #     Vd[i] = 8
+                # else:
+                #     pass
+                # if Ve[i] > 8:
+                #     Ve[i] = 8
+                # else:
+                #     pass
 
                 print("Velocidades")
                 print([Vd[i], Ve[i]])
                 
                 sim.simxSetJointTargetVelocity(self.clientID, self.motorE, Ve[i], sim.simx_opmode_blocking)
-                sim.simxSetJointTargetVelocity(self.clientID, self.motorD, Vd[i], sim.simx_opmode_blocking)
+                sim.simxSetJointTargetVelocity(self.clientID, self.motorD, 0.95*Vd[i], sim.simx_opmode_blocking)
 
                 self.yOut.append(y_atual)
                 self.xOut.append(x_atual)
@@ -418,7 +397,8 @@ class Corobeu():
         executed_path_length = np.sum([math.sqrt((self.xOut[i + 1] - self.xOut[i]) ** 2 + (self.yOut[i + 1] - self.yOut[i]) ** 2) for i in range(numPoints - 1)])
         path_length_deviation = abs(planned_path_length - executed_path_length) / planned_path_length
 
-        with open(filename, 'w') as file:
+        name = filename + '.txt'
+        with open(name, 'w') as file:
             file.write(f'Erro Absoluto Medio (MAE): {mae} m\n')
             file.write(f'Erro Quadratico Medio (MSE): {mse} m2\n')
             file.write(f'Erro Maximo: {max_error} m\n')
@@ -428,7 +408,6 @@ class Corobeu():
         print(f'Erro Quadrático Médio (MSE): {mse} m²')
         print(f'Erro Máximo: {max_error} m')
         print(f'Desvio Médio ao Longo do Caminho: {path_length_deviation * 100:.2f}%')
-
 
     def Get_Position(self):
         """

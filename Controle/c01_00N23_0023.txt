@@ -1,4 +1,0 @@
-Erro Absoluto Medio (MAE): 0.14292791045521505 m
-Erro Quadratico Medio (MSE): 0.013400753248962838 m2
-Erro Maximo: 0.30863925519037777 m
-Desvio Medio ao Longo do Caminho: 11.44%
