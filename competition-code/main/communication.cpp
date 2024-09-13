@@ -1,6 +1,16 @@
+/**********************************************************************************************/
+/*                                                                                            */
+/*                                                                                            */
+/*        communication.cpp                            Author  : Luiz Felipe                  */
+/*                                                     Email   :                              */
+/*                                                     address : DF, BRAZIL                   */
+/*        Created: 2023/02/26          by Luiz F.                                             */
+/*        Updated: 2024/09/13          by Luiz F.                                             */
+/*                                                                       All rights reserved  */
+/**********************************************************************************************/
 #include "communication.h"
 
-Communication::Communication(const char* ssid, const char* password, uint16_t port)
+Communication::Communication(const char* ssid, const char* password, uint32_t port)
     : ssid_(ssid), password_(password), port_(port), server_(port) {}
 
 void Communication::begin() {
@@ -15,22 +25,22 @@ void Communication::begin() {
     server_.begin();
 }
 
-uint16_t Communication::receiveData() {
+uint32_t Communication::receiveData() {
     if (!client_ || !client_.connected()) {
         client_ = server_.available();
         if (!client_) {
-            return 0xFFFF; // Valor inválido, sem cliente conectado
+            return 0xFFFFFFFF; // Valor inválido, sem cliente conectado
         }
     }
     if (client_.available()) {
-        uint16_t value = 0;
+        uint32_t value = 0;
         client_.read(reinterpret_cast<uint8_t*>(&value), sizeof(value));
         return value;
     }
-    return 0xFFFF; // Valor inválido, sem dados disponíveis
+    return 0xFFFFFFFF; // Valor inválido, sem dados disponíveis
 }
 
-void Communication::sendData(uint16_t value) {
+void Communication::sendData(uint32_t value) {
     if (client_ && client_.connected()) {
         client_.write(reinterpret_cast<uint8_t*>(&value), sizeof(value));
     }

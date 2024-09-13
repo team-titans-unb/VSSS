@@ -1,3 +1,13 @@
+/**********************************************************************************************/
+/*                                                                                            */
+/*                                                                                            */
+/*        motor.cpp                                    Author  : Luiz Felipe                  */
+/*                                                     Email   :                              */
+/*                                                     address : DF, BRAZIL                   */
+/*        Created: 2023/02/26          by Luiz F.                                             */
+/*        Updated: 2024/09/13          by Luiz F.                                             */
+/*                                                                       All rights reserved  */
+/**********************************************************************************************/
 #include "motor.h"
 
 Motor::Motor(uint8_t pin_R, uint8_t pin_L, uint8_t channelR, uint8_t channelL) {
