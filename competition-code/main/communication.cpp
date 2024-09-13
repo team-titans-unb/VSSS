@@ -15,22 +15,22 @@ void Communication::begin() {
     server_.begin();
 }
 
-int Communication::receiveInt() {
+uint16_t Communication::receiveData() {
     if (!client_ || !client_.connected()) {
         client_ = server_.available();
         if (!client_) {
-            return -1; // No client connected
+            return 0xFFFF; // Valor inválido, sem cliente conectado
         }
     }
     if (client_.available()) {
-        int value = 0;
+        uint16_t value = 0;
         client_.read(reinterpret_cast<uint8_t*>(&value), sizeof(value));
         return value;
     }
-    return -1;
+    return 0xFFFF; // Valor inválido, sem dados disponíveis
 }
 
-void Communication::sendInt(int value) {
+void Communication::sendData(uint16_t value) {
     if (client_ && client_.connected()) {
         client_.write(reinterpret_cast<uint8_t*>(&value), sizeof(value));
     }

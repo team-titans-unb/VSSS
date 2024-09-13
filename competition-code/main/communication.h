@@ -7,8 +7,8 @@ class Communication {
 public:
     Communication(const char* ssid, const char* password, uint16_t port);
     void begin();
-    int receiveInt();
-    void sendInt(int value);
+    uint16_t receiveData();  // Atualizado para receber dados combinados de 16 bits
+    void sendData(uint16_t value);  // Atualizado para enviar dados combinados de 16 bits
 
 private:
     const char* ssid_;
