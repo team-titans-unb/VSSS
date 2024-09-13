@@ -1,13 +1,13 @@
-// Pins of motor 1
-#define ROBOT_MOTOR_1R 32
-#define ROBOT_MOTOR_1L 33
+// Pins of motor Direita
+#define ROBOT_MOTOR_1R 33
+#define ROBOT_MOTOR_1L 25
 
 // Pwm chanels of motor 2
 #define ROBOT_CHANEL_1R 0
 #define ROBOT_CHANEL_1L 1
 
-// Pins of motor 2
-#define ROBOT_MOTOR_2R 25
+// Pins of motor 2 Esquerda 
+#define ROBOT_MOTOR_2R 27
 #define ROBOT_MOTOR_2L 26
 
 // Pwm chanels of motor 2

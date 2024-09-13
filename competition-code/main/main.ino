@@ -1,9 +1,14 @@
 #include "Robot.h"
 #include "communication.h"
 
+// Cria um robo corobeu para controle
 Robot corobeu(ROBOT_MOTOR_1R, ROBOT_MOTOR_1L, ROBOT_MOTOR_2R, ROBOT_MOTOR_2L);
+
+
 Communication messenger(NETWORK, PASSWORD, 80);
 int val = 0;
+
+
 TaskHandle_t communicationTaskHandle = NULL;
 TaskHandle_t motorControlTaskHandle = NULL;
 
@@ -21,6 +26,7 @@ void communicationTask(void* parameter) {
 
 void motorControlTask(void* parameter) {
     while (true) {
+        // Rotina de controle do robo
         corobeu.setMotorRight(val, 1);
         corobeu.setMotorLeft(val, 1);
         vTaskDelay(10 / portTICK_PERIOD_MS); // Delay para atualização periódica

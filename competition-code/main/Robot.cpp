@@ -19,7 +19,7 @@ void Robot::initializeRobot(){
 }
 
 void Robot::setMotorRight(int speedR, int direction){
-    // Coloca a velocidade nas motor direito
+    // Coloca a velocidade no motor direito
     this->motorRight.moveForward(speedR, direction);
 }
 
@@ -28,8 +28,22 @@ void Robot::setMotorLeft(int speedL, int direction){
     this->motorLeft.moveForward(speedL, direction);
 }
 
-void Robot::Stop(){
-    // Para o robo
-    motorRight.stop();
-    motorLeft.stop();
+void Robot::Stop(int Motor1, int Motor2){
+    int motorState = (Motor1 << 1) | Motor2; 
+
+    switch (motorState) {
+        case 0b01:  // 0 e 1: Para apenas o motor esquerdo
+            motorLeft.stop();
+            break;
+        case 0b10:  // 1 e 0: Para apenas o motor direito
+            motorRight.stop();
+            break;
+        case 0b11:  // 1 e 1: Para ambos os motores
+            motorRight.stop();
+            motorLeft.stop();
+            break;
+        default:    // Nenhum motor é parado se ambos forem 0
+            break;
+    }
 }
+
