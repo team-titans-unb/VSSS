@@ -33,7 +33,7 @@ void communicationTask(void* parameter) {
     while (true) {
         // Poll for data with a reduced frequency by adding idle time
         uint32_t receivedValue = messenger.receiveData();
-        if (receivedValue != 0xFFFFFFFF) { // Check if the value is valid
+        if (receivedValue != 0xFFFFFFFF) { // Check if the value is vali
             combinedValue = receivedValue;
             counter += 1;
             Serial.print("Received value: ");
