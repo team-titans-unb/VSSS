@@ -1,7 +1,7 @@
 /**********************************************************************************************/
 /*                                                                                            */
 /*                                                                                            */
-/*        motor.h                                      Author  : Luiz Felipe                  */
+/*        main.ino                                     Author  : Luiz Felipe                  */
 /*                                                     Email   :                              */
 /*                                                     address : DF, BRAZIL                   */
 /*        Created: 2023/02/26          by Luiz F.                                             */
@@ -11,72 +11,111 @@
 #include "Robot.h"
 #include "communication.h"
 
-// Cria um robô corobeu para controle
+// Create a robot object named corobeu for motor control
 Robot corobeu(ROBOT_MOTOR_1R, ROBOT_MOTOR_1L, ROBOT_MOTOR_2R, ROBOT_MOTOR_2L);
 
-// Inicializa a comunicação
+// Initialize communication
 Communication messenger(NETWORK, PASSWORD, 80);
 uint32_t combinedValue = 0;
-
+int counter = 0;
 TaskHandle_t communicationTaskHandle = NULL;
 TaskHandle_t motorControlTaskHandle = NULL;
 
-// Função de tarefa para lidar com a comunicação
+/**
+ * @brief Task to handle communication with the host.
+ * 
+ * This task listens for incoming data from the host and stores the received value in a global variable.
+ * It runs indefinitely in the background.
+ * 
+ * @param parameter Task parameter (not used in this case).
+ */
 void communicationTask(void* parameter) {
     while (true) {
+        // Poll for data with a reduced frequency by adding idle time
         uint32_t receivedValue = messenger.receiveData();
-        if (receivedValue != 0xFFFFFFFF) { // Verifica se o valor é válido
+        if (receivedValue != 0xFFFFFFFF) { // Check if the value is valid
             combinedValue = receivedValue;
-            Serial.print("Valor recebido: ");
+            counter += 1;
+            Serial.print("Received value: ");
             Serial.println(combinedValue, HEX);
+            Serial.println(counter);
         }
-        vTaskDelay(10 / portTICK_PERIOD_MS); // Delay para evitar travamentos
+        vTaskDelay(50 / portTICK_PERIOD_MS); // Increase delay to avoid frequent polling
     }
 }
 
-// Função de tarefa para controle dos motores
+/**
+ * @brief Task to control the motors of the robot.
+ * 
+ * This task decodes the received combined value into speed and direction, and updates the robot's motor control accordingly.
+ * It runs indefinitely in the background.
+ * 
+ * @param parameter Task parameter (not used in this case).
+ */
 void motorControlTask(void* parameter) {
     while (true) {
-        // Decodifica o valor combinado em velocidade e direção
-        int speed1 = ((combinedValue & 0xFF000000) >> 24); // Extrai os 8 bits mais significativos
-        int direction1 = ((combinedValue & 0x0000FF00) >> 16);     // Extrai os 8 bits menos significativos
+        if (combinedValue != 0) { // Check if there's new data to process
+            // Decode the combined value into speed and direction
+            int speed1 = ((combinedValue & 0xFF000000) >> 24);   // Extract the 8 most significant bits
+            int direction1 = ((combinedValue & 0x0000FF00) >> 8); // Extract the direction for motor 1
 
-        int speed2 = ((combinedValue & 0x00FF0000) >> 8); // Extrai os 8 bits mais significativos
-        int direction2 = combinedValue & 0x000000FF;     // Extrai os 8 bits menos significativos
+            int speed2 = ((combinedValue & 0x00FF0000) >> 16);    // Extract the speed for motor 2
+            int direction2 = combinedValue & 0x000000FF;         // Extract the direction for motor 2
 
-        // Atualiza o controle do robô com o valor recebido
-        corobeu.setMotorRight(speed1, direction1);
-        corobeu.setMotorLeft(speed2, direction2);
+            // Update the robot's motor control with the received values
+            Serial.print("Speed1:");
+            Serial.println(speed1);
+            Serial.print("Speed2:");
+            Serial.println(speed2);
+            Serial.print("Direction1:");
+            Serial.println(direction1);
+            Serial.print("Direction2:");
+            Serial.println(direction2);
+            corobeu.setMotorRight(speed1, direction1);
+            corobeu.setMotorLeft(speed2, direction2);
+            combinedValue = 0;
+        }
 
-        vTaskDelay(10 / portTICK_PERIOD_MS); // Delay para atualização periódica
+        vTaskDelay(20 / portTICK_PERIOD_MS); // Adjust delay to allow sufficient time for motor update
     }
 }
 
+/**
+ * @brief Setup function to initialize communication and create tasks.
+ * 
+ * This function is called once when the ESP32 starts. It initializes serial communication, 
+ * starts WiFi communication, and creates two FreeRTOS tasks: one for communication and one for motor control.
+ */
 void setup() {
-    Serial.begin(9600);
-    messenger.begin();
+    Serial.begin(9600);  // Initialize serial communication
+    messenger.begin();   // Start WiFi communication
 
-    // Cria a tarefa de comunicação
+    // Create the communication task
     xTaskCreate(
-        communicationTask,        // Função da tarefa
-        "Communication Task",     // Nome da tarefa
-        2048,                     // Tamanho da pilha
-        NULL,                     // Parâmetro da tarefa
-        1,                        // Prioridade da tarefa
-        &communicationTaskHandle  // Handle da tarefa
+        communicationTask,        // Task function
+        "Communication Task",     // Task name
+        2048,                     // Stack size
+        NULL,                     // Task parameter
+        1,                        // Task priority
+        &communicationTaskHandle  // Task handle
     );
 
-    // Cria a tarefa de controle dos motores
+    // Create the motor control task
     xTaskCreate(
-        motorControlTask,         // Função da tarefa
-        "Motor Control Task",     // Nome da tarefa
-        2048,                     // Tamanho da pilha
-        NULL,                     // Parâmetro da tarefa
-        1,                        // Prioridade da tarefa
-        &motorControlTaskHandle   // Handle da tarefa
+        motorControlTask,         // Task function
+        "Motor Control Task",     // Task name
+        2048,                     // Stack size
+        NULL,                     // Task parameter
+        2,                        // Higher priority for motor control
+        &motorControlTaskHandle   // Task handle
     );
 }
 
+/**
+ * @brief Main loop function.
+ * 
+ * This loop remains empty as all operations are handled by FreeRTOS tasks in the background.
+ */
 void loop() {
-    // loop vazio, tarefas são executadas em segundo plano
+    // Empty loop, tasks are running in the background
 }
