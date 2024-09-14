@@ -54,7 +54,7 @@ void communicationTask(void* parameter) {
  */
 void motorControlTask(void* parameter) {
     while (true) {
-        if (combinedValue != 0) { // Check if there's new data to process
+        if (combinedValue != 0xFFFFFFFF) { // Check if there's new data to process
             // Decode the combined value into speed and direction
             int speed1 = ((combinedValue & 0xFF000000) >> 24);   // Extract the 8 most significant bits
             int direction1 = ((combinedValue & 0x0000FF00) >> 8); // Extract the direction for motor 1
@@ -73,7 +73,7 @@ void motorControlTask(void* parameter) {
             Serial.println(direction2);
             corobeu.setMotorRight(speed1, direction1);
             corobeu.setMotorLeft(speed2, direction2);
-            combinedValue = 0;
+            combinedValue = 0xFFFFFFFF;
             corobeu.setMotorRight()
         }
 
