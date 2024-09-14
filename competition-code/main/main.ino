@@ -74,6 +74,7 @@ void motorControlTask(void* parameter) {
             corobeu.setMotorRight(speed1, direction1);
             corobeu.setMotorLeft(speed2, direction2);
             combinedValue = 0;
+            corobeu.setMotorRight()
         }
 
         vTaskDelay(20 / portTICK_PERIOD_MS); // Adjust delay to allow sufficient time for motor update
