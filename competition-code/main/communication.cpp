@@ -1,4 +1,3 @@
-
 /**********************************************************************************************/
 /*                                                                                            */
 /*                                                                                            */
@@ -9,11 +8,25 @@
 /*        Updated: 2024/09/13          by Luiz F.                                             */
 /*                                                                       All rights reserved  */
 /**********************************************************************************************/
+
 #include "communication.h"
 
+/**
+ * @brief Constructor of the Communication class.
+ * 
+ * @param ssid WiFi network name (SSID).
+ * @param password WiFi network password.
+ * @param port Port used for TCP/IP communication.
+ */
 Communication::Communication(const char* ssid, const char* password, uint32_t port)
     : ssid_(ssid), password_(password), port_(port), server_(port) {}
 
+/**
+ * @brief Initializes WiFi communication and starts the TCP/IP server.
+ * 
+ * Attempts to connect the ESP32 to the provided WiFi network. Upon successful connection,
+ * the TCP/IP server is started on the specified port.
+ */
 void Communication::begin() {
     WiFi.begin(ssid_, password_);
     while (WiFi.status() != WL_CONNECTED) {
@@ -26,11 +39,20 @@ void Communication::begin() {
     server_.begin();
 }
 
+/**
+ * @brief Receives data from a client connected to the server.
+ * 
+ * This function checks if a client is connected to the server. If connected,
+ * it reads the data sent by the client. If there is no client or no data available,
+ * it returns the value 0xFFFFFFFF to indicate the absence of data.
+ * 
+ * @return uint32_t Data received from the client. If no data is available, returns 0xFFFFFFFF.
+ */
 uint32_t Communication::receiveData() {
     if (!client_ || !client_.connected()) {
         client_ = server_.available();
         if (!client_) {
-            return 0xFFFFFFFF; // Valor inválido, sem cliente conectado
+            return 0xFFFFFFFF; // Invalid value, no client connected
         }
     }
     if (client_.available()) {
@@ -38,9 +60,17 @@ uint32_t Communication::receiveData() {
         client_.read(reinterpret_cast<uint8_t*>(&value), sizeof(value));
         return value;
     }
-    return 0xFFFFFFFF; // Valor inválido, sem dados disponíveis
+    return 0xFFFFFFFF; // Invalid value, no data available
 }
 
+/**
+ * @brief Sends data to a client connected to the server.
+ * 
+ * Checks if a client is connected. If a client is connected, the data is sent
+ * to the client via TCP/IP.
+ * 
+ * @param value Data to be sent to the client.
+ */
 void Communication::sendData(uint32_t value) {
     if (client_ && client_.connected()) {
         client_.write(reinterpret_cast<uint8_t*>(&value), sizeof(value));

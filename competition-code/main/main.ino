@@ -1,6 +1,5 @@
 /**********************************************************************************************/
 /*                                                                                            */
-/*                                                                                            */
 /*        main.ino                                     Author  : Luiz Felipe                  */
 /*                                                     Email   :                              */
 /*                                                     address : DF, BRAZIL                   */
@@ -14,9 +13,12 @@
 // Create a robot object named corobeu for motor control
 Robot corobeu(ROBOT_MOTOR_1R, ROBOT_MOTOR_1L, ROBOT_MOTOR_2R, ROBOT_MOTOR_2L);
 
-// Initialize communication
+// void setup() {
+    
+// }
+//Initialize communication
 Communication messenger(NETWORK, PASSWORD, 80);
-uint32_t combinedValue = 0;
+uint32_t combinedValue = 0xFFFFFFFF;
 int counter = 0;
 TaskHandle_t communicationTaskHandle = NULL;
 TaskHandle_t motorControlTaskHandle = NULL;
@@ -33,14 +35,15 @@ void communicationTask(void* parameter) {
     while (true) {
         // Poll for data with a reduced frequency by adding idle time
         uint32_t receivedValue = messenger.receiveData();
-        if (receivedValue != 0xFFFFFFFF) { // Check if the value is vali
+        if (receivedValue != 0xFFFFFFFF) { // Check if the value is valid
             combinedValue = receivedValue;
             counter += 1;
             Serial.print("Received value: ");
             Serial.println(combinedValue, HEX);
             Serial.println(counter);
+            receivedValue = 0xFFFFFFFF;
         }
-        vTaskDelay(50 / portTICK_PERIOD_MS); // Increase delay to avoid frequent polling
+        vTaskDelay(10 / portTICK_PERIOD_MS); // Reduced delay to make communication more responsive
     }
 }
 
@@ -63,21 +66,20 @@ void motorControlTask(void* parameter) {
             int direction2 = combinedValue & 0x000000FF;         // Extract the direction for motor 2
 
             // Update the robot's motor control with the received values
-            Serial.print("Speed1:");
-            Serial.println(speed1);
-            Serial.print("Speed2:");
-            Serial.println(speed2);
-            Serial.print("Direction1:");
-            Serial.println(direction1);
-            Serial.print("Direction2:");
-            Serial.println(direction2);
+            // Serial.print("Speed1:");
+            // Serial.println(speed1);
+            // Serial.print("Speed2:");
+            // Serial.println(speed2);
+            // Serial.print("Direction1:");
+            // Serial.println(direction1);
+            // Serial.print("Direction2:");
+            // Serial.println(direction2);
             corobeu.setMotorRight(speed1, direction1);
             corobeu.setMotorLeft(speed2, direction2);
             combinedValue = 0xFFFFFFFF;
-            corobeu.setMotorRight()
         }
 
-        vTaskDelay(20 / portTICK_PERIOD_MS); // Adjust delay to allow sufficient time for motor update
+        vTaskDelay(20 / portTICK_PERIOD_MS); // Delay kept for smoother motor updates
     }
 }
 
@@ -88,7 +90,7 @@ void motorControlTask(void* parameter) {
  * starts WiFi communication, and creates two FreeRTOS tasks: one for communication and one for motor control.
  */
 void setup() {
-    Serial.begin(9600);  // Initialize serial communication
+    Serial.begin(19200);  // Initialize serial communication
     messenger.begin();   // Start WiFi communication
 
     // Create the communication task
@@ -97,7 +99,7 @@ void setup() {
         "Communication Task",     // Task name
         2048,                     // Stack size
         NULL,                     // Task parameter
-        1,                        // Task priority
+        2,                        // Higher priority for communication
         &communicationTaskHandle  // Task handle
     );
 
@@ -107,7 +109,7 @@ void setup() {
         "Motor Control Task",     // Task name
         2048,                     // Stack size
         NULL,                     // Task parameter
-        2,                        // Higher priority for motor control
+        1,                        // Lower priority for motor control
         &motorControlTaskHandle   // Task handle
     );
 }
@@ -118,5 +120,5 @@ void setup() {
  * This loop remains empty as all operations are handled by FreeRTOS tasks in the background.
  */
 void loop() {
-    // Empty loop, tasks are running in the background
+
 }

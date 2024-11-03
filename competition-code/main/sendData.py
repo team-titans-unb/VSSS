@@ -2,7 +2,7 @@ import socket
 import time
 import random
 
-ESP32_IP = '192.168.179.89' 
+ESP32_IP = '192.168.61.44' 
 PORT = 80  
 
 def send_speed_and_direction(speed1, speed2, direction1, direction2):
@@ -25,6 +25,7 @@ def send_speed_and_direction(speed1, speed2, direction1, direction2):
 def test():
     cont = 0
     while True:
+        time.sleep(0.06)
         cont += 1 
         print(f"Attempt: {cont}")
         
@@ -40,7 +41,7 @@ def test():
         print("direction2:", hex(direction2))
         
         send_speed_and_direction(val1, val2, direction1, direction2)
-        time.sleep(0.1)  # Pausa antes de gerar novos valores e enviar novamente
+        #time.sleep(0.1)  # Pausa antes de gerar novos valores e enviar novamente
 
 if __name__ == "__main__":
     test()

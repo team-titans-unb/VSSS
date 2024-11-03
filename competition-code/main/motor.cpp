@@ -20,6 +20,8 @@
  * @param channelR PWM channel for the right motor.
  * @param channelL PWM channel for the left motor.
  */
+
+
 Motor::Motor(uint8_t pin_R, uint8_t pin_L, uint8_t channelR, uint8_t channelL) {
     this->pin_R_ = pin_R;
     this->pin_L_ = pin_L;
@@ -56,6 +58,7 @@ void Motor::moveForward(int speed, int direction) {
  * 
  * Disables both motors by setting PWM values to 0.
  */
+
 void Motor::stop() {
     ledcWrite(pin_R_, 0x00);
     ledcWrite(pin_L_, 0x00);
