@@ -12,8 +12,8 @@ robot = 'robot01'
 leftMotor = 'motorL01'
 rightMotor = 'motorR01'
 port = 19999
-finalPos = [0, 0.5]
-cen = 'c02'
+finalPos = [-0.4, -0.3]
+cen = 'c01.1'
 filename = f'{cen}_BBC_{finalPos[0]}_{finalPos[1]}'
 
 obstacleX = [-1.2, 1.2]
@@ -37,9 +37,9 @@ try:
     plt.show()
 
     print("Seguindo trajetoria...")
-    for pos in range(len(pathX)-2):
-        crb01.Micro_Behaviors(pathX[pos+2], pathY[pos+2],[pathX[-1],pathY[-1]])
-    # crb01.Micro_Behaviors(finalPos[0], finalPos[1], [pathX[-1],pathY[-1]])
+    # for pos in range(len(pathX)-2):
+    #     crb01.Micro_Behaviors(pathX[pos+2], pathY[pos+2],[pathX[-1],pathY[-1]])
+    crb01.Micro_Behaviors(finalPos[0], finalPos[1], [pathX[-1],pathY[-1]])
 
 finally:
     crb01.Stop_bot()

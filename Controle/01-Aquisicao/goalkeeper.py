@@ -32,7 +32,6 @@ import sim
 import numpy as np
 import math as mat
 import time
-
 class Corobeu():
     """"
     Corobeu class is the principal class to controller the EVA positions robots.
@@ -53,15 +52,17 @@ class Corobeu():
             self.v_max    (Integer) = max speed for the robot
             self.v_min    (Integer) = min speed for the robot
             self.posError (Float list) = phi error
+            self.sel_position (Integer) = 0 goleiro, 1 atacante
         """""
 
         self.y_out = []
         self.x_out = []
         self.phi = 0
-        self.v_max = 8
-        self.v_min = -8
-        self.v_linear = 5
+        self.v_max = 20
+        self.v_min = -20
+        self.v_linear = 18
         self.posError = []
+        self.ideal_goleiro_x = -0.7
 
     def connect_CRB(self, port):
         """""
@@ -98,7 +99,7 @@ class Corobeu():
                
         return clientID, robot, MotorE, MotorD, ball
     
-    def Speed_CRB(self, U, omega, error_distance, ballY, robotY):
+    def Speed_CRB(self, U, omega, error_distance, signed):
 
         """""
         Function used to calculate the speed for each wheel based on the topology robot
@@ -115,8 +116,8 @@ class Corobeu():
 
         ### Calculate the speed based on the topology robot ###
 
-        vd = (2 * U + omega * 7.5) / (2 * 3.2)
-        vl = (2 * U - omega * 7.5) / (2 * 3.2)
+        vd = ((2 * (U * signed) + omega * 7.5) / (2 * 3.2))
+        vl = ((2 * (U * signed) - omega * 7.5) / (2 * 3.2))
         a = 1
         print(f'vl === {vl} vd == {vd}')
         print(f' omega == {omega}')
@@ -141,18 +142,15 @@ class Corobeu():
 
         ### Saturation speed Lower ###
 
+
         if vl >= Max_Speed:
             vl = Max_Speed
         if vl <= Min_Speed:
             vl = Min_Speed
 
-        if robotY > ballY:
-            vl = -vl
-            vd = -vd
-
         ### When arrive to the goal ###
 
-        if error_distance <= 0.03:
+        if error_distance <= 0.05:
             # a = 0
             vl = 0
             vd = 0
@@ -238,7 +236,7 @@ class Corobeu():
 
         ### Get the objects within coppeliaSim using the connect_CRB function ###
 
-        (clientID, robot, motorE, motorD, ball) = self.connect_CRB(19995)
+        (clientID, robot, motorE, motorD, ball) = self.connect_CRB(19999)
 
         ### Criterio to simulation ###
 
@@ -264,7 +262,7 @@ class Corobeu():
                 ### important to get valid values and init the phi value ###
 
                 if Number_Iterations <= 1:
-                    
+
                     s, positiona = sim.simxGetObjectPosition(clientID, robot, -1, sim.simx_opmode_streaming)
                     s, ballPos = sim.simxGetObjectPosition(clientID, ball, -1, sim.simx_opmode_streaming)
                     s, angle_robot = sim.simxGetObjectOrientation(clientID, robot, -1, sim.simx_opmode_blocking)
@@ -283,21 +281,31 @@ class Corobeu():
                     # print(f'Angle robot ==> {angle_robot}')
 
                     ### Calculate the phid (see georgia tech course) ###
-                    
-                    phid = math.atan2(ballPos[1] - positiona[1], -0.7 - positiona[0])
+                    phid = math.atan2(ballPos[1] - positiona[1], (self.ideal_goleiro_x) - positiona[0])
+                    if ballPos[1] > positiona[1]:
+                        if ballPos[1] > 0.2:
+                            signed = 0
+                        else:
+                            signed = 1
+                    else:
+                        if ballPos[1] < -0.2:
+                            signed = 0
+                        else:
+                            signed = -1
                     ### Phi error to send the PID controller
 
                     error_phi = phid - self.phi
-                    # error_phi_degree = math.degrees(error_phi)
-                    # print(f'error degree == > {error_phi_degree}, error ==> {error_phi}' )
+                    error_phi_degree = math.degrees(error_phi)
+                    print(f'error degree == > {error_phi_degree}, error ==> {error_phi}' )
                     omega, fant_phi, interror_phi, Integral_part_phi = self.PID_Controller_phi(kpi, kii, kdi, deltaT,
                                                                                                error_phi, interror_phi,
                                                                                                fant_phi,
                                                                                                Integral_part_phi)
 
                     ### Calculate the distance error, the robot stop when arrive the ball ###
+                    error_distance = math.sqrt((ballPos[1] - positiona[1]) ** 2 + ((self.ideal_goleiro_x) - positiona[0]) ** 2)
 
-                    error_distance = math.sqrt((ballPos[1] - positiona[1]) ** 2)
+
 
                     ### Acumulative distance error ###
 
@@ -311,7 +319,7 @@ class Corobeu():
 
                     ### Calculate the speed right and left based on the topology robot ###
 
-                    vl, vd, a = self.Speed_CRB(self.v_linear, omega, error_distance, ballPos[1], positiona[1])
+                    vl, vd, a = self.Speed_CRB(self.v_linear, omega, error_distance, signed)
 
 
                     ### Send the speed values to coppeliasim simulato ###
@@ -335,5 +343,5 @@ if __name__ == "__main__":
     kpi = 20
     kii = 1
     kdi = 0.001
-    deltaT = 0.05 # 50 ms
+    deltaT = 0.05
     crb01.Robot_CRB(kpi, kii, kdi, deltaT)

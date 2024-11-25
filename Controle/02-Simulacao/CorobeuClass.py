@@ -294,7 +294,9 @@ class Corobeu():
 
     def Micro_Behaviors(self, pathX, pathY, End_position):
 
-        W_B = [0.39894832971087163, -2.105905809136049, 0.31736796205179807, -2.105179399172271]
+        W_B = [0.39894832971087163, -2.105905809136049, 0.31736796205179807, -2.105179399172271] # Reto
+        # W_B = [-0.024973293083546694, -2.870969075689935, 0.04775503893057847, -2.3766928990983884] # Anti-Horario
+        # W_B = [0.06438700509254595, -2.4500444769455267, 0.03583502267106433, -2.69537854438019] # Horario
         
         spd = ann.ArtificialNeuralNetwork(50)
         a = 1
@@ -375,6 +377,9 @@ class Corobeu():
 
                 self.yOut.append(y_atual)
                 self.xOut.append(x_atual)
+
+                # if x_atual < End_position[0]:
+                #     a = 0
 
                 i = i + 1
 

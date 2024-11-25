@@ -1,0 +1,20 @@
+----------------------------------------------------------------------------------------------------------------------------------
+NCDrill File Report For: panelizado.PcbDoc   22/11/2024  20:30:18
+----------------------------------------------------------------------------------------------------------------------------------
+
+Layer Pair : Top Layer to Bottom Layer
+ASCII RoundHoles File : panelizado.TXT
+
+Tool       Hole Size               Hole Tolerance               Hole Type       Hole Count   Plated         Tool Travel
+----------------------------------------------------------------------------------------------------------------------------------
+T1      0.711mm (28mil)                                           Round             8         PTH        109.91mm (4.33inch)
+T2      0.762mm (30mil)                                           Round             24        PTH        175.16mm (6.90inch)
+T3      0.8mm (31mil)                                             Round             8         PTH        75.45mm (2.97inch)
+T4      0.85mm (33mil)                                            Round             4         PTH        68.75mm (2.71inch)
+T5      0.9mm (35mil)                                             Round             20        PTH        212.49mm (8.37inch)
+T6      1.16mm (46mil)                                            Round             76        PTH        318.57mm (12.54inch)
+T7      1.65mm (65mil)                                            Round             10        PTH        83.93mm (3.30inch)
+----------------------------------------------------------------------------------------------------------------------------------
+Totals                                                                              150
+
+Total Processing Time (hh:mm:ss) : 00:00:00

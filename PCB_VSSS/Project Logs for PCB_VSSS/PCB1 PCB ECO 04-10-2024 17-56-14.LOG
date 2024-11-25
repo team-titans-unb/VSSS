@@ -1,0 +1,66 @@
+Added Component: Designator=U3(MX1616H-Module)
+Add component (AddParameter): Name = "Built-in Protections"; Value = "Over Current"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Category"; Value = "Motor Drivers"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Channels"; Value = "2"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "https://datasheet.ciiva.com:443/pdfs/VipMasterIC/IC/SGST/SGSTS36572/SGSTS36572-1.pdf?src-supplier=IHS+Markit"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "https://datasheet.ciiva.com:443/pdfs/VipMasterIC/IC/SGST/SGSTS36572/SGSTS36572-1.pdf?src-supplier=IHS+Markit"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2Description"; Value = "https://datasheet.ciiva.com/14150/ofl298n-647108-dat-en-14150301.pdf?src-supplier=Distrelec"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2URL"; Value = "https://datasheet.ciiva.com/14150/ofl298n-647108-dat-en-14150301.pdf?src-supplier=Distrelec"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink3Description"; Value = "https://datasheet.ciiva.com/19456/245403-19456698.pdf?src-supplier=Jameco"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink3URL"; Value = "https://datasheet.ciiva.com/19456/245403-19456698.pdf?src-supplier=Jameco"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink4Description"; Value = "https://datasheet.ciiva.com/15109/getdatasheetpartid-50682-15109332.pdf?src-supplier=Verical"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink4URL"; Value = "https://datasheet.ciiva.com/15109/getdatasheetpartid-50682-15109332.pdf?src-supplier=Verical"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink5Description"; Value = "https://datasheet.ciiva.com/25626/0900766b80060c26-25626619.pdf?src-supplier=Rs"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink5URL"; Value = "https://datasheet.ciiva.com/25626/0900766b80060c26-25626619.pdf?src-supplier=Rs"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink6Description"; Value = "https://datasheet.ciiva.com/29306/156128-da-01-en-dual-bridge-driv-l298n-29306997.pdf?src-supplier=Conrad"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink6URL"; Value = "https://datasheet.ciiva.com/29306/156128-da-01-en-dual-bridge-driv-l298n-29306997.pdf?src-supplier=Conrad"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink7Description"; Value = "https://datasheet.ciiva.com/1501/1693054-1501547.pdf?src-supplier=Element14"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink7URL"; Value = "https://datasheet.ciiva.com/1501/1693054-1501547.pdf?src-supplier=Element14"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink8Description"; Value = "https://datasheet.ciiva.com/1608/1693054-1608165.pdf?src-supplier=Newark"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink8URL"; Value = "https://datasheet.ciiva.com/1608/1693054-1608165.pdf?src-supplier=Newark"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink9Description"; Value = "https://datasheet.ciiva.com/1500/1693054-1500714.pdf?src-supplier=Element14"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink9URL"; Value = "https://datasheet.ciiva.com/1500/1693054-1500714.pdf?src-supplier=Element14"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink10Description"; Value = "https://datasheet.ciiva.com/1955/cd00000240-1955436.pdf?src-supplier=Digi-Key"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink10URL"; Value = "https://datasheet.ciiva.com/1955/cd00000240-1955436.pdf?src-supplier=Digi-Key"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink11Description"; Value = "https://datasheet.ciiva.com/4895/cd00000240-4895919.pdf?src-supplier=Mouser"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink11URL"; Value = "https://datasheet.ciiva.com/4895/cd00000240-4895919.pdf?src-supplier=Mouser"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Input Characteristics"; Value = "STANDARD"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Interface IC Type"; Value = "FULL BRIDGE BASED PERIPHERAL DRIVER"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "JESD-609 Code"; Value = "e3"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer"; Value = "STMicroelectronics"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Manufacturer Part Number"; Value = "L298N"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Max Supply Voltage"; Value = "7V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Min Supply Voltage"; Value = "4.5V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Nominal Supply Voltage"; Value = "5V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Output Characteristics"; Value = "TOTEM-POLE"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Output Current Flow Direction"; Value = "SOURCE AND SINK"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Output Polarity"; Value = "True"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package Shape"; Value = "Rectangular"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Package Style"; Value = "FLANGE MOUNTMeter"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pins"; Value = "15"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Pricing"; Value = "1=11,87, 10=10,91, 25=10,14, 50=10,14, 100=8,76, 250=8,44, 500=7,89, 1000=7,89, 10000=7,89 (USD)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Qualification Status"; Value = "Not Qualified"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Reach SVHC Compliant"; Value = "No"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "RoHS"; Value = "Yes"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "RoHS Compliant"; Value = "Yes"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Stock"; Value = "19"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier"; Value = "Mouser"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supplier Part Number"; Value = "MX1616H"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supply Voltage1-Max"; Value = "46V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supply Voltage1-Min"; Value = "4.8V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Supply Voltage1-Nom"; Value = "42V"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Surface Mount"; Value = "No"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Terminal Finish"; Value = "Tin"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Terminal Form"; Value = "Through Hole"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Terminal Position"; Value = "ZIG-ZAG"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=NetU2_25 Pin=U3-1
+Added Pin To Net: NetName=NetU2_24 Pin=U3-2
+Added Pin To Net: NetName=NetU2_23 Pin=U3-3
+Added Pin To Net: NetName=NetU2_22 Pin=U3-4
+Added Pin To Net: NetName=NetMTR2_2 Pin=U3-5
+Added Pin To Net: NetName=NetMTR2_1 Pin=U3-6
+Added Pin To Net: NetName=NetMTR1_2 Pin=U3-7
+Added Pin To Net: NetName=NetMTR1_1 Pin=U3-8
+Added Pin To Net: NetName=GND Pin=U3-9
+Added Pin To Net: NetName=7V4 Pin=U3-10
+Added Member To Class: ClassName=Sheet1 Member=Component U3 MX1616H-Module

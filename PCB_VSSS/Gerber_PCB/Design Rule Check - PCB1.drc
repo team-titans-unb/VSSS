@@ -1,0 +1,298 @@
+Protel Design System Design Rule Check
+PCB File : D:\Documents\Titans\VSSS\VSSS_TITANS_V1\VSSS_TITANS_V1\PCB1.PcbDoc
+Date     : 22/11/2024
+Time     : 16:52:42
+
+Processing Rule : Clearance Constraint (Gap=0.254mm) (All),(All)
+Rule Violations :0
+
+Processing Rule : Clearance Constraint (Gap=0mm) (Disabled)(InComponent('U3')),(All)
+Rule Violations :0
+
+Processing Rule : Clearance Constraint (Gap=0mm) (Disabled)(InComponent('U2')),(All)
+Rule Violations :0
+
+Processing Rule : Short-Circuit Constraint (Allowed=No) (All),(All)
+   Violation between Short-Circuit Constraint: Between Pad C1-1(146.7mm,91.825mm) on Multi-Layer And Track (141.587mm,96.938mm)(146.7mm,91.825mm) on Bottom Layer Location : [X = 146.563mm][Y = 91.962mm]
+   Violation between Short-Circuit Constraint: Between Pad C1-1(146.7mm,91.825mm) on Multi-Layer And Track (146.7mm,91.825mm)(151.562mm,96.687mm) on Bottom Layer Location : [X = 146.837mm][Y = 91.962mm]
+   Violation between Short-Circuit Constraint: Between Pad C1-2(151.7mm,91.825mm) on Multi-Layer And Track (151.7mm,86.9mm)(151.7mm,91.825mm) on Top Layer Location : [X = 151.7mm][Y = 91.687mm]
+   Violation between Short-Circuit Constraint: Between Pad C2-1(146.7mm,86.9mm) on Multi-Layer And Track (139.675mm,86.9mm)(146.7mm,86.9mm) on Bottom Layer Location : [X = 146.563mm][Y = 86.9mm]
+   Violation between Short-Circuit Constraint: Between Pad C2-1(146.7mm,86.9mm) on Multi-Layer And Track (144.594mm,86.9mm)(146.7mm,86.9mm) on Top Layer Location : [X = 146.563mm][Y = 86.9mm]
+   Violation between Short-Circuit Constraint: Between Pad C2-1(146.7mm,86.9mm) on Multi-Layer And Track (146.7mm,86.9mm)(149.208mm,89.408mm) on Top Layer Location : [X = 146.837mm][Y = 87.037mm]
+   Violation between Short-Circuit Constraint: Between Pad C2-2(151.7mm,86.9mm) on Multi-Layer And Track (149.925mm,85.125mm)(151.7mm,86.9mm) on Top Layer Location : [X = 151.566mm][Y = 86.766mm]
+   Violation between Short-Circuit Constraint: Between Pad C2-2(151.7mm,86.9mm) on Multi-Layer And Track (151.7mm,86.9mm)(151.7mm,91.825mm) on Top Layer Location : [X = 151.7mm][Y = 87.038mm]
+   Violation between Short-Circuit Constraint: Between Pad CL1-1(157.5mm,85.625mm) on Multi-Layer And Track (153.692mm,89.433mm)(157.5mm,85.625mm) on Bottom Layer Location : [X = 157.32mm][Y = 85.805mm]
+   Violation between Short-Circuit Constraint: Between Pad CL1-10(167.66mm,90.705mm) on Multi-Layer And Track (164.819mm,93.546mm)(167.66mm,90.705mm) on Bottom Layer Location : [X = 167.49mm][Y = 90.875mm]
+   Violation between Short-Circuit Constraint: Between Pad CL1-11(167.66mm,88.165mm) on Multi-Layer And Track (164.879mm,90.946mm)(167.66mm,88.165mm) on Top Layer Location : [X = 167.49mm][Y = 88.335mm]
+   Violation between Short-Circuit Constraint: Between Pad CL1-12(167.66mm,85.625mm) on Multi-Layer And Track (167.66mm,85.625mm)(169.096mm,87.061mm) on Top Layer Location : [X = 167.83mm][Y = 85.795mm]
+   Violation between Short-Circuit Constraint: Between Pad CL1-2(157.5mm,88.165mm) on Multi-Layer And Track (155.681mm,89.984mm)(157.5mm,88.165mm) on Top Layer Location : [X = 157.33mm][Y = 88.335mm]
+   Violation between Short-Circuit Constraint: Between Pad CL1-3(157.5mm,90.705mm) on Multi-Layer And Track (157.5mm,90.705mm)(162.975mm,96.18mm) on Top Layer Location : [X = 157.67mm][Y = 90.875mm]
+   Violation between Short-Circuit Constraint: Between Pad CL1-5(157.5mm,95.785mm) on Multi-Layer And Track (155.964mm,97.321mm)(157.5mm,95.785mm) on Bottom Layer Location : [X = 157.33mm][Y = 95.955mm]
+   Violation between Short-Circuit Constraint: Between Pad CL1-6(157.5mm,98.325mm) on Multi-Layer And Track (157.5mm,98.325mm)(157.622mm,98.447mm) on Bottom Layer Location : [X = 157.561mm][Y = 98.386mm]
+   Violation between Short-Circuit Constraint: Between Pad CL1-6(157.5mm,98.325mm) on Multi-Layer And Track (157.622mm,98.447mm)(157.622mm,100.483mm) on Bottom Layer Location : [X = 157.622mm][Y = 98.567mm]
+   Violation between Short-Circuit Constraint: Between Pad CL1-7(167.66mm,98.325mm) on Multi-Layer And Track (167.66mm,98.325mm)(167.66mm,103.442mm) on Top Layer Location : [X = 167.66mm][Y = 98.506mm]
+   Violation between Short-Circuit Constraint: Between Pad CL1-8(167.66mm,95.785mm) on Multi-Layer And Track (166.226mm,97.219mm)(167.66mm,95.785mm) on Top Layer Location : [X = 167.49mm][Y = 95.955mm]
+   Violation between Short-Circuit Constraint: Between Pad D1-2(131.3mm,136.82mm) on Multi-Layer And Track (131.3mm,136.82mm)(131.415mm,136.705mm) on Top Layer Location : [X = 131.357mm][Y = 136.763mm]
+   Violation between Short-Circuit Constraint: Between Pad D1-2(131.3mm,136.82mm) on Multi-Layer And Track (131.415mm,136.705mm)(132.099mm,136.705mm) on Top Layer Location : [X = 131.508mm][Y = 136.705mm]
+   Violation between Short-Circuit Constraint: Between Pad D1-2(131.3mm,136.82mm) on Multi-Layer And Track (132.099mm,136.705mm)(133.1mm,135.704mm) on Top Layer Location : [X = 131.849mm][Y = 136.732mm]
+   Violation between Short-Circuit Constraint: Between Pad E1-2(141.1mm,103.3mm) on Bottom Layer And Track (141.1mm,101.282mm)(141.1mm,103.3mm) on Bottom Layer Location : [X = 141.1mm][Y = 102.615mm]
+   Violation between Short-Circuit Constraint: Between Pad E1-2(141.1mm,103.3mm) on Bottom Layer And Track (141.1mm,101.282mm)(141.587mm,100.795mm) on Bottom Layer Location : [X = 141.1mm][Y = 101.606mm]
+   Violation between Short-Circuit Constraint: Between Pad E1-3(143.64mm,119.556mm) on Bottom Layer And Track (143.64mm,117.318mm)(143.64mm,119.556mm) on Bottom Layer Location : [X = 143.64mm][Y = 118.871mm]
+   Violation between Short-Circuit Constraint: Between Pad E1-4(141.1mm,119.556mm) on Bottom Layer And Track (141.1mm,119.556mm)(141.1mm,121.509mm) on Bottom Layer Location : [X = 141.1mm][Y = 120.241mm]
+   Violation between Short-Circuit Constraint: Between Pad E1-4(141.1mm,119.556mm) on Bottom Layer And Track (141.1mm,121.509mm)(142.375mm,122.784mm) on Bottom Layer Location : [X = 141.102mm][Y = 121.218mm]
+   Violation between Short-Circuit Constraint: Between Pad E2-2(159.275mm,119.4mm) on Bottom Layer And Track (159.275mm,108.051mm)(159.275mm,119.4mm) on Bottom Layer Location : [X = 159.275mm][Y = 118.715mm]
+   Violation between Short-Circuit Constraint: Between Pad E2-3(156.735mm,103.144mm) on Bottom Layer And Track (155.964mm,100.346mm)(156.735mm,101.117mm) on Bottom Layer Location : [X = 156.735mm][Y = 101.445mm]
+   Violation between Short-Circuit Constraint: Between Pad E2-3(156.735mm,103.144mm) on Bottom Layer And Track (156.735mm,101.117mm)(156.735mm,103.144mm) on Bottom Layer Location : [X = 156.735mm][Y = 102.459mm]
+   Violation between Short-Circuit Constraint: Between Pad E2-4(159.275mm,103.144mm) on Bottom Layer And Track (157.622mm,100.483mm)(159.275mm,102.136mm) on Bottom Layer Location : [X = 159.105mm][Y = 101.966mm]
+   Violation between Short-Circuit Constraint: Between Pad E2-4(159.275mm,103.144mm) on Bottom Layer And Track (159.275mm,102.136mm)(159.275mm,103.144mm) on Bottom Layer Location : [X = 159.275mm][Y = 102.64mm]
+   Violation between Short-Circuit Constraint: Between Pad MTR1-1(147.425mm,108.5mm) on Bottom Layer And Track (147.425mm,108.5mm)(149.05mm,110.125mm) on Bottom Layer Location : [X = 147.889mm][Y = 108.68mm]
+   Violation between Short-Circuit Constraint: Between Pad MTR1-2(147.425mm,114.2mm) on Bottom Layer And Track (146.51mm,112.293mm)(147.425mm,113.208mm) on Bottom Layer Location : [X = 147.42mm][Y = 113.523mm]
+   Violation between Short-Circuit Constraint: Between Pad MTR1-2(147.425mm,114.2mm) on Bottom Layer And Track (147.425mm,113.208mm)(147.425mm,114.2mm) on Bottom Layer Location : [X = 147.425mm][Y = 114.019mm]
+   Violation between Short-Circuit Constraint: Between Pad MTR2-1(152.95mm,114.2mm) on Bottom Layer And Track (150.554mm,114.2mm)(152.95mm,114.2mm) on Bottom Layer Location : [X = 152.266mm][Y = 114.2mm]
+   Violation between Short-Circuit Constraint: Between Pad MTR2-2(152.95mm,108.5mm) on Bottom Layer And Track (150.63mm,108.5mm)(152.95mm,108.5mm) on Bottom Layer Location : [X = 152.265mm][Y = 108.5mm]
+   Violation between Short-Circuit Constraint: Between Pad P1-1(131mm,98.315mm) on Multi-Layer And Track (131mm,95.575mm)(131mm,98.315mm) on Bottom Layer Location : [X = 131mm][Y = 97.978mm]
+   Violation between Short-Circuit Constraint: Between Pad P1-2(131mm,102.275mm) on Multi-Layer And Track (131mm,102.275mm)(132.85mm,104.125mm) on Top Layer Location : [X = 131.294mm][Y = 102.569mm]
+   Violation between Short-Circuit Constraint: Between Pad P2-1(130.85mm,110.94mm) on Multi-Layer And Track (130.85mm,110.94mm)(132.85mm,108.94mm) on Top Layer Location : [X = 131.187mm][Y = 110.603mm]
+   Violation between Short-Circuit Constraint: Between Pad P3-1(167.725mm,133.085mm) on Multi-Layer And Track (167.725mm,133.085mm)(167.725mm,134.62mm) on Top Layer Location : [X = 167.725mm][Y = 133.259mm]
+   Violation between Short-Circuit Constraint: Between Pad P3-3(167.725mm,128.005mm) on Multi-Layer And Track (165.19mm,130.54mm)(167.725mm,128.005mm) on Bottom Layer Location : [X = 167.56mm][Y = 128.17mm]
+   Violation between Short-Circuit Constraint: Between Pad P3-4(167.725mm,125.465mm) on Multi-Layer And Track (165.18mm,122.92mm)(167.725mm,125.465mm) on Top Layer Location : [X = 167.56mm][Y = 125.3mm]
+   Violation between Short-Circuit Constraint: Between Pad R1-1(131.55mm,130.325mm) on Multi-Layer And Track (131.55mm,130.254mm)(131.825mm,130.529mm) on Top Layer Location : [X = 131.687mm][Y = 130.391mm]
+   Violation between Short-Circuit Constraint: Between Pad R1-1(131.55mm,130.325mm) on Multi-Layer And Track (131.825mm,130.529mm)(131.825mm,131.45mm) on Top Layer Location : [X = 131.824mm][Y = 130.563mm]
+   Violation between Short-Circuit Constraint: Between Pad U1-1(142.475mm,86.935mm) on Top Layer And Track (141.2mm,86.935mm)(142.475mm,86.935mm) on Top Layer Location : [X = 141.838mm][Y = 86.935mm]
+   Violation between Short-Circuit Constraint: Between Pad U1-1(142.475mm,86.935mm) on Top Layer And Track (142.475mm,86.935mm)(144.559mm,86.935mm) on Top Layer Location : [X = 143.149mm][Y = 86.935mm]
+   Violation between Short-Circuit Constraint: Between Pad U1-1(142.475mm,86.935mm) on Top Layer And Track (144.559mm,86.935mm)(144.594mm,86.9mm) on Top Layer Location : [X = 144.191mm][Y = 86.935mm]
+   Violation between Short-Circuit Constraint: Between Pad U1-1(142.475mm,86.935mm) on Top Layer And Track (144.594mm,86.9mm)(146.7mm,86.9mm) on Top Layer Location : [X = 144.209mm][Y = 86.9mm]
+   Violation between Short-Circuit Constraint: Between Pad U1-3(142.475mm,92.015mm) on Top Layer And Track (142.434mm,92.09mm)(142.475mm,92.015mm) on Top Layer Location : [X = 142.454mm][Y = 92.052mm]
+   Violation between Short-Circuit Constraint: Between Pad U1-4(132.725mm,89.475mm) on Top Layer And Track (132.725mm,89.225mm)(132.725mm,89.475mm) on Top Layer Location : [X = 132.725mm][Y = 89.35mm]
+   Violation between Short-Circuit Constraint: Between Pad U1-4(132.725mm,89.475mm) on Top Layer And Track (132.725mm,89.225mm)(136.825mm,85.125mm) on Top Layer Location : [X = 134.774mm][Y = 87.175mm]
+   Violation between Short-Circuit Constraint: Between Pad U1-4(132.725mm,89.475mm) on Top Layer And Track (132.725mm,89.475mm)(134.2mm,90.95mm) on Top Layer Location : [X = 133.462mm][Y = 90.213mm]
+   Violation between Short-Circuit Constraint: Between Pad U1-4(132.725mm,89.475mm) on Top Layer And Track (134.2mm,90.95mm)(134.2mm,98.875mm) on Top Layer Location : [X = 134.2mm][Y = 92.599mm]
+   Violation between Short-Circuit Constraint: Between Pad U1-4(132.725mm,89.475mm) on Top Layer And Track (136.825mm,85.125mm)(149.925mm,85.125mm) on Top Layer Location : [X = 136.824mm][Y = 85.125mm]
+   Violation between Short-Circuit Constraint: Between Pad U2-1(162.975mm,97.52mm) on Multi-Layer And Track (157.5mm,90.705mm)(162.975mm,96.18mm) on Top Layer Location : [X = 162.975mm][Y = 96.551mm]
+   Violation between Short-Circuit Constraint: Between Pad U2-1(162.975mm,97.52mm) on Multi-Layer And Track (161.069mm,97.52mm)(162.975mm,97.52mm) on Top Layer Location : [X = 162.551mm][Y = 97.52mm]
+   Violation between Short-Circuit Constraint: Between Pad U2-1(162.975mm,97.52mm) on Multi-Layer And Track (162.975mm,96.18mm)(162.975mm,97.52mm) on Top Layer Location : [X = 162.975mm][Y = 97.221mm]
+   Violation between Short-Circuit Constraint: Between Pad U2-10(162.975mm,120.38mm) on Multi-Layer And Track (162.975mm,120.38mm)(165.235mm,120.38mm) on Top Layer Location : [X = 163.401mm][Y = 120.38mm]
+   Violation between Short-Circuit Constraint: Between Pad U2-11(162.975mm,122.92mm) on Multi-Layer And Track (162.975mm,122.92mm)(165.18mm,122.92mm) on Top Layer Location : [X = 163.401mm][Y = 122.92mm]
+   Violation between Short-Circuit Constraint: Between Pad U2-14(162.975mm,130.54mm) on Multi-Layer And Track (162.975mm,130.54mm)(165.19mm,130.54mm) on Bottom Layer Location : [X = 163.401mm][Y = 130.54mm]
+   Violation between Short-Circuit Constraint: Between Pad U2-22(137.575mm,117.84mm) on Multi-Layer And Track (137.575mm,117.84mm)(139.835mm,117.84mm) on Top Layer Location : [X = 138.001mm][Y = 117.84mm]
+   Violation between Short-Circuit Constraint: Between Pad U2-23(137.575mm,115.3mm) on Multi-Layer And Track (137.575mm,115.3mm)(143.264mm,115.3mm) on Top Layer Location : [X = 138.001mm][Y = 115.3mm]
+   Violation between Short-Circuit Constraint: Between Pad U2-24(137.575mm,112.76mm) on Multi-Layer And Track (137.575mm,112.76mm)(139.54mm,112.76mm) on Top Layer Location : [X = 138.001mm][Y = 112.76mm]
+   Violation between Short-Circuit Constraint: Between Pad U2-25(137.575mm,110.22mm) on Multi-Layer And Track (137.575mm,110.22mm)(139.648mm,110.22mm) on Top Layer Location : [X = 138.001mm][Y = 110.22mm]
+   Violation between Short-Circuit Constraint: Between Pad U2-29(137.575mm,100.06mm) on Multi-Layer And Track (135.385mm,100.06mm)(137.575mm,100.06mm) on Top Layer Location : [X = 137.149mm][Y = 100.06mm]
+   Violation between Short-Circuit Constraint: Between Pad U2-7(162.975mm,112.76mm) on Multi-Layer And Track (162.975mm,112.76mm)(164.702mm,112.76mm) on Bottom Layer Location : [X = 163.401mm][Y = 112.76mm]
+   Violation between Short-Circuit Constraint: Between Pad U2-8(162.975mm,115.3mm) on Multi-Layer And Track (162.975mm,115.3mm)(164.921mm,115.3mm) on Bottom Layer Location : [X = 163.401mm][Y = 115.3mm]
+   Violation between Short-Circuit Constraint: Between Pad U2-9(162.975mm,117.84mm) on Multi-Layer And Track (162.975mm,117.84mm)(164.879mm,117.84mm) on Top Layer Location : [X = 163.401mm][Y = 117.84mm]
+   Violation between Short-Circuit Constraint: Between Pad U3-1(149.05mm,126.65mm) on Multi-Layer And Track (149.05mm,122.738mm)(149.05mm,126.65mm) on Top Layer Location : [X = 149.05mm][Y = 126.226mm]
+   Violation between Short-Circuit Constraint: Between Pad U3-10(158.71mm,131.13mm) on Top Layer And Track (158.71mm,121.993mm)(158.71mm,131.13mm) on Top Layer Location : [X = 158.71mm][Y = 130.446mm]
+   Violation between Short-Circuit Constraint: Between Pad U3-2(146.51mm,126.65mm) on Multi-Layer And Track (146.51mm,116.84mm)(146.51mm,126.65mm) on Top Layer Location : [X = 146.51mm][Y = 126.224mm]
+   Violation between Short-Circuit Constraint: Between Pad U3-3(143.97mm,126.65mm) on Multi-Layer And Track (143.97mm,116.006mm)(143.97mm,126.65mm) on Top Layer Location : [X = 143.97mm][Y = 126.224mm]
+   Violation between Short-Circuit Constraint: Between Pad U3-4(141.43mm,126.65mm) on Multi-Layer And Track (141.43mm,119.435mm)(141.43mm,126.65mm) on Top Layer Location : [X = 141.43mm][Y = 126.224mm]
+   Violation between Short-Circuit Constraint: Between Pad U3-5(141.43mm,111.31mm) on Multi-Layer And Track (141.43mm,109.22mm)(141.43mm,111.31mm) on Bottom Layer Location : [X = 141.43mm][Y = 110.884mm]
+   Violation between Short-Circuit Constraint: Between Pad U3-6(143.97mm,111.31mm) on Multi-Layer And Track (143.97mm,111.31mm)(143.97mm,114.3mm) on Bottom Layer Location : [X = 143.97mm][Y = 111.736mm]
+   Violation between Short-Circuit Constraint: Between Pad U3-7(146.51mm,111.31mm) on Multi-Layer And Track (146.51mm,111.31mm)(146.51mm,112.293mm) on Bottom Layer Location : [X = 146.51mm][Y = 111.736mm]
+   Violation between Short-Circuit Constraint: Between Pad U3-7(146.51mm,111.31mm) on Multi-Layer And Track (146.51mm,112.293mm)(147.425mm,113.208mm) on Bottom Layer Location : [X = 146.619mm][Y = 112.227mm]
+   Violation between Short-Circuit Constraint: Between Pad U3-8(149.05mm,111.31mm) on Multi-Layer And Track (147.425mm,108.5mm)(149.05mm,110.125mm) on Bottom Layer Location : [X = 149mm][Y = 110.292mm]
+   Violation between Short-Circuit Constraint: Between Pad U3-8(149.05mm,111.31mm) on Multi-Layer And Track (149.05mm,110.125mm)(149.05mm,111.31mm) on Bottom Layer Location : [X = 149.05mm][Y = 110.884mm]
+   Violation between Short-Circuit Constraint: Between Pad U3-9(156.17mm,131.13mm) on Top Layer And Track (156.015mm,127.465mm)(156.015mm,130.975mm) on Top Layer Location : [X = 156.015mm][Y = 130.367mm]
+   Violation between Short-Circuit Constraint: Between Pad U3-9(156.17mm,131.13mm) on Top Layer And Track (156.015mm,130.975mm)(156.17mm,131.13mm) on Top Layer Location : [X = 156.092mm][Y = 131.052mm]
+Rule Violations :82
+
+Processing Rule : Un-Routed Net Constraint ( (All) )
+   Violation between Un-Routed Net Constraint: Polygon  (NONET_L02_P-001) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Polygon  (NONET_L02_P-001) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (130.85mm,110.94mm)(132.85mm,108.94mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (131.3mm,136.82mm)(131.415mm,136.705mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (131.415mm,136.705mm)(132.099mm,136.705mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (131.55mm,130.254mm)(131.825mm,130.529mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (131.825mm,130.529mm)(131.825mm,131.45mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (131.825mm,131.45mm)(133.1mm,132.725mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (131mm,102.275mm)(132.85mm,104.125mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (131mm,95.575mm)(131mm,98.315mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (131mm,95.575mm)(139.675mm,86.9mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (132.099mm,136.705mm)(133.1mm,135.704mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (132.725mm,89.225mm)(132.725mm,89.475mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (132.725mm,89.225mm)(136.825mm,85.125mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (132.725mm,89.475mm)(134.2mm,90.95mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (132.85mm,104.125mm)(132.85mm,108.94mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (133.1mm,132.725mm)(133.1mm,135.704mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (134.2mm,90.95mm)(134.2mm,98.875mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (134.2mm,98.875mm)(135.385mm,100.06mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (135.385mm,100.06mm)(137.575mm,100.06mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (136.825mm,85.125mm)(149.925mm,85.125mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (137.575mm,110.22mm)(139.648mm,110.22mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (137.575mm,112.76mm)(139.54mm,112.76mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (137.575mm,115.3mm)(143.264mm,115.3mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (137.575mm,117.84mm)(139.835mm,117.84mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (139.54mm,112.76mm)(140.8mm,114.021mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (139.648mm,110.22mm)(141.765mm,108.102mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (139.675mm,86.9mm)(146.7mm,86.9mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (139.683mm,101.144mm)(139.683mm,113.36mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (139.683mm,101.144mm)(140.533mm,100.294mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (139.683mm,113.36mm)(143.64mm,117.318mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (139.835mm,117.84mm)(141.43mm,119.435mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (140.533mm,95.593mm)(140.533mm,100.294mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (140.533mm,95.593mm)(146.693mm,89.433mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (140.8mm,114.021mm)(143.691mm,114.021mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (141.1mm,101.282mm)(141.1mm,103.3mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (141.1mm,101.282mm)(141.587mm,100.795mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (141.1mm,119.556mm)(141.1mm,121.509mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (141.1mm,121.509mm)(142.375mm,122.784mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (141.2mm,86.935mm)(142.475mm,86.935mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (141.43mm,109.22mm)(141.43mm,111.31mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (141.43mm,109.22mm)(143.589mm,107.061mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (141.43mm,119.435mm)(141.43mm,126.65mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (141.587mm,96.938mm)(141.587mm,100.795mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (141.587mm,96.938mm)(146.7mm,91.825mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (141.765mm,108.102mm)(148.725mm,108.102mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (142.375mm,122.784mm)(149.636mm,122.784mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (142.434mm,92.09mm)(142.475mm,92.015mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (142.475mm,86.935mm)(144.559mm,86.935mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (143.264mm,115.3mm)(143.97mm,116.006mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (143.589mm,107.061mm)(149.868mm,107.061mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (143.64mm,117.318mm)(143.64mm,119.556mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (143.691mm,114.021mm)(146.51mm,116.84mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (143.97mm,111.31mm)(143.97mm,114.3mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (143.97mm,114.3mm)(145.646mm,115.976mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (143.97mm,116.006mm)(143.97mm,126.65mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (144.559mm,86.935mm)(144.594mm,86.9mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (144.594mm,86.9mm)(146.7mm,86.9mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (145.646mm,115.976mm)(148.777mm,115.976mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (146.51mm,111.31mm)(146.51mm,112.293mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (146.51mm,112.293mm)(147.425mm,113.208mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (146.51mm,116.84mm)(146.51mm,126.65mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (146.693mm,89.433mm)(153.692mm,89.433mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (146.7mm,86.9mm)(149.208mm,89.408mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (146.7mm,91.825mm)(151.562mm,96.687mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (147.425mm,108.5mm)(149.05mm,110.125mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (147.425mm,113.208mm)(147.425mm,114.2mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (148.725mm,108.102mm)(150.706mm,110.084mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (148.777mm,115.976mm)(150.554mm,114.2mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (149.05mm,110.125mm)(149.05mm,111.31mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (149.05mm,122.738mm)(149.05mm,126.65mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (149.05mm,122.738mm)(150.706mm,121.082mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (149.208mm,102.845mm)(154.065mm,107.702mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (149.208mm,89.408mm)(149.208mm,102.845mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (149.636mm,122.784mm)(152.949mm,119.471mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (149.868mm,107.061mm)(149.868mm,107.738mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (149.868mm,107.738mm)(150.63mm,108.5mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (149.925mm,85.125mm)(151.7mm,86.9mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (150.554mm,114.2mm)(152.95mm,114.2mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (150.63mm,108.5mm)(152.95mm,108.5mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (150.706mm,110.084mm)(150.706mm,121.082mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (151.562mm,100.981mm)(158.632mm,108.051mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (151.562mm,96.687mm)(151.562mm,100.981mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (151.7mm,86.9mm)(151.7mm,91.825mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (152.949mm,118.628mm)(152.949mm,119.471mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (152.949mm,118.628mm)(154.618mm,116.959mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (153.692mm,89.433mm)(157.5mm,85.625mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (154.065mm,107.702mm)(154.065mm,117.348mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (154.065mm,117.348mm)(158.71mm,121.993mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (154.618mm,116.959mm)(154.916mm,116.959mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (154.916mm,116.959mm)(156.675mm,115.2mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (155.681mm,102.206mm)(156.675mm,103.2mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (155.681mm,89.984mm)(155.681mm,102.206mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (155.681mm,89.984mm)(157.5mm,88.165mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (155.925mm,127.375mm)(156.015mm,127.465mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (155.964mm,100.346mm)(156.735mm,101.117mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (155.964mm,97.321mm)(155.964mm,100.346mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (155.964mm,97.321mm)(157.5mm,95.785mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (156.015mm,127.465mm)(156.015mm,130.975mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (156.015mm,130.975mm)(156.17mm,131.13mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (156.675mm,103.2mm)(156.675mm,115.2mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (156.735mm,101.117mm)(156.735mm,103.144mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (157.5mm,90.705mm)(162.975mm,96.18mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (157.5mm,98.325mm)(157.622mm,98.447mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (157.622mm,100.483mm)(159.275mm,102.136mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (157.622mm,98.447mm)(157.622mm,100.483mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (158.632mm,108.051mm)(159.275mm,108.051mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (158.71mm,121.993mm)(158.71mm,131.13mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (159.275mm,102.136mm)(159.275mm,103.144mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (159.275mm,108.051mm)(159.275mm,119.4mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (159.275mm,108.051mm)(160.691mm,106.635mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (160.691mm,96.629mm)(160.691mm,106.635mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (160.691mm,96.629mm)(163.774mm,93.546mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (161.069mm,133.985mm)(161.831mm,134.747mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (161.069mm,97.52mm)(161.069mm,133.985mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (161.069mm,97.52mm)(162.975mm,97.52mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (161.831mm,134.747mm)(167.598mm,134.747mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (162.975mm,112.76mm)(164.702mm,112.76mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (162.975mm,115.3mm)(164.921mm,115.3mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (162.975mm,117.84mm)(164.879mm,117.84mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (162.975mm,120.38mm)(165.235mm,120.38mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (162.975mm,122.92mm)(165.18mm,122.92mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (162.975mm,130.54mm)(165.19mm,130.54mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (162.975mm,96.18mm)(162.975mm,97.52mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (163.774mm,93.546mm)(164.819mm,93.546mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (164.702mm,112.76mm)(164.879mm,112.582mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (164.819mm,93.546mm)(167.66mm,90.705mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (164.879mm,106.223mm)(164.879mm,112.582mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (164.879mm,106.223mm)(167.66mm,103.442mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (164.879mm,90.946mm)(164.879mm,117.84mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (164.879mm,90.946mm)(167.66mm,88.165mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (164.921mm,115.3mm)(166.988mm,113.233mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (165.18mm,122.92mm)(167.725mm,125.465mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (165.19mm,130.54mm)(167.725mm,128.005mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (165.235mm,120.38mm)(166.149mm,119.466mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (166.149mm,113.03mm)(166.149mm,119.466mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (166.149mm,113.03mm)(169.096mm,110.084mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (166.226mm,107.696mm)(166.988mm,108.458mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (166.226mm,97.219mm)(166.226mm,107.696mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (166.226mm,97.219mm)(167.66mm,95.785mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (166.988mm,108.458mm)(166.988mm,113.233mm) on Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (167.598mm,134.747mm)(167.725mm,134.62mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (167.66mm,85.625mm)(169.096mm,87.061mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (167.66mm,98.325mm)(167.66mm,103.442mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (167.725mm,133.085mm)(167.725mm,134.62mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Track (169.096mm,87.061mm)(169.096mm,110.084mm) on Top Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Via (155.925mm,127.375mm) from Top Layer to Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Via (156.675mm,115.2mm) from Top Layer to Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Via (166.988mm,108.458mm) from Top Layer to Bottom Layer Dead Copper - Net Not Assigned.
+   Violation between Un-Routed Net Constraint: Via (167.66mm,103.442mm) from Top Layer to Bottom Layer Dead Copper - Net Not Assigned.
+Rule Violations :150
+
+Processing Rule : Modified Polygon (Allow modified: No), (Allow shelved: No)
+Rule Violations :0
+
+Processing Rule : Width Constraint (Min=0.5mm) (Max=1mm) (Preferred=0.8mm) (All)
+Rule Violations :0
+
+Processing Rule : Routing Topology Rule(Topology=Shortest) (All)
+Rule Violations :0
+
+Processing Rule : Power Plane Connect Rule(Relief Connect )(Expansion=0.508mm) (Conductor Width=0.254mm) (Air Gap=0.254mm) (Entries=4) (All)
+Rule Violations :0
+
+Processing Rule : Hole Size Constraint (Min=0.025mm) (Max=2.54mm) (All)
+Rule Violations :0
+
+Processing Rule : Hole To Hole Clearance (Gap=0.254mm) (All),(All)
+Rule Violations :0
+
+Processing Rule : Minimum Solder Mask Sliver (Gap=0.254mm) (All),(All)
+Rule Violations :0
+
+Processing Rule : Silk To Solder Mask (Clearance=0.254mm) (Disabled)(IsPad),(All)
+Rule Violations :0
+
+Processing Rule : Silk To Solder Mask (Clearance=0mm) (Disabled)(HasFootprint('MODULE_ESP32_DEVKIT_V1')),(All)
+Rule Violations :0
+
+Processing Rule : Silk To Solder Mask (Clearance=0mm) (IsPad),(All)
+Rule Violations :0
+
+Processing Rule : Silk to Silk (Clearance=0mm) (All),(All)
+Rule Violations :0
+
+Processing Rule : Silk to Silk (Clearance=0.254mm) (Disabled)(All),(All)
+Rule Violations :0
+
+Processing Rule : Net Antennae (Tolerance=0mm) (All)
+Rule Violations :0
+
+Processing Rule : Height Constraint (Min=0mm) (Max=25.4mm) (Prefered=12.7mm) (All)
+Rule Violations :0
+
+
+Violations Detected : 232
+Waived Violations : 0
+Time Elapsed        : 00:00:01

@@ -31,6 +31,7 @@ import math
 import sim
 import numpy as np
 import math as mat
+import pandas as pd
 import time
 
 class Corobeu():
@@ -58,10 +59,17 @@ class Corobeu():
         self.y_out = []
         self.x_out = []
         self.phi = 0
-        self.v_max = 8
-        self.v_min = -8
-        self.v_linear = 5
+        self.v_max = 20
+        self.v_min = -20
+        self.v_linear = 16
         self.posError = []
+        self.positions = []
+        self.rv = []
+        self.lv = []
+        self.phid = []
+        self.phiRobot = []
+        self.errorPhi = []
+        self.ballPosition = []
 
     def connect_CRB(self, port):
         """""
@@ -118,8 +126,8 @@ class Corobeu():
         vd = (2 * U + omega * 7.5) / (2 * 3.2)
         vl = (2 * U - omega * 7.5) / (2 * 3.2)
         a = 1
-        print(f'vl === {vl} vd == {vd}')
-        print(f' omega == {omega}')
+        # print(f'vl === {vl} vd == {vd}')
+        # print(f' omega == {omega}')
         ### the first time #####
 
         if omega >= 1 or omega <= -1:
@@ -148,7 +156,7 @@ class Corobeu():
 
         ### When arrive to the goal ###
 
-        if error_distance <= 0.03:
+        if error_distance <= 0.07:
             a = 0
             vl = 0
             vd = 0
@@ -218,6 +226,23 @@ class Corobeu():
         # print(f'Integral_part == {Integral_part}')
         return PID, f, interror, Integral_part
 
+    def save_to_dataframe(self, filename='robot_data.csv'):
+        """ Saves the lv, rv, and positions lists into a DataFrame and stores it as a CSV file. """
+        data = {
+            'Left Wheel Speed': self.lv,
+            'Right Wheel Speed': self.rv,
+            'Position X': [pos[0] for pos in self.positions],
+            'Position Y': [pos[1] for pos in self.positions],
+            'Robot phi': self.phiRobot,
+            'Error phi': self.errorPhi,
+            'Ball Position X': [pos[0] for pos in self.ballPosition],
+            'Ball Position Y': [pos[1] for pos in self.ballPosition],
+            'Desired Phi': self.phid
+        }
+        df = pd.DataFrame(data)
+        df.to_csv(filename, index=False)
+        print("Data saved to 'robot_data.csv'")
+
     def Robot_CRB(self, kpi, kii, kdi, deltaT):
 
         """""
@@ -248,6 +273,7 @@ class Corobeu():
         Integral_part_phi = 0
         fant_phi = 0
         cont0 = 0
+        positiona = []
 
         ### Make the communication with coppeliaSim ###
 
@@ -264,7 +290,7 @@ class Corobeu():
                     s, positiona = sim.simxGetObjectPosition(clientID, robot, -1, sim.simx_opmode_streaming)
                     s, ballPos = sim.simxGetObjectPosition(clientID, ball, -1, sim.simx_opmode_streaming)
                     s, angle_robot = sim.simxGetObjectOrientation(clientID, robot, -1, sim.simx_opmode_blocking)
-                    # self.phi = angle_robot[2] - 1.47
+                    # self.phi = angle_robot[2] - math.pi
                     self.phi = 0
                     sim.simxSetJointTargetVelocity(clientID, motorE, 0, sim.simx_opmode_blocking)
                     sim.simxSetJointTargetVelocity(clientID, motorD, 0, sim.simx_opmode_blocking)
@@ -274,7 +300,7 @@ class Corobeu():
                     s, ballPos = sim.simxGetObjectPosition(clientID, ball, -1, sim.simx_opmode_streaming)
                     # s, angle_robot = sim.simxGetObjectOrientation(clientID, robot, -1, sim.simx_opmode_blocking)
                     # s, angle_ball = sim.simxGetObjectOrientation(clientID, robot, -1, sim.simx_opmode_blocking)
-                    # self.phi = angle_robot[2] - 1.47
+                    # self.phi = angle_robot[2] - math.pi
 
                     # print(f'Angle robot ==> {angle_robot}')
 
@@ -283,7 +309,7 @@ class Corobeu():
                     phid = math.atan2(ballPos[1] - positiona[1], ballPos[0] - positiona[0])
                     ### Phi error to send the PID controller
 
-                    error_phi = phid - self.phi
+                    error_phi = phid - self.phi # plotar isso
                     # error_phi_degree = math.degrees(error_phi)
                     # print(f'error degree == > {error_phi_degree}, error ==> {error_phi}' )
                     omega, fant_phi, interror_phi, Integral_part_phi = self.PID_Controller_phi(kpi, kii, kdi, deltaT,
@@ -308,20 +334,25 @@ class Corobeu():
                     ### Calculate the speed right and left based on the topology robot ###
 
                     vl, vd, a = self.Speed_CRB(self.v_linear, omega, error_distance, Number_Iterations)
-
-
+                    self.lv.append(vl)
+                    self.rv.append(vd)
+                    self.positions.append([positiona[0], positiona[1]])
+                    self.phid.append(phid)
+                    self.phiRobot.append(self.phi)
+                    self.errorPhi.append(error_phi)
+                    self.ballPosition.append(ballPos)
                     ### Send the speed values to coppeliasim simulato ###
 
                     sim.simxSetJointTargetVelocity(clientID, motorE, vl, sim.simx_opmode_blocking)
                     sim.simxSetJointTargetVelocity(clientID, motorD, vd, sim.simx_opmode_blocking)
 
                     ### update the time simulation and the simulation iteration
-
                 Number_Iterations = Number_Iterations + 1
+                print(Number_Iterations)
                 Time_Sample.append(Number_Iterations * deltaT)
                 # time.sleep(0.5)
         ### Save the robot position ###
-
+        self.save_to_dataframe('robot_data.csv')
         self.y_out.append(positiona[1])
         self.x_out.append(positiona[0])
 
@@ -333,3 +364,6 @@ if __name__ == "__main__":
     kdi = 0.001
     deltaT = 0.05 # 50 ms
     crb01.Robot_CRB(kpi, kii, kdi, deltaT)
+    print(crb01.lv)
+    print(crb01.rv)
+    print(crb01.positions)

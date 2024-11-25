@@ -146,14 +146,22 @@ class LFDmetodology():
             vd = [vel for vel in speedL]
             ve = [vel for vel in speedR]
             plt.figure()
-            plt.plot(self.acqSpeed[0], label='Velocidades roda direita')
-            plt.plot(self.acqSpeed[1], label='Velocidades roda esquerda')
-            plt.plot(vd, label='Velocidades calculadas da roda direita')
-            plt.plot(ve, label='Velocidades calculadas da roda esquerda')
+            # plt.plot(self.acqSpeed[0], label='Velocidades roda direita')
+            # plt.plot(self.acqSpeed[1], label='Velocidades roda esquerda')
+            # plt.plot(vd, label='Velocidades calculadas da roda direita')
+            # plt.plot(ve, label='Velocidades calculadas da roda esquerda')
+            # plt.legend()
+            # plt.xlabel("Iteração")
+            # plt.ylabel("Velocidade da Roda")
+            # plt.title("Comparação entre as Velocidades Medidas e Calculadas")
+            plt.plot(self.acqSpeed[0], label='Right wheel speed')
+            plt.plot(self.acqSpeed[1], label='Left wheel speed')
+            plt.plot(vd, label='Calculated right wheel speed')
+            plt.plot(ve, label='Calculated left wheel speed')
             plt.legend()
-            plt.xlabel("Iteração")
-            plt.ylabel("Velocidade da Roda")
-            plt.title("Comparação entre as Velocidades Medidas e Calculadas")
+            plt.xlabel("Iteration")
+            plt.ylabel("Wheel speed")
+            plt.title("Comparison between Acquired and Calculated Speeds")
             name = self.filename + '_Speeds.pdf'
             plt.savefig(name)
             plt.show()
@@ -281,8 +289,8 @@ class LFDmetodology():
 
 if __name__ == "__main__":
 
-    finalPos = [0.7, 0.3]
-    cen = 'T01'
+    finalPos = [0, 0.2]
+    cen = 'T03_ANTI'
     filename = f'{cen}_LfD_{finalPos[0]}_{finalPos[1]}'
 
     crb = LFDmetodology(destiny=finalPos, nSamples=50, filename=filename)
@@ -291,13 +299,15 @@ if __name__ == "__main__":
     spdD = crb.acqSpeed[0]
     spdE = crb.acqSpeed[1]
     plt.figure()
-    plt.plot(spdD, label='Velocidades roda direita')
-    plt.plot(spdE, label='Velocidades roda esquerda')
+    # plt.plot(spdD, label='Velocidades roda direita')
+    # plt.plot(spdE, label='Velocidades roda esquerda')
+    plt.plot(spdD, label='Right wheel speed')
+    plt.plot(spdE, label='Left wheel speed')
     plt.legend()
     plt.show()
 
     simulate = True
-    while(simulate):
+    while simulate:
 
         crb.training()
 

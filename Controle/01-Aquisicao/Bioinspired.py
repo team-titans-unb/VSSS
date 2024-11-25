@@ -111,12 +111,13 @@ class Bioinspired_algorithms:
             implement the PSO algorithm to find the best weights value in training MARIA neural networks
 
             Args:
-                inputs_value (float): Are the inputs neural network value (generally distance)
-                outputs_value (float) : Are the outputs neural network  value (generally speed)
+                inputs_value (list of float): Are the inputs neural network value (generally distance)
+                outputs_value (list of int) : Are the outputs neural network  value (generally speed)
 
             """
         S = 20
-        N = 4
+        # N = 4
+        N = 10 #For referee
         maxIter = 200
         w0 = 0.9
         wf = 0.2
@@ -144,8 +145,14 @@ class Bioinspired_algorithms:
             #    Loop to find the best individual particle
 
             for i in range(S):
-                object_neural_network_sim = ann.ArtificialNeuralNetwork(nSample)
-                fx = object_neural_network_sim.mse_slp(inputs_value, x[i, :] , outputs_value)
+                ### Use this for slp training
+                # object_neural_network_sim = ann.ArtificialNeuralNetwork(nSample)
+                # fx = object_neural_network_sim.mse_slp(inputs_value, x[i, :] , outputs_value)
+
+                ### Use it for referee training
+                object_neural_network_sim = ann.Referee(nSample)
+                fx = object_neural_network_sim.mse_top1(inputs_value, x[i, :], outputs_value)
+
                 print(fx)
                 # print("___________________")
                 if fx < fInd[i]:
