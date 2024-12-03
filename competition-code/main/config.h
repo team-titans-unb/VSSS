@@ -14,6 +14,14 @@
 #define ROBOT_CHANEL_2R 2
 #define ROBOT_CHANEL_2L 3
 
+// Left Encoder Pins
+#define LEFT_ENCODER_A 5
+#define LEFT_ENCODER_B 17
+
+// Right Encoder Pins
+#define RIGHT_ENCODER_A 19
+#define RIGHT_ENCODER_B 18
+
 // Frequência do pwm da esp32
 #define PWM_MOTOR_FREQUENCY  5000
 #define PWM_MOTOR_RESOLUTION 8

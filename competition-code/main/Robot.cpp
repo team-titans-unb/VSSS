@@ -15,14 +15,20 @@
  * 
  * Initializes the motors with specified pins and PWM channels.
  * 
- * @param pin_R1 Pin number for the right motor of the first motor group.
- * @param pin_L1 Pin number for the left motor of the first motor group.
- * @param pin_R2 Pin number for the right motor of the second motor group.
- * @param pin_L2 Pin number for the left motor of the second motor group.
+ * @param pin_R1 GPIO pin for controlling the right motor direction 1.
+ * @param pin_L1 GPIO pin for controlling the right motor direction 2.
+ * @param pin_R2 GPIO pin for controlling the left motor direction 1.
+ * @param pin_L2 GPIO pin for controlling the left motor direction 2.
+ * @param encoderAL GPIO pin for receiving the A channel for the left encoder
+ * @param encoderBL GPIO pin for receiving the B channel for the left encoder
+ * @param encoderAR GPIO pin for receiving the A channel for the right encoder
+ * @param encoderBR GPIO pin for receiving the B channel for the right encoder
  */
-Robot::Robot(uint8_t pin_R1, uint8_t pin_L1, uint8_t pin_R2, uint8_t pin_L2)
+Robot::Robot(uint8_t pin_R1, uint8_t pin_L1, uint8_t pin_R2, uint8_t pin_L2, uint8_t encoderAL, uint8_t encoderBL, uint8_t encoderAR, uint8_t encoderBR)
     : motorRight(pin_R1, pin_L1, ROBOT_CHANEL_1R, ROBOT_CHANEL_1L),
-      motorLeft(pin_R2, pin_L2, ROBOT_CHANEL_2R, ROBOT_CHANEL_2L) {
+      motorLeft(pin_R2, pin_L2, ROBOT_CHANEL_2R, ROBOT_CHANEL_2L),
+      encoderLeft(encoderAL, encoderBL),
+      encoderRight(encoderAR, encoderBR)  {
     this->pin_R1_ = pin_R1;
     this->pin_L1_ = pin_L1; 
     this->channelR1_ = ROBOT_CHANEL_1R;
@@ -31,17 +37,23 @@ Robot::Robot(uint8_t pin_R1, uint8_t pin_L1, uint8_t pin_R2, uint8_t pin_L2)
     this->pin_L2_ = pin_L2;
     this->channelR2_ = ROBOT_CHANEL_2R;
     this->channelL2_ = ROBOT_CHANEL_2L;
+    this->encoderAL = encoderAL;
+    this->encoderBL = encoderBL;
+    this->encoderAR = encoderAR;
+    this->encoderBR = encoderBR;
     this->state_ = 0;
 }
 
 /**
  * @brief Initialize the robot.
  * 
- * Runs a test routine to check if the robot is connected to the controller.
- * This function may include setup procedures and diagnostics.
+ * Stop the motors and initialize the encoders
  */
 void Robot::initializeRobot() {
-    // Add test routines to check if the robot is connected to the controller
+    motorRight.stop();
+    motorLeft.stop();
+    encoderLeft.begin();
+    encoderRight.begin();
 }
 
 /**

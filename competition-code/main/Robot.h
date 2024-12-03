@@ -12,6 +12,7 @@
 #define ROBO_H
 
 #include "motor.h"
+#include "encoder.h"
 
 /**
  * @brief Class for controlling a robot with two motors.
@@ -31,8 +32,12 @@ public:
      * @param pin_L1 GPIO pin for controlling the right motor direction 2.
      * @param pin_R2 GPIO pin for controlling the left motor direction 1.
      * @param pin_L2 GPIO pin for controlling the left motor direction 2.
+     * @param encoderAL GPIO pin for receiving the A channel for the left encoder
+     * @param encoderBL GPIO pin for receiving the B channel for the left encoder
+     * @param encoderAR GPIO pin for receiving the A channel for the right encoder
+     * @param encoderBR GPIO pin for receiving the B channel for the right encoder
      */
-    Robot(uint8_t pin_R1, uint8_t pin_L1, uint8_t pin_R2, uint8_t pin_L2);
+    Robot(uint8_t pin_R1, uint8_t pin_L1, uint8_t pin_R2, uint8_t pin_L2, uint8_t encoderAL, uint8_t encoderBL, uint8_t encoderAR, uint8_t encoderBR);
 
     /**
      * @brief Initializes the robot's motors and settings.
@@ -75,6 +80,8 @@ public:
 
     Motor motorRight; /**< Motor object controlling the right motor. */
     Motor motorLeft;  /**< Motor object controlling the left motor. */
+    Encoder encoderRight;
+    Encoder encoderLeft;
 
 private:
     uint8_t pin_R1_;  /**< GPIO pin for the right motor direction 1. */
@@ -86,6 +93,10 @@ private:
     uint8_t channelR2_; /**< PWM channel for the right motor direction 2. */
     uint8_t channelL2_; /**< PWM channel for the left motor direction 2. */
     uint8_t state_;   /**< State of the robot, used for tracking status or mode. */
+    uint8_t encoderAL; /**< GPIO pin for receiving the A channel of the left encoder */
+    uint8_t encoderBL; /**< GPIO pin for receiving the B channel of the left encoder */
+    uint8_t encoderAR; /**< GPIO pin for receiving the A channel of the right encoder */
+    uint8_t encoderBR; /**< GPIO pin for receiving the B channel of the right encoder */
 };
 
 

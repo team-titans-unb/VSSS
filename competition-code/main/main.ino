@@ -11,11 +11,8 @@
 #include "communication.h"
 
 // Create a robot object named corobeu for motor control
-Robot corobeu(ROBOT_MOTOR_1R, ROBOT_MOTOR_1L, ROBOT_MOTOR_2R, ROBOT_MOTOR_2L);
+Robot corobeu(ROBOT_MOTOR_1R, ROBOT_MOTOR_1L, ROBOT_MOTOR_2R, ROBOT_MOTOR_2L, LEFT_ENCODER_A, LEFT_ENCODER_B, RIGHT_ENCODER_A, RIGHT_ENCODER_B);
 
-// void setup() {
-    
-// }
 //Initialize communication
 Communication messenger(NETWORK, PASSWORD, 80);
 uint32_t combinedValue = 0xFFFFFFFF;
@@ -90,6 +87,7 @@ void motorControlTask(void* parameter) {
  * starts WiFi communication, and creates two FreeRTOS tasks: one for communication and one for motor control.
  */
 void setup() {
+    corobeu.initializeRobot();
     Serial.begin(19200);  // Initialize serial communication
     messenger.begin();   // Start WiFi communication
 
