@@ -54,6 +54,8 @@ void communicationTask(void* parameter) {
  */
 void motorControlTask(void* parameter) {
     while (true) {
+        corobeu.encoderLeft.calculateSpeed(100);
+        corobeu.encoderRight.calculateSpeed(100);
         if (combinedValue != 0xFFFFFFFF) { // Check if there's new data to process
             // Decode the combined value into speed and direction
             int speed1 = ((combinedValue & 0xFF000000) >> 24);   // Extract the 8 most significant bits
@@ -75,6 +77,12 @@ void motorControlTask(void* parameter) {
             corobeu.setMotorLeft(speed2, direction2);
             combinedValue = 0xFFFFFFFF;
         }
+        float rpmRight = corobeu.encoderRight.getRPM();
+        float rpmLeft = corobeu.encoderLeft.getRPM();
+        Serial.print("RPM Right: ");
+        Serial.println(rpmRight);
+        Serial.print("RPM Left: ");
+        Serial.println(rpmLeft);
 
         vTaskDelay(20 / portTICK_PERIOD_MS); // Delay kept for smoother motor updates
     }

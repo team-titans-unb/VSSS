@@ -29,7 +29,9 @@ void Encoder::calculateSpeed(uint32_t intervalMs) {
     if (elapsedTime >= intervalMs) {
         float rotations = pulses_ / 12.0; // 12 pulses per rotation
         rpm_ = (rotations / elapsedTime) * 60000.0;
-        angle_ = (pulses_ % 12) * (360.0 / 12.0);
+        angle_ += (pulses_ % 12) * (360.0 / 12.0);
+        angle_ = fmod(angle_, 360.0);
+        pulses_ = 0;
         lastTime_ = now;
     }
 }

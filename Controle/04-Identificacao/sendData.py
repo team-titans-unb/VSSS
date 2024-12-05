@@ -15,7 +15,7 @@ def send_speed_and_direction(speed1, speed2, direction1, direction2, IP):
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 print("Trying to connect to ESP32...")
-                s.connect((ESP32_IP, PORT))
+                s.connect((IP, PORT))
                 s.sendall(combined_value.to_bytes(4, byteorder='little'))  # Envia o valor como 4 bytes
                 print("Data sent successfully.")
                 return  # Sai da função após o envio bem-sucedido
