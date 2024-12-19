@@ -12,7 +12,7 @@
 #define ROBO_H
 
 #include "motor.h"
-#include "encoder.h"
+
 
 /**
  * @brief Class for controlling a robot with two motors.
@@ -80,6 +80,8 @@ public:
 
     Motor motorRight; /**< Motor object controlling the right motor. */
     Motor motorLeft;  /**< Motor object controlling the left motor. */
+    // QuadratureEncoder encoderRight;
+    // QuadratureEncoder encoderLeft;
     Encoder encoderRight;
     Encoder encoderLeft;
 

@@ -7,16 +7,16 @@
 #define ROBOT_CHANEL_1L 1
 
 // Pins of motor 2 Esquerda 
-#define ROBOT_MOTOR_2R 26  // IN 1
-#define ROBOT_MOTOR_2L 27  // IN 2
+#define ROBOT_MOTOR_2R 27  // IN 1
+#define ROBOT_MOTOR_2L 26  // IN 2
 
 // Pwm chanels of motor 2
 #define ROBOT_CHANEL_2R 2
 #define ROBOT_CHANEL_2L 3
 
 // Left Encoder Pins
-#define LEFT_ENCODER_A 5
-#define LEFT_ENCODER_B 17
+#define LEFT_ENCODER_A 17
+#define LEFT_ENCODER_B 5
 
 // Right Encoder Pins
 #define RIGHT_ENCODER_A 19
@@ -27,8 +27,8 @@
 #define PWM_MOTOR_RESOLUTION 8
 
 // Wifi settings
-#define NETWORK "Titans"
-#define PASSWORD "Titans2024"
+#define NETWORK "LARSIS_ROBOS"
+#define PASSWORD "larsis@larsis"
 
 
 

@@ -8,13 +8,13 @@ import time
 # 2 - Se conectar a ESP a uma rede roteada pelo teu celular ou notebook, é possivel ver o 
 # endereço de IP na lista de aparelhos conectados nas configurações da rede.
 
-goleiro_ip = '192.168.63.9' # Este ip aqui nao irá funcionar, é apenas um exemplo
+goleiro_ip = '192.168.0.103' # Este ip aqui nao irá funcionar, é apenas um exemplo
 #send_speed_and_direction(Direito, Esquero, direção, direção, IP)
 
-send_speed_and_direction(125, 135, 1, 1, goleiro_ip) # é aqui que vocês devem controlar o pwm.
+send_speed_and_direction(255, 255, 0, 0, goleiro_ip) # é aqui que vocês devem controlar o pwm.
 time.sleep(5)
 
 ##--------- isso aqui abaixo só faz o robô voltar e parar
-send_speed_and_direction(190, 200, 0, 0, goleiro_ip) # faz o robô voltar para perto do ponto de partida
-time.sleep(5)
+send_speed_and_direction(255, 255, 1, 1, goleiro_ip) # faz o robô voltar para perto do ponto de partida
+time.sleep(2.5)
 send_speed_and_direction(0, 0, 1, 1, goleiro_ip) # faz o robô parar
