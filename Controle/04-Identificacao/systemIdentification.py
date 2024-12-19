@@ -11,7 +11,7 @@ import time
 goleiro_ip = '192.168.0.103' # Este ip aqui nao irá funcionar, é apenas um exemplo
 #send_speed_and_direction(Direito, Esquero, direção, direção, IP)
 
-send_speed_and_direction(255, 255, 0, 0, goleiro_ip) # é aqui que vocês devem controlar o pwm.
+send_speed_and_direction(150, 255, 0, 0, goleiro_ip) # é aqui que vocês devem controlar o pwm.
 time.sleep(5)
 
 ##--------- isso aqui abaixo só faz o robô voltar e parar
