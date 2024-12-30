@@ -12,7 +12,8 @@
 #define ROBO_H
 
 #include "motor.h"
-#include "encoder.h"
+#include "MotorEncoder.h"
+
 
 /**
  * @brief Class for controlling a robot with two motors.
@@ -78,10 +79,14 @@ public:
      */
     void Stop(int Motor1, int Motor2);
 
+    void updateEncoder();
+
     Motor motorRight; /**< Motor object controlling the right motor. */
     Motor motorLeft;  /**< Motor object controlling the left motor. */
-    Encoder encoderRight;
-    Encoder encoderLeft;
+    // QuadratureEncoder encoderRight;
+    // QuadratureEncoder encoderLeft;
+    MotorEncoder encoderRight;
+    MotorEncoder encoderLeft;
 
 private:
     uint8_t pin_R1_;  /**< GPIO pin for the right motor direction 1. */

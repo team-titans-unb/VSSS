@@ -63,7 +63,7 @@ uint32_t Communication::receiveData() {
     return 0xFFFFFFFF; // Invalid value, no data available
 }
 
-/**
+/**a
  * @brief Sends data to a client connected to the server.
  * 
  * Checks if a client is connected. If a client is connected, the data is sent

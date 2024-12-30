@@ -108,3 +108,8 @@ void Robot::Stop(int Motor1, int Motor2) {
             break;
     }
 }
+
+void Robot::updateEncoder(){
+    encoderLeft.updateSpeed();
+    encoderRight.updateSpeed();
+}
