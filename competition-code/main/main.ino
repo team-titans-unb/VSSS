@@ -10,7 +10,14 @@
 #include "Robot.h"
 #include "communication.h"
 
+// Configurações do controle PID
+float kp = 1.0; // Ganho proporcional
+float ki = 0.1; // Ganho integral
+float kd = 0.05; // Ganho derivativo
 
+// Variáveis para controle PID de cada roda
+float integralRight = 0.0, integralLeft = 0.0;
+float prevErrorRight = 0.0, prevErrorLeft = 0.0;
 
 // Create a robot object named corobeu for motor control
 Robot corobeu(ROBOT_MOTOR_1R, ROBOT_MOTOR_1L, ROBOT_MOTOR_2R, ROBOT_MOTOR_2L, LEFT_ENCODER_A, LEFT_ENCODER_B, RIGHT_ENCODER_A, RIGHT_ENCODER_B);
@@ -18,7 +25,7 @@ Robot corobeu(ROBOT_MOTOR_1R, ROBOT_MOTOR_1L, ROBOT_MOTOR_2R, ROBOT_MOTOR_2L, LE
 //Initialize communication
 Communication messenger(NETWORK, PASSWORD, 80);
 uint32_t combinedValue = 0xFFFFFFFF;
-int counter = 0;
+
 TaskHandle_t communicationTaskHandle = NULL;
 TaskHandle_t motorControlTaskHandle = NULL;
 TaskHandle_t encoderReadingTaskHandle = NULL;
@@ -38,10 +45,8 @@ void communicationTask(void* parameter) {
         uint32_t receivedValue = messenger.receiveData();
         if (receivedValue != 0xFFFFFFFF) { // Check if the value is valid
             combinedValue = receivedValue;
-            counter += 1;
             Serial.print("Received value: ");
             Serial.println(combinedValue, HEX);
-            Serial.println(counter);
             receivedValue = 0xFFFFFFFF;
         }
         messenger.sendData(corobeu.encoderRight.getRPM());
@@ -61,27 +66,45 @@ void communicationTask(void* parameter) {
 void motorControlTask(void* parameter) {
     while (true) {
         if (combinedValue != 0xFFFFFFFF) { // Check if there's new data to process
-            // Decode the combined value into speed and direction
-            int speed1 = ((combinedValue & 0xFF000000) >> 24);   // Extract the 8 most significant bits
-            int direction1 = ((combinedValue & 0x0000FF00) >> 8); // Extract the direction for motor 1
+            // Decode the combined value into speed set-points
+            int setPointRight = ((combinedValue & 0xFF000000) >> 24);   // Velocidade desejada motor direito
+            int setPointLeft = ((combinedValue & 0x00FF0000) >> 16);    // Velocidade desejada motor esquerdo
 
-            int speed2 = ((combinedValue & 0x00FF0000) >> 16);    // Extract the speed for motor 2
-            int direction2 = combinedValue & 0x000000FF;         // Extract the direction for motor 2
+            // Leituras dos encoders (feedback em RPM)
+            float currentSpeedRight = corobeu.encoderRight.getRPM();
+            float currentSpeedLeft = corobeu.encoderLeft.getRPM();
 
-            // Update the robot's motor control with the received values
-            // Serial.print("Speed1:");
-            // Serial.println(speed1);
-            // Serial.print("Speed2:");
-            // Serial.println(speed2);
-            // Serial.print("Direction1:");
-            // Serial.println(direction1);
-            // Serial.print("Direction2:");
-            // Serial.println(direction2);
-            corobeu.setMotorRight(speed1, direction1);
-            corobeu.setMotorLeft(speed2, direction2);
-            combinedValue = 0xFFFFFFFF;
+            // Calcular erro
+            float errorRight = setPointRight - currentSpeedRight;
+            float errorLeft = setPointLeft - currentSpeedLeft;
+
+            // Atualizar integração (acúmulo do erro para ação integral)
+            integralRight += errorRight;
+            integralLeft += errorLeft;
+
+            // Derivada do erro (mudança do erro para ação derivativa)
+            float derivativeRight = errorRight - prevErrorRight;
+            float derivativeLeft = errorLeft - prevErrorLeft;
+
+            // Atualizar valores anteriores
+            prevErrorRight = errorRight;
+            prevErrorLeft = errorLeft;
+
+            // Calcular o sinal de controle PID
+            float controlRight = (kp * errorRight) + (ki * integralRight) + (kd * derivativeRight);
+            float controlLeft = (kp * errorLeft) + (ki * integralLeft) + (kd * derivativeLeft);
+
+            // Saturar o sinal de controle dentro dos limites do PWM
+            controlRight = constrain(controlRight, 0, 255);
+            controlLeft = constrain(controlLeft, 0, 255);
+
+            // Aplicar o controle nos motores
+            corobeu.setMotorRight((int)controlRight, setPointRight >= 0 ? 1 : -1); // Definir direção com base no set-point
+            corobeu.setMotorLeft((int)controlLeft, setPointLeft >= 0 ? 1 : -1);
+
+            combinedValue = 0xFFFFFFFF; // Resetar valor processado
         }
-        vTaskDelay(20 / portTICK_PERIOD_MS); // Delay kept for smoother motor updates
+        vTaskDelay(20 / portTICK_PERIOD_MS); // Delay para atualização suave
     }
 }
 
