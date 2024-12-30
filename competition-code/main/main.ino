@@ -10,6 +10,8 @@
 #include "Robot.h"
 #include "communication.h"
 
+
+
 // Create a robot object named corobeu for motor control
 Robot corobeu(ROBOT_MOTOR_1R, ROBOT_MOTOR_1L, ROBOT_MOTOR_2R, ROBOT_MOTOR_2L, LEFT_ENCODER_A, LEFT_ENCODER_B, RIGHT_ENCODER_A, RIGHT_ENCODER_B);
 
@@ -19,6 +21,8 @@ uint32_t combinedValue = 0xFFFFFFFF;
 int counter = 0;
 TaskHandle_t communicationTaskHandle = NULL;
 TaskHandle_t motorControlTaskHandle = NULL;
+TaskHandle_t encoderReadingTaskHandle = NULL;
+unsigned long lastUpdateTime; // Última atualização de velocidade
 
 /**
  * @brief Task to handle communication with the host.
@@ -40,6 +44,8 @@ void communicationTask(void* parameter) {
             Serial.println(counter);
             receivedValue = 0xFFFFFFFF;
         }
+        messenger.sendData(corobeu.encoderRight.getRPM());
+        messenger.sendData(corobeu.encoderLeft.getRPM());
         vTaskDelay(10 / portTICK_PERIOD_MS); // Reduced delay to make communication more responsive
     }
 }
@@ -54,8 +60,6 @@ void communicationTask(void* parameter) {
  */
 void motorControlTask(void* parameter) {
     while (true) {
-        corobeu.encoderLeft.calculateSpeed(50);
-        corobeu.encoderRight.calculateSpeed(50);
         if (combinedValue != 0xFFFFFFFF) { // Check if there's new data to process
             // Decode the combined value into speed and direction
             int speed1 = ((combinedValue & 0xFF000000) >> 24);   // Extract the 8 most significant bits
@@ -77,15 +81,25 @@ void motorControlTask(void* parameter) {
             corobeu.setMotorLeft(speed2, direction2);
             combinedValue = 0xFFFFFFFF;
         }
-        // float rpmRight = corobeu.encoderRight.getRPM();
-        // float rpmLeft = corobeu.encoderLeft.getRPM();
-        // Serial.print("RPM Right: ");
-        // Serial.println(rpmRight);
-        // Serial.print("RPM Left: ");
-        // Serial.println(rpmLeft);
-
         vTaskDelay(20 / portTICK_PERIOD_MS); // Delay kept for smoother motor updates
     }
+}
+
+void encoderTask(void* parameter){
+    while (true){
+        corobeu.encoderLeft.updateSpeed();
+        corobeu.encoderRight.updateSpeed();
+        Serial.print("RPM R: ");
+        Serial.print(corobeu.encoderRight.getRPM());
+        Serial.print(" : ");
+        Serial.print(corobeu.encoderRight.getDirection());
+        Serial.print("  |   RPM L: ");
+        Serial.print(corobeu.encoderLeft.getRPM());
+        Serial.print(" : ");
+        Serial.println(corobeu.encoderLeft.getDirection());
+        vTaskDelay(pdMS_TO_TICKS(500));
+    }
+    
 }
 
 /**
@@ -117,6 +131,15 @@ void setup() {
         NULL,                     // Task parameter
         1,                        // Lower priority for motor control
         &motorControlTaskHandle   // Task handle
+    );
+
+    xTaskCreate(
+        encoderTask,
+        "Encoder Reading Task",
+        2048,
+        NULL,
+        1,
+        &encoderReadingTaskHandle
     );
 }
 
