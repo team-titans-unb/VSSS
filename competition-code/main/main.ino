@@ -11,9 +11,12 @@
 #include "communication.h"
 
 // Configurações do controle PID
-float kp = 1.0; // Ganho proporcional
-float ki = 0.1; // Ganho integral
-float kd = 0.05; // Ganho derivativo
+float kpr = 1.0; // Ganho proporcional
+float kir = 0.1; // Ganho integral
+float kdr = 0.05; // Ganho derivativo
+float kpl = 1.0; // Ganho proporcional1
+float kil = 0.1; // Ganho integral
+float kdl = 0.05; // Ganho derivativo
 
 // Variáveis para controle PID de cada roda
 float integralRight = 0.0, integralLeft = 0.0;
@@ -91,8 +94,8 @@ void motorControlTask(void* parameter) {
             prevErrorLeft = errorLeft;
 
             // Calcular o sinal de controle PID
-            float controlRight = (kp * errorRight) + (ki * integralRight) + (kd * derivativeRight);
-            float controlLeft = (kp * errorLeft) + (ki * integralLeft) + (kd * derivativeLeft);
+            float controlRight = (kpr * errorRight) + (kir * integralRight) + (kdr * derivativeRight);
+            float controlLeft = (kpl * errorLeft) + (kil * integralLeft) + (kdl * derivativeLeft);
 
             // Saturar o sinal de controle dentro dos limites do PWM
             controlRight = constrain(controlRight, 0, 255);
