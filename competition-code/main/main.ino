@@ -11,14 +11,17 @@
 #include "communication.h"
 
 // Configurações do controle PID
-float kpr = 1.0; // Ganho proporcional
-float kir = 0.1; // Ganho integral
-float kdr = 0.05; // Ganho derivativo
-float kpl = 1.0; // Ganho proporcional1
-float kil = 0.1; // Ganho integral
-float kdl = 0.05; // Ganho derivativo
+float kpr = 1.3; // Ganho proporcional
+float kir = 0.000005; // Ganho integral
+float kdr = 1.0; // Ganho derivativo
+// Acima parece certo
+float kpl = 1; // Ganho proporcional
+float kil = 0.000005; // Ganho integral
+float kdl = 0.0; // Ganho derivativo
 
 // Variáveis para controle PID de cada roda
+volatile int setPointRight = 0;
+volatile int setPointLeft = 0;
 float integralRight = 0.0, integralLeft = 0.0;
 float prevErrorRight = 0.0, prevErrorLeft = 0.0;
 
@@ -47,13 +50,15 @@ void communicationTask(void* parameter) {
         // Poll for data with a reduced frequency by adding idle time
         uint32_t receivedValue = messenger.receiveData();
         if (receivedValue != 0xFFFFFFFF) { // Check if the value is valid
-            combinedValue = receivedValue;
+            // Atualizar set-points com os novos dados
+            setPointRight = ((receivedValue & 0xFF000000) >> 24);
+            setPointLeft = ((receivedValue & 0x00FF0000) >> 16);
             Serial.print("Received value: ");
-            Serial.println(combinedValue, HEX);
+            Serial.println(receivedValue, HEX);
             receivedValue = 0xFFFFFFFF;
         }
-        messenger.sendData(corobeu.encoderRight.getRPM());
-        messenger.sendData(corobeu.encoderLeft.getRPM());
+        // messenger.sendData(corobeu.encoderRight.getRPM());
+        // messenger.sendData(corobeu.encoderLeft.getRPM());
         vTaskDelay(10 / portTICK_PERIOD_MS); // Reduced delay to make communication more responsive
     }
 }
@@ -68,47 +73,51 @@ void communicationTask(void* parameter) {
  */
 void motorControlTask(void* parameter) {
     while (true) {
-        if (combinedValue != 0xFFFFFFFF) { // Check if there's new data to process
-            // Decode the combined value into speed set-points
-            int setPointRight = ((combinedValue & 0xFF000000) >> 24);   // Velocidade desejada motor direito
-            int setPointLeft = ((combinedValue & 0x00FF0000) >> 16);    // Velocidade desejada motor esquerdo
+          // Leituras dos encoders (feedback em RPM)
+          float currentSpeedRight = corobeu.encoderRight.getRPM();
+          float currentSpeedLeft = corobeu.encoderLeft.getRPM();
 
-            // Leituras dos encoders (feedback em RPM)
-            float currentSpeedRight = corobeu.encoderRight.getRPM();
-            float currentSpeedLeft = corobeu.encoderLeft.getRPM();
+          // Calcular erro
+          float errorRight = setPointRight - currentSpeedRight;
+          float errorLeft = setPointLeft - currentSpeedLeft;
 
-            // Calcular erro
-            float errorRight = setPointRight - currentSpeedRight;
-            float errorLeft = setPointLeft - currentSpeedLeft;
+          // Atualizar integração (acúmulo do erro para ação integral)
+          integralRight += errorRight;
+          integralLeft += errorLeft;
 
-            // Atualizar integração (acúmulo do erro para ação integral)
-            integralRight += errorRight;
-            integralLeft += errorLeft;
+          // Derivada do erro (mudança do erro para ação derivativa)
+          float derivativeRight = errorRight - prevErrorRight;
+          float derivativeLeft = errorLeft - prevErrorLeft;
 
-            // Derivada do erro (mudança do erro para ação derivativa)
-            float derivativeRight = errorRight - prevErrorRight;
-            float derivativeLeft = errorLeft - prevErrorLeft;
+          // Atualizar valores anteriores
+          prevErrorRight = errorRight;
+          prevErrorLeft = errorLeft;
 
-            // Atualizar valores anteriores
-            prevErrorRight = errorRight;
-            prevErrorLeft = errorLeft;
+          // Calcular o sinal de controle PID
+          float controlRight = (kpr * errorRight) + (kir * integralRight) + (kdr * derivativeRight);
+          float controlLeft = (kpl * errorLeft) + (kil * integralLeft) + (kdl * derivativeLeft);
 
-            // Calcular o sinal de controle PID
-            float controlRight = (kpr * errorRight) + (kir * integralRight) + (kdr * derivativeRight);
-            float controlLeft = (kpl * errorLeft) + (kil * integralLeft) + (kdl * derivativeLeft);
+          // Saturar o sinal de controle dentro dos limites do PWM
+          controlRight = constrain(controlRight, 0, 255);
+          controlLeft = constrain(controlLeft, 0, 255);
 
-            // Saturar o sinal de controle dentro dos limites do PWM
-            controlRight = constrain(controlRight, 0, 255);
-            controlLeft = constrain(controlLeft, 0, 255);
-
-            // Aplicar o controle nos motores
-            corobeu.setMotorRight((int)controlRight, setPointRight >= 0 ? 1 : -1); // Definir direção com base no set-point
-            corobeu.setMotorLeft((int)controlLeft, setPointLeft >= 0 ? 1 : -1);
-
-            combinedValue = 0xFFFFFFFF; // Resetar valor processado
+          // Aplicar o controle nos motores
+          // Serial.print("PWM R: ");
+          // Serial.print(controlRight);
+          // Serial.print("  |   PWM L: ");
+          // Serial.println(controlLeft);
+          corobeu.setMotorRight((int)controlRight, setPointRight >= 0 ? 1 : -1); // Definir direção com base no set-point
+          corobeu.setMotorLeft((int)controlLeft, setPointLeft >= 0 ? 1 : -1);
+          // Serial.print("RPM R: ");
+          // Serial.print(corobeu.encoderRight.getRPM());
+          // Serial.print(" : ");
+          // Serial.print(corobeu.encoderRight.getDirection());
+          // Serial.print("  |   RPM L: ");
+          // Serial.print(corobeu.encoderLeft.getRPM());
+          // Serial.print(" : ");
+          // Serial.println(corobeu.encoderLeft.getDirection());
         }
-        vTaskDelay(20 / portTICK_PERIOD_MS); // Delay para atualização suave
-    }
+        vTaskDelay(500 / portTICK_PERIOD_MS); // Delay para atualização suave
 }
 
 void encoderTask(void* parameter){
@@ -123,7 +132,7 @@ void encoderTask(void* parameter){
         Serial.print(corobeu.encoderLeft.getRPM());
         Serial.print(" : ");
         Serial.println(corobeu.encoderLeft.getDirection());
-        vTaskDelay(pdMS_TO_TICKS(500));
+        vTaskDelay(pdMS_TO_TICKS(100));
     }
     
 }

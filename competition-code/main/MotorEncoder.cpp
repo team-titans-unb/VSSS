@@ -25,7 +25,7 @@ void MotorEncoder::updateSpeed() {
     unsigned long currentTime = millis();
     unsigned long elapsedTime = currentTime - lastUpdateTime;
 
-    if (elapsedTime >= 500) { // Atualiza a cada 500ms
+    if (elapsedTime >= 100) { // Atualiza a cada 100 ms
         noInterrupts();
         int count = pulseCount;
         pulseCount = 0;
