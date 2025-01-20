@@ -52,6 +52,9 @@ public:
      */
     uint32_t receiveData();
 
+    
+    uint32_t waitData();
+
     /**
      * @brief Sends data to the client.
      * 
@@ -60,6 +63,7 @@ public:
      * @param value The 32-bit value to be sent.
      */
     void sendData(uint32_t value);
+
 
 private:
     const char* ssid_;       /**< WiFi network name (SSID). */

@@ -12,7 +12,7 @@ goleiro_ip = '192.168.0.103'
 # goleiro_ip = '192.168.137.111'
 #send_data(Direito, Esquero, direção, direção, IP)
 
-send_data(100, 100, 1, 1, goleiro_ip) # é aqui que vocês devem controlar o pwm.
+send_data(250, 250, 1, 1, goleiro_ip) # é aqui que vocês devem controlar o pwm.
 # time.sleep(1)
 # wheel_speed_1, wheel_speed_2 = receive_data(goleiro_ip)
 # print(f"Velocidade das rodas: {wheel_speed_1}, {wheel_speed_2}")

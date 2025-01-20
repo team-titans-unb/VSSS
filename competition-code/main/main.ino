@@ -11,13 +11,13 @@
 #include "communication.h"
 
 // Configurações do controle PID
-float kpr = 1.3; // Ganho proporcional
+float kpr = 1.45; // Ganho proporcional
 float kir = 0.000005; // Ganho integral
-float kdr = 1.0; // Ganho derivativo
+float kdr = 0.85; // Ganho derivativo
 // Acima parece certo
-float kpl = 1; // Ganho proporcional
+float kpl = 1.7; // Ganho proporcional
 float kil = 0.000005; // Ganho integral
-float kdl = 0.0; // Ganho derivativo
+float kdl = 0.2; // Ganho derivativo
 
 // Variáveis para controle PID de cada roda
 volatile int setPointRight = 0;
@@ -176,6 +176,21 @@ void setup() {
         1,
         &encoderReadingTaskHandle
     );
+
+  // uint32_t PIDR = messenger.waitData();
+  // if (PIDR != 0xFFFFFFFF) { // Check if the value is valid
+  //           // Atualizar set-points com os novos dados
+  //           kpr = ((PIDR & 0xFF000000) >> 24);
+  //           kir = ((PIDR & 0x00FF0000) >> 16);
+  //           kdr = ((PIDR & 0x0000FF00) >> 8);
+  // }
+  // uint32_t PIDL = messenger.waitData();
+  // if (PIDL != 0xFFFFFFFF) { // Check if the value is valid
+  //           // Atualizar set-points com os novos dados
+  //           kpl = ((PIDR & 0xFF000000) >> 24);
+  //           kil = ((PIDR & 0x00FF0000) >> 16);
+  //           kdl = ((PIDR & 0x0000FF00) >> 8);
+  // }
 }
 
 /**

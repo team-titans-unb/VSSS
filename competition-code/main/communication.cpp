@@ -63,6 +63,23 @@ uint32_t Communication::receiveData() {
     return 0xFFFFFFFF; // Invalid value, no data available
 }
 
+uint32_t Communication::waitData() {
+    if (!client_ || !client_.connected()) {
+        client_ = server_.available();
+        if (!client_) {
+            return 0xFFFFFFFF; // Invalid value, no client connected
+        }
+    }
+    if (client_.available()) {
+        uint32_t value = 0;
+        while(!client_.read(reinterpret_cast<uint8_t*>(&value), sizeof(value))){
+          delayMicroseconds(1);
+        }
+        return value;
+    }
+    return 0xFFFFFFFF; // Invalid value, no data available
+}
+
 /**a
  * @brief Sends data to a client connected to the server.
  * 
