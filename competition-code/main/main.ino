@@ -14,7 +14,7 @@
 float kpr = 1.45; // Ganho proporcional
 float kir = 0.000005; // Ganho integral
 float kdr = 0.85; // Ganho derivativo
-// Acima parece certo
+
 float kpl = 1.7; // Ganho proporcional
 float kil = 0.000005; // Ganho integral
 float kdl = 0.2; // Ganho derivativo
