@@ -11,13 +11,13 @@
 #include "communication.h"
 
 // Configurações do controle PID
-float kpr = 1.45; // Ganho proporcional
+float kpr = 1.75; // Ganho proporcional
 float kir = 0.000005; // Ganho integral
-float kdr = 0.85; // Ganho derivativo
+float kdr = 3; // Ganho derivativo
 
-float kpl = 1.7; // Ganho proporcional
+float kpl = 2; // Ganho proporcional
 float kil = 0.000005; // Ganho integral
-float kdl = 0.2; // Ganho derivativo
+float kdl = 0.9; // Ganho derivativo
 
 // Variáveis para controle PID de cada roda
 volatile int setPointRight = 0;
@@ -51,8 +51,8 @@ void communicationTask(void* parameter) {
         uint32_t receivedValue = messenger.receiveData();
         if (receivedValue != 0xFFFFFFFF) { // Check if the value is valid
             // Atualizar set-points com os novos dados
-            setPointRight = ((receivedValue & 0xFF000000) >> 24);
-            setPointLeft = ((receivedValue & 0x00FF0000) >> 16);
+            setPointRight = ((receivedValue & 0xFFFF0000) >> 16);
+            setPointLeft = ((receivedValue & 0x0000FFFF));
             Serial.print("Received value: ");
             Serial.println(receivedValue, HEX);
             receivedValue = 0xFFFFFFFF;
