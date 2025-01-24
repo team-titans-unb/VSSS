@@ -11,17 +11,22 @@
 #include "communication.h"
 
 // Configurações do controle PID
-float kpr = 1.75; // Ganho proporcional
+float kpr = 1.45; // Ganho proporcional
 float kir = 0.000005; // Ganho integral
-float kdr = 3; // Ganho derivativo
+float kdr = 0.85; // Ganho derivativo
 
-float kpl = 2; // Ganho proporcional
+float kpl = 1.7; // Ganho proporcional
 float kil = 0.000005; // Ganho integral
-float kdl = 0.9; // Ganho derivativo
+float kdl = 0.2; // Ganho derivativo
 
 // Variáveis para controle PID de cada roda
-volatile int setPointRight = 0;
-volatile int setPointLeft = 0;
+volatile int cnt = 0;
+volatile int pid_anteriorR = 0;
+volatile int pid_anteriorL = 0;
+volatile int setPointRight = 150;
+volatile int setPointLeft = 150;
+volatile float controlRight = 0;
+volatile float controlLeft = 0;
 float integralRight = 0.0, integralLeft = 0.0;
 float prevErrorRight = 0.0, prevErrorLeft = 0.0;
 
@@ -72,70 +77,146 @@ void communicationTask(void* parameter) {
  * @param parameter Task parameter (not used in this case).
  */
 void motorControlTask(void* parameter) {
+    int auxcontrolRight = 0;
+    int auxcontrolLeft = 0;
     while (true) {
-          // Leituras dos encoders (feedback em RPM)
-          float currentSpeedRight = corobeu.encoderRight.getRPM();
-          float currentSpeedLeft = corobeu.encoderLeft.getRPM();
+      corobeu.encoderLeft.updateSpeed();
+      corobeu.encoderRight.updateSpeed();
+      Serial.print("RPM R: ");
+      Serial.print(corobeu.encoderRight.getRPM());
+      Serial.print(" : ");
+      Serial.print(corobeu.encoderRight.getDirection());
+      Serial.print("  |   RPM L: ");
+      Serial.print(corobeu.encoderLeft.getRPM());
+      Serial.print(" : ");
+      Serial.println(corobeu.encoderLeft.getDirection());
+       if(cnt<24){
+        auxcontrolRight += 5;
+        auxcontrolLeft += 5;
+        cnt++;
+        float currentSpeedRight = corobeu.encoderRight.getRPM();
+        float currentSpeedLeft = corobeu.encoderLeft.getRPM();
 
-          // Calcular erro
-          float errorRight = setPointRight - currentSpeedRight;
-          float errorLeft = setPointLeft - currentSpeedLeft;
+        // Calcular erro
+        float errorRight = setPointRight - currentSpeedRight;
+        float errorLeft = setPointLeft - currentSpeedLeft;
+        Serial.print("Erro vel PID\n\r");
+        Serial.println(errorRight);
+        Serial.println(errorLeft);
+        pid_anteriorR = auxcontrolRight;
+        pid_anteriorL = auxcontrolLeft;
+       }
+       else{
+        // Leituras dos encoders (feedback em RPM)
+        float currentSpeedRight = corobeu.encoderRight.getRPM();
+        float currentSpeedLeft = corobeu.encoderLeft.getRPM();
 
-          // Atualizar integração (acúmulo do erro para ação integral)
-          integralRight += errorRight;
-          integralLeft += errorLeft;
+        // Calcular erro
+        float errorRight = setPointRight - currentSpeedRight;
+        float errorLeft = setPointLeft - currentSpeedLeft;
 
-          // Derivada do erro (mudança do erro para ação derivativa)
-          float derivativeRight = errorRight - prevErrorRight;
-          float derivativeLeft = errorLeft - prevErrorLeft;
+        // Atualizar integração (acúmulo do erro para ação integral)
+        integralRight += 0.5*errorRight;
+        integralLeft += 0.5*errorLeft;
 
-          // Atualizar valores anteriores
-          prevErrorRight = errorRight;
-          prevErrorLeft = errorLeft;
-
-          // Calcular o sinal de controle PID
-          float controlRight = (kpr * errorRight) + (kir * integralRight) + (kdr * derivativeRight);
-          float controlLeft = (kpl * errorLeft) + (kil * integralLeft) + (kdl * derivativeLeft);
-
-          // Saturar o sinal de controle dentro dos limites do PWM
-          controlRight = constrain(controlRight, 0, 255);
-          controlLeft = constrain(controlLeft, 0, 255);
-
-          // Aplicar o controle nos motores
-          // Serial.print("PWM R: ");
-          // Serial.print(controlRight);
-          // Serial.print("  |   PWM L: ");
-          // Serial.println(controlLeft);
-          corobeu.setMotorRight((int)controlRight, setPointRight >= 0 ? 1 : -1); // Definir direção com base no set-point
-          corobeu.setMotorLeft((int)controlLeft, setPointLeft >= 0 ? 1 : -1);
-          // Serial.print("RPM R: ");
-          // Serial.print(corobeu.encoderRight.getRPM());
-          // Serial.print(" : ");
-          // Serial.print(corobeu.encoderRight.getDirection());
-          // Serial.print("  |   RPM L: ");
-          // Serial.print(corobeu.encoderLeft.getRPM());
-          // Serial.print(" : ");
-          // Serial.println(corobeu.encoderLeft.getDirection());
+        if(integralRight>250){
+            integralRight = 250;
         }
-        vTaskDelay(500 / portTICK_PERIOD_MS); // Delay para atualização suave
+        if(integralLeft>250){
+            integralLeft = 250;
+        }
+        if(integralRight<-250){
+            integralRight = -250;
+        }
+        if(integralLeft<-250){
+            integralLeft = -250;
+        }
+
+        // Derivada do erro (mudança do erro para ação derivativa)
+        float derivativeRight = 2*(errorRight - prevErrorRight);
+        float derivativeLeft = 2*(errorLeft - prevErrorLeft);
+
+        // Atualizar valores anteriores
+        prevErrorRight = errorRight;
+        prevErrorLeft = errorLeft;
+
+        // Calcular o sinal de controle PID
+        controlRight = (kpr * errorRight) + (kir * integralRight) + (kdr * derivativeRight);
+        controlLeft = (kpl * errorLeft) + (kil * integralLeft) + (kdl * derivativeLeft);
+        if(controlRight>50 || controlRight<-50){
+            if((controlRight > 1.5*pid_anteriorR)){
+              controlRight = 1.5*pid_anteriorR;
+            }
+            if((controlRight < 0.5*pid_anteriorR)){
+              controlRight = 0.5*pid_anteriorR;
+            }
+            pid_anteriorR = controlRight;
+        }
+        
+        if(controlLeft>50 || controlLeft<-50){
+          if((controlLeft > 1.5*pid_anteriorL)){
+            controlLeft = 1.5*pid_anteriorL;
+          }
+          if((controlLeft < 0.5*pid_anteriorL)){
+            controlLeft = 0.5*pid_anteriorL;
+          }
+          pid_anteriorL = controlLeft;
+        }
+      Serial.print("Erro vel PID\n\r");
+      Serial.println(errorRight);
+      Serial.println(errorLeft);
+      Serial.print("saidas PID\n\r");
+      Serial.println(controlRight);
+      Serial.println(controlLeft);
+      // controlRight = 150;
+      // controlLeft = 150;
+      auxcontrolRight = constrain(controlRight, 50, 255);
+      auxcontrolLeft = constrain(controlLeft, 50, 255);
+      }
+
+      // Saturar o sinal de controle dentro dos limites do PWM
+      // if(auxcontrolRight<50){
+      //   auxcontrolRight = 0;
+      // }
+      // if(auxcontrolLeft<50){
+      //   auxcontrolLeft = 0;
+      // }
+
+      // Aplicar o controle nos motores
+      Serial.print("PWM R: ");
+      Serial.print(auxcontrolRight);
+      Serial.print("  |   PWM L: ");
+      Serial.println(auxcontrolLeft);
+      corobeu.setMotorRight((int)auxcontrolRight, setPointRight >= 0 ? 1 : -1); // Definir direção com base no set-point
+      corobeu.setMotorLeft((int)auxcontrolLeft, setPointLeft >= 0 ? 1 : -1);
+      // Serial.print("RPM R: ");
+      // Serial.print(corobeu.encoderRight.getRPM());
+      // Serial.print(" : ");
+      // Serial.print(corobeu.encoderRight.getDirection());
+      // Serial.print("  |   RPM L: ");
+      // Serial.print(corobeu.encoderLeft.getRPM());
+      // Serial.print(" : ");
+      // Serial.println(corobeu.encoderLeft.getDirection());
+    }
+  vTaskDelay(100 / portTICK_PERIOD_MS); // Delay para atualização suave
 }
 
-void encoderTask(void* parameter){
-    while (true){
-        corobeu.encoderLeft.updateSpeed();
-        corobeu.encoderRight.updateSpeed();
-        Serial.print("RPM R: ");
-        Serial.print(corobeu.encoderRight.getRPM());
-        Serial.print(" : ");
-        Serial.print(corobeu.encoderRight.getDirection());
-        Serial.print("  |   RPM L: ");
-        Serial.print(corobeu.encoderLeft.getRPM());
-        Serial.print(" : ");
-        Serial.println(corobeu.encoderLeft.getDirection());
-        vTaskDelay(pdMS_TO_TICKS(100));
-    }
+// void encoderTask(void* parameter){
+//     while (true){
+//         corobeu.encoderLeft.updateSpeed();
+//         corobeu.encoderRight.updateSpeed();
+//         // Serial.print("RPM R: ");
+//         // Serial.print(corobeu.encoderRight.getRPM());
+//         // Serial.print(" : ");
+//         // Serial.print(corobeu.encoderRight.getDirection());
+//         // Serial.print("  |   RPM L: ");
+//         // Serial.print(corobeu.encoderLeft.getRPM());
+//         // Serial.print(" : ");
+//         // Serial.println(corobeu.encoderLeft.getDirection());
+//         vTaskDelay(pdMS_TO_TICKS(100));
+//     }
     
-}
+// }
 
 /**
  * @brief Setup function to initialize communication and create tasks.
@@ -168,14 +249,14 @@ void setup() {
         &motorControlTaskHandle   // Task handle
     );
 
-    xTaskCreate(
-        encoderTask,
-        "Encoder Reading Task",
-        2048,
-        NULL,
-        1,
-        &encoderReadingTaskHandle
-    );
+    // xTaskCreate(
+    //     encoderTask,
+    //     "Encoder Reading Task",
+    //     2048,
+    //     NULL,
+    //     1,
+    //     &encoderReadingTaskHandle
+    // );
 
   // uint32_t PIDR = messenger.waitData();
   // if (PIDR != 0xFFFFFFFF) { // Check if the value is valid
