@@ -1,3 +1,5 @@
+##Para rodar junto ao vss-vision
+
 import socket
 import struct
 import time
