@@ -63,6 +63,7 @@ void motorControlTask(void* parameter) {
     Serial.print("RPM R: ");
     Serial.print(corobeu.encoderRight.getRPM());
     Serial.print("  |   RPM L: ");
+    //Serial.print(" | ");
     Serial.println(corobeu.encoderLeft.getRPM());
 
     // Aplicar a velocidade nos motores

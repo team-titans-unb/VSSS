@@ -8,16 +8,13 @@ import serial
 import wrapper_pb2 as wr
 
 # Configuração da comunicação
-ROBOT_IP = "192.168.4.1"  # IP do robô
+ROBOT_IP = "192.168.0.103"  # IP do robô
 ROBOT_PORT = 80  # Porta do robô
-SERIAL_PORT = "COM3"  # Porta serial do robô (ex: COM3 ou /dev/ttyUSB0)
+SERIAL_PORT = "/dev/ttyUSB0"  # Porta serial do robô (ex: COM3 ou /dev/ttyUSB0)
 SERIAL_BAUDRATE = 19200  # Baudrate da porta serial
 VISION_IP = "224.5.23.2"  # IP do sistema de visão
 VISION_PORT = 10011  # Porta do sistema de visão
 ROBOT_ID = 4  # ID do robô azul a ser controlado
-
-# Configuração do arquivo de log
-CSV_FILENAME = "robot_system_identification.csv"
 
 def send_pwm(pwm_left, pwm_right, robot_ip, robot_port):
     """
@@ -52,8 +49,10 @@ def read_rpm(serial_port):
     try:
         # Lê uma linha da porta serial e decodifica
         line = serial_port.readline().decode('utf-8').strip()
+        #print(f"raw: {line}")
         if "RPM R:" in line and "RPM L:" in line:
             # Extrai os valores de RPM das rodas direita e esquerda
+            #print(f"{line}")
             parts = line.split("|")
             rpm_right = float(parts[0].split(":")[1].strip())
             rpm_left = float(parts[1].split(":")[1].strip())
@@ -93,7 +92,7 @@ def filter_robot_data(frame, robot_id, team="blue"):
             return robot
     return None
 
-def main():
+def main(pwm_right = 100, pwm_left = 100, duration = 20, CSV_FILENAME = "identification.csv"):
     """
     Realiza o experimento de identificação de sistemas do robô, integrando:
     1. Envio de valores de PWM para as rodas.
@@ -121,21 +120,17 @@ def main():
     with open(CSV_FILENAME, mode='w', newline='') as csvfile:
         csv_writer = csv.writer(csvfile)
         # Cabeçalho do arquivo CSV
-        csv_writer.writerow(["Timestamp", "PWM_Left", "PWM_Right", "RPM_Left", "RPM_Right",
+        csv_writer.writerow(["PWM_Right", "PWM_Left", "RPM_Right", "RPM_Left",
                              "Distance_X", "Distance_Y", "Distance_Total",
                              "Velocity_X", "Velocity_Y", "Velocity_Total"])
 
-        # Valores de PWM para as rodas
-        pwm_left = 100
-        pwm_right = 100
 
         # Envia os comandos iniciais
         print("Sending PWM values to robot...")
-        send_pwm(pwm_left, pwm_right, ROBOT_IP, ROBOT_PORT)
+        send_pwm(pwm_right, pwm_left, ROBOT_IP, ROBOT_PORT)
 
         # Tempo inicial
         start_time = time.time()
-        duration = 5  # Segundos
         initial_position = None
 
         while time.time() - start_time < duration:
@@ -152,7 +147,7 @@ def main():
                 distance_total = (distance_x**2 + distance_y**2) ** 0.5
 
                 # Leitura de RPM
-                rpm_left, rpm_right = read_rpm(serial_port)
+                rpm_right, rpm_left = read_rpm(serial_port)
 
                 # Tempo atual
                 timestamp = time.time() - start_time
@@ -163,8 +158,8 @@ def main():
                 velocity_total = distance_total / timestamp
 
                 # Salva os dados no CSV
-                csv_writer.writerow([timestamp, pwm_left, pwm_right,
-                                     rpm_left, rpm_right,
+                csv_writer.writerow([pwm_right, pwm_left,
+                                     rpm_right, rpm_left,
                                      distance_x, distance_y, distance_total,
                                      velocity_x, velocity_y, velocity_total])
 
@@ -174,5 +169,12 @@ def main():
 
     print(f"Experiment completed. Data saved to {CSV_FILENAME}")
 
+
+# Configuração do arquivo de log
+CSV_FILENAME = "100_95.csv"
+pwm_left = 110
+pwm_right = 95
+duration = 20
+
 if __name__ == "__main__":
-    main()
+    main(pwm_right, pwm_left, duration, CSV_FILENAME)
