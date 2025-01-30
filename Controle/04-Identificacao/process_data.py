@@ -1,6 +1,7 @@
 import os
 import pandas as pd
 import re
+import math
 
 # Pasta onde os arquivos CSV estão localizados (use "." se estiver no mesmo diretório)
 FOLDER_PATH = "."
@@ -26,15 +27,18 @@ for filename in os.listdir(FOLDER_PATH):
             file_path = os.path.join(FOLDER_PATH, filename)
             df = pd.read_csv(file_path)
 
-            # Adiciona a coluna de PWM ao DataFrame
-            df["PWM_Right"] = pwm_right
-            df["PWM_Left"] = pwm_left
+            # Calcula as médias dos valores
+            rpm_right_mean = df["RPM_Right"].mean()
+            rpm_left_mean = df["RPM_Left"].mean()
+            velocity_x_mean = df["Velocity_X"].mean()
+            velocity_y_mean = df["Velocity_Y"].mean()
+            velocity_total_mean = df["Velocity_Total"].mean()
 
             # Coleta os dados para os três arquivos de saída
-            data_right.extend(df[["PWM_Right", "RPM_Right"]].values.tolist())
-            data_left.extend(df[["PWM_Left", "RPM_Left"]].values.tolist())
-            data_speed.extend(df[["PWM_Right", "PWM_Left", "Velocity_X", "Velocity_Y", "Velocity_Total"]].values.tolist())
-
+            data_right.append([pwm_right, rpm_right_mean])
+            data_left.append([pwm_left, rpm_left_mean])
+            data_speed.append([pwm_right, pwm_left, velocity_x_mean, velocity_y_mean, velocity_total_mean])
+            
 # Converte os dados para DataFrames do Pandas
 df_right = pd.DataFrame(data_right, columns=["PWM_Right", "RPM_Right"])
 df_left = pd.DataFrame(data_left, columns=["PWM_Left", "RPM_Left"])
