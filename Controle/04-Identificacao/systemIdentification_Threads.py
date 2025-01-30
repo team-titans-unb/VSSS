@@ -319,8 +319,9 @@ def main(PWM_INITIAL = (100, 100), duration = 10, CSV_FILENAME = "robot_system_i
     print(f"Data saved to {CSV_FILENAME}")
 
 if __name__ == "__main__":
-    PWMR = 255
-    PWML = 252
+    PWMR = 225
+    PWML = 220
+
     CSV_FILENAME = f"R{PWMR}L{PWML}.csv"
     PWM_INITIAL = (PWMR, PWML)  # PWM inicial (direita, esquerda)
     duration = 3  # Duração do experimento em segundos
