@@ -11,21 +11,18 @@
 #include "communication.h"
 
 // Configurações do controle PID
-float kpr = 0.4145; // Ganho proporcional
-float kir = 2.1283; // Ganho integral
-float kdr = 0.0146; // Ganho derivativo
-float alfar = 0;
-float umalfar = 0;
-float fr = 0;
-float fanteriorr = 0;
+const float kpr = 0.4145; // Ganho proporcional
+const float kir = 2.1283; // Ganho integral
+const float kdr = 0.0146; // Ganho derivativo
+const float alfar = 0.00046;
+const float umalfar = 0.99954;
 
-float kpl = 0.1587; // Ganho proporcional
-float kil = 2.0705; // Ganho integral
-float kdl = 0.0129; // Ganho derivativo
-float alfal = 0;
-float umalfal = 0;
-float fl = 0;
-float fanteriorl = 0;
+
+const float kpl = 0.1587; // Ganho proporcional
+const float kil = 2.0705; // Ganho integral
+const float kdl = 0.0129; // Ganho derivativo
+const float alfal = 0.00079;
+const float umalfal = 0.99921;
 
 // Variáveis para controle PID de cada roda
 volatile int cnt = 0;
@@ -87,17 +84,23 @@ void communicationTask(void* parameter) {
 void motorControlTask(void* parameter) {
     int auxcontrolRight = 0;
     int auxcontrolLeft = 0;
+    //Filtro da parte derivativa
+    float fl = 0;
+    float fanteriorl = 0;
+    float fr = 0;
+    float fanteriorr = 0;
+
     while (true) {
       corobeu.encoderLeft.updateSpeed();
       corobeu.encoderRight.updateSpeed();
-      Serial.print("RPM R: ");
-      Serial.print(corobeu.encoderRight.getRPM());
-      Serial.print(" : ");
-      Serial.print(corobeu.encoderRight.getDirection());
-      Serial.print("  |   RPM L: ");
-      Serial.print(corobeu.encoderLeft.getRPM());
-      Serial.print(" : ");
-      Serial.println(corobeu.encoderLeft.getDirection());
+      // Serial.print("RPM R: ");
+      // Serial.print(corobeu.encoderRight.getRPM());
+      // Serial.print(" : ");
+      // Serial.print(corobeu.encoderRight.getDirection());
+      // Serial.print("  |   RPM L: ");
+      // Serial.print(corobeu.encoderLeft.getRPM());
+      // Serial.print(" : ");
+      // Serial.println(corobeu.encoderLeft.getDirection());
        if(cnt<24){
         auxcontrolRight += 5;
         auxcontrolLeft += 5;
@@ -127,22 +130,18 @@ void motorControlTask(void* parameter) {
         integralRight += 0.5*errorRight;
         integralLeft += 0.5*errorLeft;
 
-        if(integralRight>250){
-            integralRight = 250;
-        }
-        if(integralLeft>250){
-            integralLeft = 250;
-        }
-        if(integralRight<-250){
-            integralRight = -250;
-        }
-        if(integralLeft<-250){
-            integralLeft = -250;
-        }
+        integralRight = constrain(integralRight, -250, 250);
+        integralLeft = constrain(integralLeft, -250, 250);
+        
+        fr = umalfar * fanteriorr + alfar * errorRight;
+        float derivativeRight = 2*(fr - fanteriorr);
+
+        fl = umalfal * fanteriorl + alfal * errorLeft;
+        float derivativeLeft = 2*(fl - fanteriorl);
 
         // Derivada do erro (mudança do erro para ação derivativa)
-        float derivativeRight = 2*(errorRight - prevErrorRight);
-        float derivativeLeft = 2*(errorLeft - prevErrorLeft);
+        // float derivativeRight = 2*(errorRight - prevErrorRight);
+        // float derivativeLeft = 2*(errorLeft - prevErrorLeft);
 
         // Atualizar valores anteriores
         prevErrorRight = errorRight;
