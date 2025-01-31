@@ -11,13 +11,21 @@
 #include "communication.h"
 
 // Configurações do controle PID
-float kpr = 1.45; // Ganho proporcional
-float kir = 0.000005; // Ganho integral
-float kdr = 0.85; // Ganho derivativo
+float kpr = 0.4145; // Ganho proporcional
+float kir = 2.1283; // Ganho integral
+float kdr = 0.0146; // Ganho derivativo
+float alfar = 0;
+float umalfar = 0;
+float fr = 0;
+float fanteriorr = 0;
 
-float kpl = 1.7; // Ganho proporcional
-float kil = 0.000005; // Ganho integral
-float kdl = 0.2; // Ganho derivativo
+float kpl = 0.1587; // Ganho proporcional
+float kil = 2.0705; // Ganho integral
+float kdl = 0.0129; // Ganho derivativo
+float alfal = 0;
+float umalfal = 0;
+float fl = 0;
+float fanteriorl = 0;
 
 // Variáveis para controle PID de cada roda
 volatile int cnt = 0;
