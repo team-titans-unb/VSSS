@@ -10,10 +10,10 @@ import time
 
 #goleiro_ip = '192.168.0.110'
 # goleiro_ip = '192.168.0.103' #robo azul-+
-goleiro_ip = '192.168.137.223'
+goleiro_ip = '192.168.137.155'
 #send_data(Direito, Esquero, direção, direção, IP)
 
-send_data(250, 250, 1, 1, goleiro_ip) # é aqui que vocês devem controlar o pwm.
+send_data(255, 255, 1, 1, goleiro_ip) # é aqui que vocês devem controlar o pwm.
 # time.sleep(1)
 # wheel_speed_1, wheel_speed_2 = receive_data(goleiro_ip)
 # print(f"Velocidade das rodas: {wheel_speed_1}, {wheel_speed_2}")
