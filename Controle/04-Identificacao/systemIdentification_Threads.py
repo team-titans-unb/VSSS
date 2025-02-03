@@ -227,4 +227,4 @@ if __name__ == "__main__":
     PWM_INITIAL = (PWMR, PWML)  # PWM inicial (direita, esquerda)
     duration = 3  # Duração do experimento em segundos
 
-    main(PWM_INITIAL, duration, CSV_FILENAME)
+    main(PWM_INITIAL, duration, CSV_FILENAME)   
