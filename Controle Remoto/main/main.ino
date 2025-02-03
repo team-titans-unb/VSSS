@@ -35,8 +35,8 @@ void notify() {
         // makes the robot move straight and turn smoothly to the right
         Serial.println("Go foward turn right");
         ajuste = speedY - (speedX*speedY/255);
-        motor1.moveForward((int)ajuste  -40, -1);
-        motor2.moveForward(speedY - 40, 1);
+        motor1.moveForward((int)ajuste -40, -1);
+        motor2.moveForward( -speedY, 1);
     } else if ((speedY >= 40 ) && (speedX <= -40)){
         // makes the robot move forward and turn smoothly to the left
         Serial.println("Go foward turn left");
@@ -58,13 +58,13 @@ void notify() {
     } else if ((speedY >= 40) && (speedX > -40) && (speedX < 40)){
         // makes the robot go straight
         Serial.println("Go forward");
-        motor1.moveForward(speedY -40, -1);
-        motor2.moveForward(speedY -40, 1);
+        motor1.moveForward(speedY -40, 1);
+        motor2.moveForward(speedY -40, -1);
     } else if ((speedY <= -40) && (speedX > -40) && (speedX < 40)){
         //makes the robot go backwards
         Serial.println("Go backward");
-        motor1.moveForward(-speedY -40, 1);
-        motor2.moveForward(-speedY -40, -1);
+        motor1.moveForward(speedY -40, -1);
+        motor2.moveForward(speedY -40, 1);
     } else{
         // mmakes the robot to stop
         Serial.println("Go backward");

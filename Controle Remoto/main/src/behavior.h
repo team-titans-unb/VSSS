@@ -46,6 +46,6 @@
 
 // SETTINGS PS3
 // Aqui tu tem que mudar o endereço mac do controle pra funcionar
-#define CONTROLS_MAC_ADDRESS   "08:a9:5a:a7:97:47"
-
+#define CONTROLS_MAC_ADDRESS   "74:85:76:73:65:71"
+//74:85:76:73:65:71
 #endif
