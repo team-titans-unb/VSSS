@@ -1,16 +1,17 @@
 #include "Robot.h"
 #include "communication.h"
 
-// Configurações do controle PID com filtro derivativo
-const float kpr = 0.4145;
-const float kir = 2.1283;
-const float kdr = 0.0146;
+// Configurações do controle PID
+const float kpr = 0.4145; // Ganho proporcional
+const float kir = 2.1283; // Ganho integral
+const float kdr = 0.0146; // Ganho derivativo
 const float alfar = 0.00046;
 const float umalfar = 0.99954;
 
-const float kpl = 0.1587;
-const float kil = 2.0705;
-const float kdl = 0.0129;
+
+const float kpl = 0.1587; // Ganho proporcional
+const float kil = 2.0705; // Ganho integral
+const float kdl = 0.0129; // Ganho derivativo
 const float alfal = 0.00079;
 const float umalfal = 0.99921;
 
@@ -58,10 +59,29 @@ void communicationTask(void* parameter) {
  * @brief Tarefa de controle dos motores
  */
 void motorControlTask(void* parameter) {
+    int auxcontrolRight = 0;
+    int auxcontrolLeft = 0;
+    //Filtro da parte derivativa
+    float fl = 0;
+    float fanteriorl = 0;
+    float fr = 0;
+    float fanteriorr = 0;
+
     while (true) {
-        // Atualizar velocidades dos encoders
-        corobeu.encoderLeft.updateSpeed();
-        corobeu.encoderRight.updateSpeed();
+      corobeu.encoderLeft.updateSpeed();
+      corobeu.encoderRight.updateSpeed();
+      // Serial.print("RPM R: ");
+      // Serial.print(corobeu.encoderRight.getRPM());
+      // Serial.print(" : ");
+      // Serial.print(corobeu.encoderRight.getDirection());
+      // Serial.print("  |   RPM L: ");
+      // Serial.print(corobeu.encoderLeft.getRPM());
+      // Serial.print(" : ");
+      // Serial.println(corobeu.encoderLeft.getDirection());
+       if(cnt<24){
+        auxcontrolRight += 5;
+        auxcontrolLeft += 5;
+        cnt++;
         float currentSpeedRight = corobeu.encoderRight.getRPM();
         float currentSpeedLeft = corobeu.encoderLeft.getRPM();
 
@@ -80,13 +100,33 @@ void motorControlTask(void* parameter) {
             float pidOutputRight = (kpr * errorRight) + (kir * integralRight) + (kdr * derivativeRight);
             pidOutputRight = constrain(pidOutputRight, RAMP_PWM_LIMIT, 255);
 
-            // Rampa de aceleração
-            if (currentPWMRight < RAMP_PWM_LIMIT) {
-                currentPWMRight += RAMP_STEP;
-                currentPWMRight = min(currentPWMRight, RAMP_PWM_LIMIT);
-                controlRight = currentPWMRight;
-            } else {
-                controlRight = pidOutputRight;
+        // Atualizar integração (acúmulo do erro para ação integral)
+        integralRight += 0.5*errorRight;
+        integralLeft += 0.5*errorLeft;
+
+        integralRight = constrain(integralRight, -250, 250);
+        integralLeft = constrain(integralLeft, -250, 250);
+        
+        fr = umalfar * fanteriorr + alfar * errorRight;
+        float derivativeRight = 2*(fr - fanteriorr);
+
+        fl = umalfal * fanteriorl + alfal * errorLeft;
+        float derivativeLeft = 2*(fl - fanteriorl);
+
+        // Derivada do erro (mudança do erro para ação derivativa)
+        // float derivativeRight = 2*(errorRight - prevErrorRight);
+        // float derivativeLeft = 2*(errorLeft - prevErrorLeft);
+
+        // Atualizar valores anteriores
+        prevErrorRight = errorRight;
+        prevErrorLeft = errorLeft;
+
+        // Calcular o sinal de controle PID
+        controlRight = (kpr * errorRight) + (kir * integralRight) + (kdr * derivativeRight);
+        controlLeft = (kpl * errorLeft) + (kil * integralLeft) + (kdl * derivativeLeft);
+        if(controlRight>50 || controlRight<-50){
+            if((controlRight > 1.5*pid_anteriorR)){
+              controlRight = 1.5*pid_anteriorR;
             }
 
             corobeu.setMotorRight((int)controlRight, setPointRight >= 0 ? 1 : -1);

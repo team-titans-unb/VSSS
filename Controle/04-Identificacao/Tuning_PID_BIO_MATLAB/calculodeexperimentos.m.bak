@@ -1,0 +1,62 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%Algoritmo para fazer a sintonizaÃ§Ã£o do controlador PID utilizando PSO
+%%JoÃ£o vitor Araujo dos Santos - Estudante de Engenharia EletrÃ´nica da UNB
+%%Lukas AraÃºjo da Silva - Estudante de Engenharia EletrÃ´nica da UNB
+%%Mario AndrÃ©s Pastrana Triana Estudante de Doutorado da UnB
+%%Mateus Souza Santana  Estudante de Engenheria EletrÃ´nica da UnB 
+%% Limpar o workspace e o command Windows
+clear all    % Limpa o Workspace
+close all    % Limpa as janelas
+clc          % Limpa o Command Window
+%% parámetros de configuração do PSO
+maxCycle = 100;                 % Número maximo de iterações
+runtime = 1;                   % Número maximo de experimentos
+GlobalMins = zeros(1,runtime); % Minimos Globales
+S = 20;                        % Número de partículas
+F = 1.25;                      % Factor de mutación (caso seja executado o algoritmo DE)
+C = 0.75;                      % crosover rate (caso seja executado o algoritmo DE)
+x_min = 0.001;                 % Limite minimo do espaço de busca
+x_max = 2;                    % Limite maximo do espaço de busca
+N = 3;                         % Número de dimenções (Kp, Ki, Kd)
+ys = zeros(N);                 % Melhor global posições particulas
+sp = 30;                       % SP utilizado para avaliar a função objetivo
+
+%% Execução do algoritmo PSO
+
+parfor r=1:runtime     % For utilizado para executar o total de experimentos
+        
+    %[GlobalMins ys] = PSO(x_min,x_max,N,S,maxCycle,sp);  % Execução do algoritmo PSO
+    [GlobalMins ys] = OMFO(S,maxCycle,x_min,x_max,N,sp);
+    kpi = ys(1);                    % O primeiro valor é o valor de Kp
+    kii = ys(2);                    % O segundo valor é a constante Ki
+    kdi = ys(3);                    % O terceiro valor é o valor da constante Kd
+    raizes = roots([kdi kpi kii]);   % Obtendo o valor das raices
+    absoluto = abs(raizes);       % Valor absoluto das raices
+    mayor = max(absoluto);        % Valor maximo das raices
+    e1i = 1/(mayor*10);            % Valor do filtro para o Kp
+    save([ 'PID_OptimizationOMFO',num2str(r),'.mat']);  % Carrega os experimentos salvos
+    disp('Esta no experimento:');                  % Apresenta Experimento
+    disp(r); 
+end                          % Finalização dos experiementos
+
+melhorglobal = 100000000;       % Melhor globlal fitnes 
+%% Para calcular o melhor dos experimentos 
+ for r=1:runtime     %For para o número de experimentos
+     load([ 'PID_OptimizationPSO',num2str(r),'.mat']);  % Carrega os experimentos salvos
+     if (GlobalMins(maxCycle)<= melhorglobal)  % Caso o GlobalMin seja  menor ao anterio salva em "mejorglobal"
+         melhorglobal=GlobalMins(maxCycle);  % Salva GlobalMin em "mejorglobal"
+         kpfinal=ys(1);          % Salva o valor do kp melhor
+         kifinal=ys(2);          % Salva o valor do ki melhor
+         kdfinal=ys(3);          % Salva o valor do kd melhor
+         raizesf = roots([kdfinal kpfinal kifinal]);   % Obtendo o valor das raices
+        absolutof = abs(raizesf);       % Valor absoluto das raices
+        mayorf = max(absolutof);        % Valor maximo das raices
+        e1if = 1/(mayorf*10);            % Valor do filtro para o Kp
+
+     end
+        disp('experimento');                  % Apresenta Experimento
+        disp(r);                              % Apresenta o numero de experimento  
+ end 
+
+    
+
