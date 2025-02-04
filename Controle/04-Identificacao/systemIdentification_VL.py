@@ -9,13 +9,13 @@ import time
 # endereço de IP na lista de aparelhos conectados nas configurações da rede.
 
 #goleiro_ip = '192.168.0.110'
-goleiro_ip = '192.168.0.103' #robo azul-+
+goleiro_ip = '192.168.0.101' #robo azul-+
 # goleiro_ip = '192.168.137.70'
 #send_data(Direito, Esquero, direção, direção, IP)
 
-send_data(223, 255, 1, 1, goleiro_ip) # é aqui que vocês devem controlar o pwm.
+send_data(120, 120, 1, 1, goleiro_ip) # é aqui que vocês devem controlar o pwm.
 time.sleep(2)
-send_data(0, 255, 1, 1, goleiro_ip) 
+send_data(255, 255, 1, 1, goleiro_ip) 
 time.sleep(1)
 # wheel_speed_1, wheel_speed_2 = receive_data(goleiro_ip)
 # print(f"Velocidade das rodas: {wheel_speed_1}, {wheel_speed_2}")
