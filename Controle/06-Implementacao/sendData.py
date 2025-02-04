@@ -5,9 +5,7 @@ import csv
 # wifi: Titans
 # pass: Titans2024
 
-PORT = 80  
-
-def send_data(speed1, speed2, direction1, direction2, IP):
+def send_data(speed1, speed2, IP, PORT = 80):
     combined_value = (speed1 << 16) | speed2 
     #combined_value = (speed1 << 24) | (speed2 << 16) | (direction1 << 8) | direction2
     retry_delay = 2  # Tempo de espera (em segundos) entre tentativas
@@ -24,7 +22,7 @@ def send_data(speed1, speed2, direction1, direction2, IP):
             print(f"Connection refused, retrying in {retry_delay} seconds...")
             time.sleep(retry_delay)  # Aguarda antes de tentar novamente
 
-def receive_data(IP):
+def receive_data(IP, PORT = 80):
     """Recebe os dados da ESP32 em dois frames separados."""
     retry_delay = 2  # Tempo de espera (em segundos) entre tentativas
 
@@ -76,7 +74,7 @@ def control_and_log_pwm(ip, pwm_values, log_filename="motor_data.csv", duration=
             try:
                 print(f"Sending PWM values: Wheel 1 = {pwm1}, Wheel 2 = {pwm2}")
                 # Envia os valores de PWM para o robô
-                send_data(pwm1, pwm2, 0 if pwm1 >= 0 else 1, 0 if pwm2 >= 0 else 1, ip)
+                send_data(pwm1, pwm2, ip)
                 
                 # Começa a registrar os dados por 5 segundos
                 start_time = time.time()
