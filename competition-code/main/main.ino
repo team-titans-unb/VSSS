@@ -46,14 +46,25 @@ TaskHandle_t motorControlTaskHandle = NULL;
 void communicationTask(void* parameter) {
     while (true) {
         uint32_t receivedValue = messenger.receiveData();
-        if (receivedValue != 0xFFFFFFFF) {
-            setPointRight = (receivedValue & 0xFFFF0000) >> 16;
-            setPointLeft = receivedValue & 0x0000FFFF;
-            Serial.printf("Setpoints -> Direita: %d, Esquerda: %d\n", setPointRight, setPointLeft);
+        if (receivedValue != 0xFFFFFFFF) { // Se houver novos dados válidos
+            // Extrai velocidade e direção de cada motor
+            int speedRight = (receivedValue & 0x00FF0000) >> 16;  // Bits 16-23 -> Velocidade motor direito
+            int directionRight = (receivedValue & 0x000000FF);    // Bits 0-7  -> Direção motor direito
+            
+            int speedLeft = (receivedValue & 0xFF000000) >> 24;   // Bits 24-31 -> Velocidade motor esquerdo
+            int directionLeft = (receivedValue & 0x0000FF00) >> 8;// Bits 8-15  -> Direção motor esquerdo
+            
+            // Ajusta o sinal conforme a direção (exemplo: 1 = frente, 0 = ré)
+            setPointRight = (directionRight == 1) ? speedRight : -speedRight;
+            setPointLeft = (directionLeft == 1) ? speedLeft : -speedLeft;
+
+            Serial.printf("Setpoints -> Direita: %d (Dir: %d), Esquerda: %d (Dir: %d)\n", 
+                          setPointRight, directionRight, setPointLeft, directionLeft);
         }
         vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 }
+
 
 /**
  * @brief Tarefa de controle dos motores
@@ -68,20 +79,9 @@ void motorControlTask(void* parameter) {
     float fanteriorr = 0;
 
     while (true) {
-      corobeu.encoderLeft.updateSpeed();
-      corobeu.encoderRight.updateSpeed();
-      // Serial.print("RPM R: ");
-      // Serial.print(corobeu.encoderRight.getRPM());
-      // Serial.print(" : ");
-      // Serial.print(corobeu.encoderRight.getDirection());
-      // Serial.print("  |   RPM L: ");
-      // Serial.print(corobeu.encoderLeft.getRPM());
-      // Serial.print(" : ");
-      // Serial.println(corobeu.encoderLeft.getDirection());
-       if(cnt<24){
-        auxcontrolRight += 5;
-        auxcontrolLeft += 5;
-        cnt++;
+        // Atualizar velocidades dos encoders
+        corobeu.encoderLeft.updateSpeed();
+        corobeu.encoderRight.updateSpeed();
         float currentSpeedRight = corobeu.encoderRight.getRPM();
         float currentSpeedLeft = corobeu.encoderLeft.getRPM();
 
@@ -100,33 +100,13 @@ void motorControlTask(void* parameter) {
             float pidOutputRight = (kpr * errorRight) + (kir * integralRight) + (kdr * derivativeRight);
             pidOutputRight = constrain(pidOutputRight, RAMP_PWM_LIMIT, 255);
 
-        // Atualizar integração (acúmulo do erro para ação integral)
-        integralRight += 0.5*errorRight;
-        integralLeft += 0.5*errorLeft;
-
-        integralRight = constrain(integralRight, -250, 250);
-        integralLeft = constrain(integralLeft, -250, 250);
-        
-        fr = umalfar * fanteriorr + alfar * errorRight;
-        float derivativeRight = 2*(fr - fanteriorr);
-
-        fl = umalfal * fanteriorl + alfal * errorLeft;
-        float derivativeLeft = 2*(fl - fanteriorl);
-
-        // Derivada do erro (mudança do erro para ação derivativa)
-        // float derivativeRight = 2*(errorRight - prevErrorRight);
-        // float derivativeLeft = 2*(errorLeft - prevErrorLeft);
-
-        // Atualizar valores anteriores
-        prevErrorRight = errorRight;
-        prevErrorLeft = errorLeft;
-
-        // Calcular o sinal de controle PID
-        controlRight = (kpr * errorRight) + (kir * integralRight) + (kdr * derivativeRight);
-        controlLeft = (kpl * errorLeft) + (kil * integralLeft) + (kdl * derivativeLeft);
-        if(controlRight>50 || controlRight<-50){
-            if((controlRight > 1.5*pid_anteriorR)){
-              controlRight = 1.5*pid_anteriorR;
+            // Rampa de aceleração
+            if (currentPWMRight < RAMP_PWM_LIMIT) {
+                currentPWMRight += RAMP_STEP;
+                currentPWMRight = min(currentPWMRight, RAMP_PWM_LIMIT);
+                controlRight = currentPWMRight;
+            } else {
+                controlRight = pidOutputRight;
             }
 
             corobeu.setMotorRight((int)controlRight, setPointRight >= 0 ? 1 : -1);
