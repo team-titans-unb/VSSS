@@ -51,12 +51,13 @@ class Corobeu:
         vd = max(min(vd, Max_Speed), Min_Speed)
         vl = max(min(vl, Max_Speed), Min_Speed)
 
-        return int(vl * 100), int(vd * 100)
+        return int(vl * 10), int(vd * 10)
     
     def send_speed(self, speed_left, speed_right):
         direction_left = 0 if speed_left > 0 else 1
         direction_right = 0 if speed_right > 0 else 1 
-        combined_value = (speed_left << 24) | (speed_right << 16) | (direction_left << 8) | direction_right
+        combined_value = (abs(speed_left) << 24) | (abs(speed_right) << 16) | (direction_left << 8) | direction_right
+        print(f"enviando: {combined_value}")
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.connect((self.robot_ip, self.robot_port))
@@ -108,7 +109,7 @@ class Corobeu:
 if __name__ == "__main__":
     VISION_IP = "224.5.23.2"
     VISION_PORT = 10011
-    ROBOT_IP = "192.168.0.101"  # IP do robô
+    ROBOT_IP = "192.168.0.104"  # IP do robô
     ROBOT_PORT = 80  # Porta do robô
     ROBOT_ID = 4  # ID do robô azul a ser controlado
 
@@ -118,3 +119,4 @@ if __name__ == "__main__":
 
     vision_sock = init_vision_socket(VISION_IP, VISION_PORT)
     crb01 = Corobeu(ROBOT_IP, ROBOT_PORT, ROBOT_ID, vision_sock, Kp, Ki, Kd)
+    crb01.follow_path(0.5, 0.5, [0.5, 0.5])
