@@ -61,6 +61,7 @@ void communicationTask(void* parameter) {
             Serial.printf("Setpoints -> Direita: %d (Dir: %d), Esquerda: %d (Dir: %d)\n", 
                           setPointRight, directionRight, setPointLeft, directionLeft);
         }
+        // receivedValue = 0xFFFFFFFF;
         vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 }
@@ -155,7 +156,7 @@ void setup() {
     messenger.begin();
 
     // Criar tarefas do FreeRTOS
-    xTaskCreate(communicationTask, "Communication Task", 2048, NULL, 2, &communicationTaskHandle);
+    xTaskCreate(communicationTask, "Communication Task", 4096, NULL, 2, &communicationTaskHandle);
     xTaskCreate(motorControlTask, "Motor Control Task", 2048, NULL, 1, &motorControlTaskHandle);
 }
 

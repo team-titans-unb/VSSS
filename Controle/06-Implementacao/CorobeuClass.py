@@ -61,6 +61,8 @@ class Corobeu:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.connect((self.robot_ip, self.robot_port))
                 s.sendall(combined_value.to_bytes(4, byteorder='little'))
+                print("data sent")
+                return
         except Exception as e:
             print(f"Erro ao enviar dados: {e}")
     

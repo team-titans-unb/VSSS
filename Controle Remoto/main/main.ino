@@ -28,6 +28,9 @@ int rightX;
 void notify() {
     leftY = Ps3.data.analog.stick.ly; 
     rightX = Ps3.data.analog.stick.rx;
+    Serial.print("\nVelocidades");
+    Serial.print(leftY);
+    Serial.println(rightX);
     int speedY = map(leftY, 128, -128, -255, 255); // Mapping analog values to speed intervals
     int speedX = map(rightX, -128, 128, -255, 255); // Mapping analog values to direction intervals
     float ajuste;
@@ -67,7 +70,7 @@ void notify() {
         motor2.moveForward(speedY -40, 1);
     } else{
         // mmakes the robot to stop
-        Serial.println("Go backward");
+        Serial.println("Stop");
         motor1.stop();
         motor2.stop();
     }

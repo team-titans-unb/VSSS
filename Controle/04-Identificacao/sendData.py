@@ -8,8 +8,8 @@ import csv
 PORT = 80  
 
 def send_data(speed1, speed2, direction1, direction2, IP):
-    combined_value = (speed1 << 16) | speed2 
-    #combined_value = (speed1 << 24) | (speed2 << 16) | (direction1 << 8) | direction2
+    #combined_value = (speed1 << 16) | speed2 
+    combined_value = (speed1 << 24) | (speed2 << 16) | (direction1 << 8) | direction2
     retry_delay = 2  # Tempo de espera (em segundos) entre tentativas
 
     while True:  # Loop infinito para tentativas indefinidas
