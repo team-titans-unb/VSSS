@@ -9,7 +9,7 @@ import time
 # endereço de IP na lista de aparelhos conectados nas configurações da rede.
 
 #goleiro_ip = '192.168.0.110'
-goleiro_ip = '192.168.0.103' #robo azul-+
+goleiro_ip = '192.168.0.104' #robo azul-+
 # goleiro_ip = '192.168.137.70'
 #send_data(Direito, Esquero, direção, direção, IP)
 
