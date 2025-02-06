@@ -26,7 +26,7 @@ class Corobeu:
         self.kd = kd
         self.v_max = 255
         self.v_min = -255
-        self.v_linear = 50
+        self.v_linear = 100
         self.phi = 0
     
     def get_position(self):
