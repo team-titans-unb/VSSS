@@ -26,7 +26,7 @@ class Corobeu:
         self.kd = kd
         self.v_max = 255
         self.v_min = -255
-        self.v_linear = 50
+        self.v_linear = 100
         self.phi = 0
     
     def get_position(self):
@@ -113,13 +113,14 @@ class Corobeu:
 if __name__ == "__main__":
     VISION_IP = "224.5.23.2"
     VISION_PORT = 10011
-    ROBOT_IP = "192.168.0.104"  # IP do robô
+    # ROBOT_IP = "192.168.0.104"  # IP do robô
+    ROBOT_IP = "192.168.0.100"  # IP do robô
     ROBOT_PORT = 80  # Porta do robô
     ROBOT_ID = 4  # ID do robô azul a ser controlado
 
-    Kp = 20
-    Ki = 1
-    Kd = 0.001
+    Kp = 150
+    Ki = 75
+    Kd = 20
 
     vision_sock = init_vision_socket(VISION_IP, VISION_PORT)
     crb01 = Corobeu(ROBOT_IP, ROBOT_PORT, ROBOT_ID, vision_sock, Kp, Ki, Kd)
