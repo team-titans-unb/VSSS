@@ -78,7 +78,7 @@ class Corobeu:
             x, y, phi_obs = self.get_position()
             print(f"x: {x}, y: {y}, phi: {phi_obs}")
             if x is None or y is None:
-                print("bah gurizada")
+                # print("bah gurizada")
                 continue
             
             phid = math.atan2((pathY - y), (pathX - x))
@@ -88,9 +88,9 @@ class Corobeu:
             error_distance_global = math.sqrt((End_position[1] - y) ** 2 + (End_position[0] - x) ** 2)
             
             U = self.v_linear
-            print(f"velocidades: U= {U}, omega= {omega}")            
+            # print(f"velocidades: U= {U}, omega= {omega}")            
             vl, vd = self.speed_control(U, omega)
-            print(f"velocidades: L= {vl}, R= {vd}")
+            # print(f"velocidades: L= {vl}, R= {vd}")
             self.send_speed(vl, vd)
             
             if error_distance <= 0.02 or error_distance_global <= 0.03:
@@ -113,13 +113,13 @@ class Corobeu:
 if __name__ == "__main__":
     VISION_IP = "224.5.23.2"
     VISION_PORT = 10011
-    ROBOT_IP = "192.168.0.104"  # IP do robô
+    ROBOT_IP = "192.168.0.111"  # IP do robô
     ROBOT_PORT = 80  # Porta do robô
     ROBOT_ID = 4  # ID do robô azul a ser controlado
 
-    Kp = 20
-    Ki = 1
-    Kd = 0.001
+    Kp = 150
+    Ki = 75
+    Kd = 10
 
     vision_sock = init_vision_socket(VISION_IP, VISION_PORT)
     crb01 = Corobeu(ROBOT_IP, ROBOT_PORT, ROBOT_ID, vision_sock, Kp, Ki, Kd)
