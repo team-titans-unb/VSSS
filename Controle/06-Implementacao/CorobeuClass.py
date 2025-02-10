@@ -26,12 +26,13 @@ class Corobeu:
         self.kd = kd
         self.v_max = 255
         self.v_min = -255
-        self.v_linear = 100
+        self.v_linear = 50
         self.phi = 0
     
     def get_position(self):
         data, _ = self.vision_sock.recvfrom(1024)
         frame = wr.SSL_WrapperPacket().FromString(data)
+        print(frame)
         for robot in frame.detection.robots_blue:
             if robot.robot_id == self.robot_id:
                 return robot.x / 1000, robot.y / 1000, robot.orientation
@@ -57,7 +58,7 @@ class Corobeu:
         direction_left = 1 if speed_left > 0 else 0
         direction_right = 1 if speed_right > 0 else 0 
         combined_value = (abs(speed_left) << 24) | (abs(speed_right) << 16) | (direction_left << 8) | direction_right
-        print(f"enviando: {combined_value}")
+        # print(f"enviando: {combined_value}")
         try:
             with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
                 s.connect((self.robot_ip, self.robot_port))
@@ -113,7 +114,7 @@ class Corobeu:
 if __name__ == "__main__":
     VISION_IP = "224.5.23.2"
     VISION_PORT = 10011
-    ROBOT_IP = "192.168.0.111"  # IP do robô
+    ROBOT_IP = "192.168.0.117"  # IP do robô
     ROBOT_PORT = 80  # Porta do robô
     ROBOT_ID = 4  # ID do robô azul a ser controlado
 
@@ -123,4 +124,4 @@ if __name__ == "__main__":
 
     vision_sock = init_vision_socket(VISION_IP, VISION_PORT)
     crb01 = Corobeu(ROBOT_IP, ROBOT_PORT, ROBOT_ID, vision_sock, Kp, Ki, Kd)
-    crb01.follow_path(0.5, 0.5, [0.5, 0.5])
+    crb01.follow_path(0.45, 0.45, [0.45, 0.45])
