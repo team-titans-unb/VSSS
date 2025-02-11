@@ -16,7 +16,7 @@ const float RAMP_PWM_LIMIT = 100.0;
 const float RAMP_STEP = 10;
 
 // Variáveis de controle
-volatile int setPointRight = 0, setPointLeft = 0;
+volatile int setPointRight = 0, setPointLeft = 0, directionRight = 0, directionLeft = 0;
 float controlRight = 0, controlLeft = 0;
 float integralRight = 0, integralLeft = 0;
 float fr = 0, fanteriorr = 0, fl = 0, fanteriorl = 0;
@@ -51,13 +51,13 @@ void loop() {
         if (receivedValue != 0xFFFFFFFF) {
             // Extrai velocidade e direção de cada motor
             int speedRight = (receivedValue & 0x00FF0000) >> 16;
-            int directionRight = (receivedValue & 0x000000FF);
+            directionRight = (receivedValue & 0x000000FF);
             
             int speedLeft = (receivedValue & 0xFF000000) >> 24;
-            int directionLeft = (receivedValue & 0x0000FF00) >> 8;
+            directionLeft = (receivedValue & 0x0000FF00) >> 8;
 
-            setPointRight = (directionRight == 1) ? speedRight : -speedRight;
-            setPointLeft = (directionLeft == 1) ? speedLeft : -speedLeft;
+            setPointRight = speedRight;
+            setPointLeft = speedLeft;
 
             Serial.printf("Setpoints -> Direita: %d (Dir: %d), Esquerda: %d (Dir: %d)\n", 
                           setPointRight, directionRight, setPointLeft, directionLeft);
@@ -99,7 +99,7 @@ void loop() {
                 controlRight = pidOutputRight;
             // }
 
-            corobeu.setMotorRight((int)controlRight, setPointRight >= 0 ? 1 : -1);
+            corobeu.setMotorRight((int)controlRight, (int)directionRight);
         }
 
         //Controle PID para motor esquerdo
@@ -126,7 +126,7 @@ void loop() {
                 controlLeft = pidOutputLeft;
             // }
 
-            corobeu.setMotorLeft((int)controlLeft, setPointLeft >= 0 ? 1 : -1);
+            corobeu.setMotorLeft((int)controlLeft, (int)directionLeft);
         }
 
         // Debug
