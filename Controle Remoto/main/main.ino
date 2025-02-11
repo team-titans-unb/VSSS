@@ -28,9 +28,6 @@ int rightX;
 void notify() {
     leftY = Ps3.data.analog.stick.ly; 
     rightX = Ps3.data.analog.stick.rx;
-    Serial.print("\nVelocidades");
-    Serial.print(leftY);
-    Serial.println(rightX);
     int speedY = map(leftY, 128, -128, -255, 255); // Mapping analog values to speed intervals
     int speedX = map(rightX, -128, 128, -255, 255); // Mapping analog values to direction intervals
     float ajuste;
@@ -38,8 +35,8 @@ void notify() {
         // makes the robot move straight and turn smoothly to the right
         Serial.println("Go foward turn right");
         ajuste = speedY - (speedX*speedY/255);
-        motor1.moveForward((int)ajuste -40, -1);
-        motor2.moveForward( -speedY, 1);
+        motor1.moveForward((int)ajuste  -40, -1);
+        motor2.moveForward(speedY - 40, 1);
     } else if ((speedY >= 40 ) && (speedX <= -40)){
         // makes the robot move forward and turn smoothly to the left
         Serial.println("Go foward turn left");
@@ -61,16 +58,16 @@ void notify() {
     } else if ((speedY >= 40) && (speedX > -40) && (speedX < 40)){
         // makes the robot go straight
         Serial.println("Go forward");
-        motor1.moveForward(speedY -40, 1);
-        motor2.moveForward(speedY -40, -1);
+        motor1.moveForward(speedY -40, -1);
+        motor2.moveForward(speedY -40, 1);
     } else if ((speedY <= -40) && (speedX > -40) && (speedX < 40)){
         //makes the robot go backwards
         Serial.println("Go backward");
-        motor1.moveForward(speedY -40, -1);
-        motor2.moveForward(speedY -40, 1);
+        motor1.moveForward(-speedY -40, 1);
+        motor2.moveForward(-speedY -40, -1);
     } else{
         // mmakes the robot to stop
-        Serial.println("Stop");
+        Serial.println("Go backward");
         motor1.stop();
         motor2.stop();
     }
@@ -86,7 +83,8 @@ void setup() {
     Serial.begin(19200); // Initialize serial communication
     Ps3.attach(notify); // Attach the notification function to the PS3 controller
     Ps3.attachOnConnect(onConnect); // Attach the connection function to the PS3 controller
-    Ps3.begin(CONTROLS_MAC_ADDRESS); // Begin PS3 controller communication
+    Ps3.begin("08:a9:5a:a7:97:47"); // Begin PS3 controller communication
+    //Ps3.begin("90:34:fc:c8:49:f1"); // Begin PS3 controller communication
     Serial.println("Ready."); // Print "Ready." to serial monitor
 }
 

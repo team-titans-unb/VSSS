@@ -4,17 +4,17 @@ close all    % Limpa as janelas
 clc          % Limpa o Command Window
 %% parámetros de configuração do PSO
 maxCycle = 100;                 % Número maximo de iterações
-runtime = 16;                   % Número maximo de experimentos
+runtime = 5;                   % Número maximo de experimentos
 GlobalMins = zeros(1,runtime); % Minimos Globales
 S = 20;                        % Número de partículas
 F = 1.25;                      % Factor de mutación (caso seja executado o algoritmo DE)
 C = 0.75;                      % crosover rate (caso seja executado o algoritmo DE)
-x_min = 0.01;                 % Limite minimo do espaço de busca
+x_min = -5;                 % Limite minimo do espaço de busca
 x_max = 5;                     % Limite maximo do espaço de busca
 N = 3;                         % Número de dimenções (Kp, Ki, Kd)
 ys = zeros(N);                 % Melhor global posições particulas
-sp = 1;                       % SP utilizado para avaliar a função objetivo (em cm)
-deltaT = 0.1;
+sp = 150;                       % SP utilizado para avaliar a função objetivo (em cm)
+deltaT = 0.7;
 %% Execução do algoritmo PSO
 
 for r=1:runtime     % For utilizado para executar o total de experimentos
@@ -38,7 +38,7 @@ for r=1:runtime     % For utilizado para executar o total de experimentos
     e1i = 1/(mayor*10);            % Valor do filtro para o Kp
     unomenosalfa = exp(-(deltaT/e1i))
     alfa = 1 - unomenosalfa
-    save([ 'PID_OptimizationGOA',num2str(r),'.mat']);  % Carrega os experimentos salvos
+    save([ 'PID_OptimizationPSO',num2str(r),'.mat']);  % Carrega os experimentos salvos
     disp('Esta no experimento:');                  % Apresenta Experimento
     disp(r); 
 end                          % Finalização dos experiementos
@@ -48,7 +48,7 @@ melhorglobal = 100000000;       % Melhor globlal fitnes
  for r=1:runtime     %For para o número de experimentos
 
 
-     load([ 'PID_OptimizationGOA',num2str(r),'.mat']);  % Carrega os experimentos salvos
+     load([ 'PID_OptimizationPSO',num2str(r),'.mat']);  % Carrega os experimentos salvos
      if (GlobalMins(r)<= melhorglobal)  % Caso o GlobalMin seja  menor ao anterio salva em "mejorglobal"
          melhorglobal=GlobalMins(r);  % Salva GlobalMin em "mejorglobal"
          kpfinal=ys(1);          % Salva o valor do kp melhor

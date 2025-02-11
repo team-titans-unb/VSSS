@@ -15,8 +15,8 @@
 #define ROBOT_CHANEL_2L 3
 
 // Left Encoder Pins
-#define LEFT_ENCODER_A 18 
-#define LEFT_ENCODER_B 19 
+#define LEFT_ENCODER_A 19 
+#define LEFT_ENCODER_B 18
 
 // Right Encoder Pins
 #define RIGHT_ENCODER_A 17
