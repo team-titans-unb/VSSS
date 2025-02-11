@@ -55,8 +55,8 @@ class Corobeu:
         return int(vl), int(vd)
     
     def send_speed(self, speed_left, speed_right):
-        direction_left = 1 if speed_left > 0 else 0
-        direction_right = 1 if speed_right > 0 else 0 
+        direction_left = 1 if speed_left > 0 else -1
+        direction_right = 1 if speed_right > 0 else -1 
         combined_value = (abs(speed_left) << 24) | (abs(speed_right) << 16) | (direction_left << 8) | direction_right
         # print(f"enviando: {combined_value}")
         try:
