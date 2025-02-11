@@ -4,7 +4,7 @@ import math
 import struct
 import wrapper_pb2 as wr
 
-def init_vision_socket(VISION_IP = "224.5.23.2", VISION_PORT = 10011):
+def init_vision_socket(VISION_IP = "224.5.23.2", VISION_PORT = 10015):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
     sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
     sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, 128)
@@ -55,8 +55,8 @@ class Corobeu:
         return int(vl), int(vd)
     
     def send_speed(self, speed_left, speed_right):
-        direction_left = 1 if speed_left > 0 else 0
-        direction_right = 1 if speed_right > 0 else 0 
+        direction_left = 1 if speed_left > 0 else -1
+        direction_right = 1 if speed_right > 0 else -1 
         combined_value = (abs(speed_left) << 24) | (abs(speed_right) << 16) | (direction_left << 8) | direction_right
         # print(f"enviando: {combined_value}")
         try:
@@ -89,9 +89,9 @@ class Corobeu:
             error_distance_global = math.sqrt((End_position[1] - y) ** 2 + (End_position[0] - x) ** 2)
             
             U = self.v_linear
-            # print(f"velocidades: U= {U}, omega= {omega}")            
+            print(f"Erro Phi: {error_phi}, omega: {omega}")            
             vl, vd = self.speed_control(U, omega)
-            # print(f"velocidades: L= {vl}, R= {vd}")
+            print(f"velocidades: L: {vl}, R: {vd}")
             self.send_speed(vl, vd)
             
             if error_distance <= 0.02 or error_distance_global <= 0.03:
@@ -113,8 +113,8 @@ class Corobeu:
 
 if __name__ == "__main__":
     VISION_IP = "224.5.23.2"
-    VISION_PORT = 10011
-    ROBOT_IP = "192.168.0.117"  # IP do robô
+    VISION_PORT = 10015
+    ROBOT_IP = "192.168.0.107"  # IP do robô
     ROBOT_PORT = 80  # Porta do robô
     ROBOT_ID = 4  # ID do robô azul a ser controlado
 
