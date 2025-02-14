@@ -4,14 +4,14 @@ import csv
 import serial
 
 # Configuração da comunicação
-ROBOT_IP = "192.168.0.105"
+ROBOT_IP = "192.168.0.120"
 ROBOT_PORT = 80
 SERIAL_PORT = "COM3"
 SERIAL_BAUDRATE = 19200
 
 def send_pwm(pwm_left, pwm_right, robot_ip, robot_port):
-    direction1 = 1 if pwm_left > 0 else 0
-    direction2 = 1 if pwm_right > 0 else 0 
+    direction1 = 1 if pwm_left >= 0 else 0
+    direction2 = 1 if pwm_right >= 0 else 0 
     combined_value = (pwm_left << 24) | (pwm_right << 16) | (direction1 << 8) | direction2
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         s.connect((robot_ip, robot_port))
@@ -65,14 +65,14 @@ def main(pwm_right=100, pwm_left=100, duration=20, CSV_FILENAME="identification.
     print(f"Experiment completed. Data saved to {CSV_FILENAME}")
 
 if __name__ == "__main__":
-    # PWM_STEP = 5
-    # PWM_MAX = 195
-    # PWM_INI = 140
-    # Max_iter = int((PWM_MAX - PWM_INI)/PWM_STEP)
-    for i in range(6):
-        pwm_left = 150
-        pwm_right = 150
-        CSV_FILENAME = f"validacao_{i}.csv"
-        duration = 100
+    PWM_STEP = 5
+    PWM_MAX = 255
+    PWM_INI = 75
+    Max_iter = int((PWM_MAX - PWM_INI)/PWM_STEP)
+    for i in range(Max_iter+1):
+        pwm_left = PWM_INI + i * PWM_STEP
+        pwm_right = PWM_INI + i * PWM_STEP
+        CSV_FILENAME = f"R{pwm_right}_L{pwm_left}.csv"
+        duration = 20
         main(pwm_right, pwm_left, duration, CSV_FILENAME)
-        time.sleep(3)
+        time.sleep(1)

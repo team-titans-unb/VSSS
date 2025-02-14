@@ -70,7 +70,7 @@ void motorControlTask(void* parameter) {
     corobeu.setMotorRight((int)setPointRight, setPointRight >= 0 ? 1 : -1); // Definir direção com base no set-point
     corobeu.setMotorLeft((int)setPointLeft, setPointLeft >= 0 ? 1 : -1);
   }
-  vTaskDelay(100 / portTICK_PERIOD_MS); // Delay para atualização suave
+  vTaskDelay(700 / portTICK_PERIOD_MS); // Delay para atualização suave
 }
 
 /**

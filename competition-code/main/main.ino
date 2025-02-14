@@ -2,18 +2,19 @@
 #include "communication.h"
 
 // Configurações do controle PID
-const float kpr = 1.2, kir = 0.813, kdr = 0.01;
+// const float kpr = 0.961, kir = 0.6306, kdr = 4.6676;
+// const float alfar = 0.4326, umalfar = 0.5674;
+
+// const float kpl = 0.938, kil = 0.6755, kdl = 3.9739;
+// const float alfal = 0.6188, umalfal = 0.3812;
+
+const float kpr = 1.4, kir = 0.813, kdr = 0.0632;
 const float alfar = 1, umalfar = 0;
 
 const float kpl = 1.4958, kil = 0.816, kdl = 0.0632;
 const float alfal = 1, umalfal = 0;
 
-// const float kpl = 0.1587, kil = 2.0705, kdl = 0.0129;
-// const float alfal = 0.00079, umalfal = 0.99921;
-
-const float INTEGRAL_LIMIT = 250.0;
-const float RAMP_PWM_LIMIT = 100.0;
-const float RAMP_STEP = 10;
+const float INTEGRAL_LIMIT = 2500.0;
 
 // Variáveis de controle
 volatile int setPointRight = 0, setPointLeft = 0, directionRight = 0, directionLeft = 0;
@@ -88,18 +89,10 @@ void loop() {
             fanteriorr = fr;
 
             float pidOutputRight = (kpr * errorRight) + (kir * integralRight) + (kdr * derivativeRight);
-            pidOutputRight = constrain(pidOutputRight, RAMP_PWM_LIMIT, 255);
+            pidOutputRight = constrain(pidOutputRight, 70, 255);
 
-            // Rampa de aceleração
-            // if (currentPWMRight < RAMP_PWM_LIMIT) {
-            //     currentPWMRight += RAMP_STEP;
-            //     currentPWMRight = min(currentPWMRight, RAMP_PWM_LIMIT);
-            //     controlRight = currentPWMRight;
-            // } else {
-                controlRight = pidOutputRight;
-            // }
-
-            corobeu.setMotorRight((int)controlRight, (int)directionRight);
+            corobeu.setMotorRight((int)pidOutputRight, (int)directionRight);
+            // corobeu.setMotorRight((int)setPointRight, (int)directionRight);
         }
 
         //Controle PID para motor esquerdo
@@ -115,22 +108,10 @@ void loop() {
             fanteriorl = fl;
 
             float pidOutputLeft = (kpl * errorLeft) + (kil * integralLeft) + (kdl * derivativeLeft);
-            pidOutputLeft = constrain(pidOutputLeft, RAMP_PWM_LIMIT, 255);
+            pidOutputLeft = constrain(pidOutputLeft, 70, 255);
 
-            // Rampa de aceleração
-            // if (currentPWMLeft < RAMP_PWM_LIMIT) {
-            //     currentPWMLeft += RAMP_STEP;
-            //     currentPWMLeft = min(currentPWMLeft, RAMP_PWM_LIMIT);
-            //     controlLeft = currentPWMLeft;
-            // } else {
-                controlLeft = pidOutputLeft;
-            // }
-
-            corobeu.setMotorLeft((int)controlLeft, (int)directionLeft);
+            corobeu.setMotorLeft((int)pidOutputLeft, (int)directionLeft);
+            // corobeu.setMotorLeft((int)setPointLeft, (int)directionLeft);
         }
-
-        // Debug
-        // Serial.printf("PWM -> Direita: %.2f | Esquerda: %.2f\n", controlRight, controlLeft);
-        
     }
 }
