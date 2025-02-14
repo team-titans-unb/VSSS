@@ -47,7 +47,7 @@ void Motor::moveForward(int speed, int direction) {
     if (direction == 1) {
         ledcWrite(pin_R_, LOW);
         ledcWrite(pin_L_, speed);        
-    } else if (direction == -1) {
+    } else if (direction == 0) {
         ledcWrite(pin_R_, speed);
         ledcWrite(pin_L_, LOW);              
     }

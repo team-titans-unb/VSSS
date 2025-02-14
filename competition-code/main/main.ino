@@ -8,9 +8,6 @@ const float alfar = 1, umalfar = 0;
 const float kpl = 1.4958, kil = 0.816, kdl = 0.0632;
 const float alfal = 1, umalfal = 0;
 
-// const float kpl = 0.1587, kil = 2.0705, kdl = 0.0129;
-// const float alfal = 0.00079, umalfal = 0.99921;
-
 const float INTEGRAL_LIMIT = 250.0;
 const float RAMP_PWM_LIMIT = 100.0;
 const float RAMP_STEP = 10;
@@ -77,6 +74,7 @@ void loop() {
         // Controle PID para motor direito
         if (setPointRight == 0 || abs(setPointRight) < 70) {
             controlRight = integralRight = currentPWMRight = 0;
+            // Serial.print("Deu zero");
             corobeu.setMotorRight(0, 0);
         } else {
             float errorRight = setPointRight - currentSpeedRight;
@@ -90,15 +88,7 @@ void loop() {
             float pidOutputRight = (kpr * errorRight) + (kir * integralRight) + (kdr * derivativeRight);
             pidOutputRight = constrain(pidOutputRight, RAMP_PWM_LIMIT, 255);
 
-            // Rampa de aceleração
-            // if (currentPWMRight < RAMP_PWM_LIMIT) {
-            //     currentPWMRight += RAMP_STEP;
-            //     currentPWMRight = min(currentPWMRight, RAMP_PWM_LIMIT);
-            //     controlRight = currentPWMRight;
-            // } else {
-                controlRight = pidOutputRight;
-            // }
-
+            controlRight = pidOutputRight;
             corobeu.setMotorRight((int)controlRight, (int)directionRight);
         }
 
@@ -117,15 +107,7 @@ void loop() {
             float pidOutputLeft = (kpl * errorLeft) + (kil * integralLeft) + (kdl * derivativeLeft);
             pidOutputLeft = constrain(pidOutputLeft, RAMP_PWM_LIMIT, 255);
 
-            // Rampa de aceleração
-            // if (currentPWMLeft < RAMP_PWM_LIMIT) {
-            //     currentPWMLeft += RAMP_STEP;
-            //     currentPWMLeft = min(currentPWMLeft, RAMP_PWM_LIMIT);
-            //     controlLeft = currentPWMLeft;
-            // } else {
-                controlLeft = pidOutputLeft;
-            // }
-
+            controlLeft = pidOutputLeft;
             corobeu.setMotorLeft((int)controlLeft, (int)directionLeft);
         }
 
