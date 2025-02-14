@@ -5,6 +5,7 @@ import struct
 import signal
 import matplotlib.pyplot as plt
 import wrapper_pb2 as wr
+from DrawField import draw_field, plot_robot_path
 
 def init_vision_socket(VISION_IP="224.5.23.2", VISION_PORT=10015):
     sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
@@ -28,13 +29,17 @@ class Corobeu:
         self.kd = kd
         self.v_max = 255
         self.v_min = 0
-        self.v_linear = 350
+        self.v_linear = 340
         self.phi = 0
         
         self.last_speed_time = time.time()
         self.time_log = []
         self.set_point_log = []
         self.output_log = []
+        
+        # Listas para armazenar as coordenadas do robô
+        self.x_log = []
+        self.y_log = []
         
         signal.signal(signal.SIGINT, self.plot_response)
         signal.signal(signal.SIGTERM, self.plot_response)
@@ -48,17 +53,14 @@ class Corobeu:
         return None, None, None
     
     def speed_control(self, U, omega):
-        omega = max(min(omega, 40), -40)
+        limiar_min = 68
+        sat_omega = abs(((limiar_min*6.4) - (2*U))/7.5)
+        omega = max(min(omega, sat_omega), -sat_omega)
         vr = (2 * U + omega * 7.5) / (2 * 3.2)
         vl = (2 * U - omega * 7.5) / (2 * 3.2)
         print(f"Prev: {vr}, {vl}")
         vr = max(min(vr, self.v_max), self.v_min)
         vl = max(min(vl, self.v_max), self.v_min)
-        
-        if abs(vr) <= 60:
-            vr = 0
-        if abs(vl) <= 60:
-            vl = 0
         
         return int(vl), int(vr)
     
@@ -78,15 +80,24 @@ class Corobeu:
         deltaT = 0.7
         a = 1
         interror_phi = Integral_part_phi = fant_phi = 0
+        phi_obs = 0
         
         while a == 1:
+            # x, y, _ = self.get_position()
             x, y, phi_obs = self.get_position()
             if x is None or y is None:
                 continue
             
+            # Armazenar as coordenadas do robô
+            self.x_log.append(x)
+            self.y_log.append(y)
+
             phid = math.atan2((pathY - y), (pathX - x))
             error_phi = phid - phi_obs
             omega, fant_phi, interror_phi, Integral_part_phi = self.pid_controller(self.kp, self.ki, self.kd, deltaT, error_phi, interror_phi, fant_phi, Integral_part_phi)
+            
+            # phi_obs = phi_obs + omega * deltaT
+
             error_distance = math.sqrt((pathY - y)**2 + (pathX - x)**2)
             error_distance_global = math.sqrt((End_position[1] - y) ** 2 + (End_position[0] - x) ** 2)
             
@@ -98,19 +109,21 @@ class Corobeu:
                 self.send_speed(vl, vr)
                 self.last_speed_time = current_time
                 print(f"X: {x}, Y: {y}, Phi: {phi_obs}")
-                print(f"Erro: {error_phi}, Omega: {omega}")
+                print(f"Erro: {error_phi}, Omega: {omega}, Phid: {phid}")
                 print(f"Vl: {vl}, Vr: {vr}")
 
                 self.time_log.append(current_time)
                 self.set_point_log.append(phid)
                 self.output_log.append(omega)
             
-            if error_distance <= 0.02 or error_distance_global <= 0.05:
+            if error_distance <= 0.1:
+                a = 0
+            if error_distance_global <= 0.07:
                 self.send_speed(0, 0)
                 a = 0
     
     def pid_controller(self, kp, ki, kd, deltaT, error, interror, fant, Integral_part):
-        Integral_saturation = 20
+        Integral_saturation = 5
         raizes = math.sqrt(kd), math.sqrt(kp), math.sqrt(ki)
         Filter_e = 1 / (max(raizes) * 10)   
         unomenosalfaana = math.exp(-(deltaT / Filter_e))
@@ -124,10 +137,18 @@ class Corobeu:
     
     def plot_response(self, signum=None, frame=None):
         self.send_speed(0, 0)
+        
+        # Plotar o caminho percorrido pelo robô
+        if self.x_log and self.y_log:
+            errorX = 0 - self.x_log[-1]
+            errorY = 0 - self.y_log[-1] 
+            fileName = f"P1A270-x:{errorX}-y:{errorY}-E3"
+            plot_robot_path([], [], self.x_log, self.y_log, fileName)
+            print(fileName)
+
         plt.figure()
         plt.plot(self.time_log, self.set_point_log, label='Set Point', linestyle='--')
         plt.plot(self.time_log, self.output_log, label='PID Output')
-        # plt.plot(self.time_log, (self.set_point_log - self.output_log), label='ERROR')
         plt.xlabel('Time (s)')
         plt.ylabel('Response')
         plt.title('System Response vs. Set Point')
@@ -139,16 +160,15 @@ class Corobeu:
 if __name__ == "__main__":
     VISION_IP = "224.5.23.2"
     VISION_PORT = 10015
-    ROBOT_IP = "192.168.0.109"
+    ROBOT_IP = "192.168.0.103"
     ROBOT_PORT = 80
     ROBOT_ID = 4
 
-    Kp = 15
-    Ki = 5
-    Kd = 1
-
+    Kp = 25         #20
+    Ki = 5          #5
+    Kd = 3
 
     vision_sock = init_vision_socket(VISION_IP, VISION_PORT)
     crb01 = Corobeu(ROBOT_IP, ROBOT_PORT, ROBOT_ID, vision_sock, Kp, Ki, Kd)
-    crb01.follow_path(0.0, 0.38, [0.0, 0.39])
+    crb01.follow_path(0.7, 0, (0.7, 0))
     crb01.plot_response()
