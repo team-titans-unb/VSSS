@@ -74,6 +74,12 @@ void loop() {
         corobeu.encoderRight.updateSpeed();
         float currentSpeedRight = corobeu.encoderRight.getRPM();
         float currentSpeedLeft = corobeu.encoderLeft.getRPM();
+        // if (currentSpeedRight == 0){
+        //   currentSpeedRight = 50;
+        // }
+        // if (currentSpeedLeft == 0){
+        //   currentSpeedLeft = 50;
+        // }
         Serial.printf("RPM R: %.2f | RPM L: %.2f\n", currentSpeedRight, currentSpeedLeft);
         // Controle PID para motor direito
         if (setPointRight == 0 || abs(setPointRight) < 70) {
