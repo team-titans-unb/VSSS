@@ -84,6 +84,7 @@ void loop() {
         // Controle PID para motor direito
         if (setPointRight == 0 || abs(setPointRight) < 70) {
             controlRight = integralRight = currentPWMRight = 0;
+            // Serial.print("Deu zero");
             corobeu.setMotorRight(0, 0);
         } else {
             float errorRight = setPointRight - currentSpeedRight;
