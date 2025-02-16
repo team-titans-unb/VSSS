@@ -55,10 +55,11 @@ melhorglobal = 100000000;       % Melhor globlal fitnes
          kifinal=ys(2);          % Salva o valor do ki melhor
          kdfinal=ys(3);          % Salva o valor do kd melhor
          %raizesf = roots([kdfinal kpfinal kifinal]);   % Obtendo o valor das raices
+         %raizesf = roots([0.0632 1.4 0.813]);
          raizesf = roots([0.0632 1.4958 0.816]);   % Obtendo o valor das raices
          absolutof = abs(raizesf);       % Valor absoluto das raices
          mayorf = max(absolutof);        % Valor maximo das raices
-         e1if = 1/(mayorf*10);            % Valor do filtro para o Kp
+         e1if = 1/(mayorf*10)            % Valor do filtro para o Kp
          unomenosalfaf = exp(-(deltaT/e1if))
          alfaf = 1 - unomenosalfaf
          disp('Melhor experimento foi');                  % Apresenta Experimento

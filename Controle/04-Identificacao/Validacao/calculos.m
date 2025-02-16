@@ -1,7 +1,7 @@
 clc; clear;
 
 % Carregar os dados do arquivo CSV gerado anteriormente
-filePath = 'validacao_2.csv';
+filePath = 'StepAns.csv';
 data = readmatrix(filePath);
 
 % Definir o tempo de amostragem

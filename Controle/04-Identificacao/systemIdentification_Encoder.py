@@ -4,7 +4,7 @@ import csv
 import serial
 
 # Configuração da comunicação
-ROBOT_IP = "192.168.0.120"
+ROBOT_IP = "192.168.137.191"
 ROBOT_PORT = 80
 SERIAL_PORT = "COM3"
 SERIAL_BAUDRATE = 19200
@@ -65,14 +65,15 @@ def main(pwm_right=100, pwm_left=100, duration=20, CSV_FILENAME="identification.
     print(f"Experiment completed. Data saved to {CSV_FILENAME}")
 
 if __name__ == "__main__":
-    PWM_STEP = 5
-    PWM_MAX = 255
-    PWM_INI = 75
-    Max_iter = int((PWM_MAX - PWM_INI)/PWM_STEP)
-    for i in range(Max_iter+1):
-        pwm_left = PWM_INI + i * PWM_STEP
-        pwm_right = PWM_INI + i * PWM_STEP
-        CSV_FILENAME = f"R{pwm_right}_L{pwm_left}.csv"
-        duration = 20
-        main(pwm_right, pwm_left, duration, CSV_FILENAME)
-        time.sleep(1)
+    # PWM_STEP = 5
+    # PWM_MAX = 255
+    # PWM_INI = 75
+    # Max_iter = int((PWM_MAX - PWM_INI)/PWM_STEP)
+    # for i in range(Max_iter+1):
+    #     pwm_left = PWM_INI + i * PWM_STEP
+    #     pwm_right = PWM_INI + i * PWM_STEP
+    #     CSV_FILENAME = f"R{pwm_right}_L{pwm_left}.csv"
+    #     duration = 20
+    #     main(pwm_right, pwm_left, duration, CSV_FILENAME)
+    #     time.sleep(1)
+    main(150, 150, 100, "StepAns.csv")
