@@ -1,19 +1,17 @@
 Relatório de Classificação:
               precision    recall  f1-score   support
 
-           0       0.33      0.14      0.19       835
-           1       0.38      0.51      0.43       407
-           2       0.47      0.59      0.52      1365
+           0       1.00      1.00      1.00       661
+           1       0.99      0.99      0.99       176
+           2       0.99      0.99      0.99       188
 
-    accuracy                           0.43      2607
-   macro avg       0.39      0.41      0.38      2607
-weighted avg       0.41      0.43      0.40      2607
+    accuracy                           1.00      1025
+   macro avg       0.99      0.99      0.99      1025
+weighted avg       1.00      1.00      1.00      1025
 
 Casos Perdidos:
-Verdadeiro: 0, Previsto: 2
 Verdadeiro: 2, Previsto: 1
+Verdadeiro: 1, Previsto: 2
 Verdadeiro: 2, Previsto: 1
-Verdadeiro: 2, Previsto: 0
-Verdadeiro: 0, Previsto: 2
-
-Tempo médio de inferência: 0.009245 segundos
+1/1 ━━━━━━━━━━━━━━━━━━━━ 0s 79ms/step
+Tempo médio de inferência: 0.016554 segundos

@@ -8,11 +8,14 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, classification_report
+from collections import Counter
+from imblearn.under_sampling import RandomUnderSampler
+import joblib
 import matplotlib.pyplot as plt
 import time
 
 # Configuração
-SEQUENCE_LENGTH = 5  # Número de frames usados como entrada
+SEQUENCE_LENGTH = 50  # Número de frames usados como entrada
 DATASET_DIR = r"D:\\Documents\\Titans\\VSSS\\VSSS\\Controle\\05-Modelagem\\estrategias\\treino"
 OUTPUT_DIR = r"D:\\Documents\\Titans\\VSSS\\VSSS\\Controle\\05-Modelagem\\resultados"
 
@@ -34,15 +37,15 @@ def load_dataset(dataset_dir):
         labels.append(strategy_blue)
         
         # Criando dataset para o robô amarelo (trocando as colunas)
-        strategy_yellow = df["yellow_robot_strategy"].values
-        features_yellow = df.copy()
-        features_yellow.rename(columns={
-            "yellow_robot_x": "blue_robot_x", "yellow_robot_y": "blue_robot_y", "yellow_robot_orientation": "blue_robot_orientation",
-            "blue_robot_x": "yellow_robot_x", "blue_robot_y": "yellow_robot_y", "blue_robot_orientation": "yellow_robot_orientation"
-        }, inplace=True)
-        features_yellow.drop(columns=["blue_robot_strategy", "yellow_robot_strategy"], inplace=True, errors='ignore')
-        data.append(features_yellow.values)
-        labels.append(strategy_yellow)
+        # strategy_yellow = df["yellow_robot_strategy"].values
+        # features_yellow = df.copy()
+        # features_yellow.rename(columns={
+        #     "yellow_robot_x": "blue_robot_x", "yellow_robot_y": "blue_robot_y", "yellow_robot_orientation": "blue_robot_orientation",
+        #     "blue_robot_x": "yellow_robot_x", "blue_robot_y": "yellow_robot_y", "blue_robot_orientation": "yellow_robot_orientation"
+        # }, inplace=True)
+        # features_yellow.drop(columns=["blue_robot_strategy", "yellow_robot_strategy"], inplace=True, errors='ignore')
+        # data.append(features_yellow.values)
+        # labels.append(strategy_yellow)
     
     return data, labels
 
@@ -71,6 +74,10 @@ def create_sequences(data, labels, seq_length):
     
     return np.array(X, dtype=np.float32), np.array(y, dtype=np.int32)
 
+# undersampler = RandomUnderSampler(sampling_strategy={2: 1600}, random_state=42)  # Reduz para 300 amostras
+# X_resampled, y_resampled = undersampler.fit_resample(X.reshape(X.shape[0], -1), y)  # Remodelando para compatibilidade
+
+# X_resampled = X_resampled.reshape(-1, SEQUENCE_LENGTH, X.shape[2])
 
 X, y = create_sequences(X_normalized, labels, SEQUENCE_LENGTH)
 y = np.array(y, dtype=np.int32)
@@ -80,6 +87,8 @@ label_encoder = LabelEncoder()
 y = label_encoder.fit_transform(y)
 # Dividir em treino e teste
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# X_train, X_test, y_train, y_test = train_test_split(X_resampled, y_resampled, test_size=0.2, random_state=42)
+
 
 # Criar o modelo LSTM
 model = keras.Sequential([
@@ -93,7 +102,7 @@ model = keras.Sequential([
 model.compile(optimizer='adam', loss='sparse_categorical_crossentropy', metrics=['accuracy'])
 
 # Treinar
-epochs = 50
+epochs = 100
 model.fit(X_train, y_train, epochs=epochs, batch_size=8, validation_data=(X_test, y_test))
 
 # Avaliação
@@ -119,6 +128,8 @@ print(f"Tempo médio de inferência: {(end_time - start_time) / 10:.6f} segundos
 
 # Salvar o modelo
 model.save(os.path.join(OUTPUT_DIR, "lstm_futebol_robotico.h5"))
+joblib.dump(scaler, os.path.join(OUTPUT_DIR, "scaler.pkl"))
+
 
 # Salvar imagem do modelo
 plot_model(model, to_file=os.path.join(OUTPUT_DIR, "lstm_model.png"), show_shapes=True, show_layer_names=True)
