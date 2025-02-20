@@ -83,8 +83,8 @@ void setup() {
     Serial.begin(19200); // Initialize serial communication
     Ps3.attach(notify); // Attach the notification function to the PS3 controller
     Ps3.attachOnConnect(onConnect); // Attach the connection function to the PS3 controller
-    Ps3.begin("08:a9:5a:a7:97:47"); // Begin PS3 controller communication
-    //Ps3.begin("90:34:fc:c8:49:f1"); // Begin PS3 controller communication
+    // Ps3.begin("08:a9:5a:a7:97:47"); // Begin PS3 controller communication
+    Ps3.begin("74:85:76:73:65:71"); // Begin PS3 controller communication
     Serial.println("Ready."); // Print "Ready." to serial monitor
 }
 

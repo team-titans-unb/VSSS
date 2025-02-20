@@ -18,7 +18,7 @@ void IRAM_ATTR MotorEncoder::handleInterrupt(void* arg) {
 void MotorEncoder::begin() {
     pinMode(encoderPinA, INPUT_PULLUP);
     pinMode(encoderPinB, INPUT_PULLUP);
-    attachInterruptArg(digitalPinToInterrupt(encoderPinA), handleInterrupt, this, FALLING);
+    attachInterruptArg(digitalPinToInterrupt(encoderPinA), handleInterrupt, this, CHANGE);
     lastUpdateTime = millis();
 }
 

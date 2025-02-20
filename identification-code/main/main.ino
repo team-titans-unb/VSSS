@@ -1,115 +1,86 @@
-/**********************************************************************************************/
-/*                                                                                            */
-/*        main.ino                                     Author  : Luiz Felipe                  */
-/*                                                     Email   :                              */
-/*                                                     address : DF, BRAZIL                   */
-/*        Created: 2023/02/26          by Luiz F.                                             */
-/*        Updated: 2024/09/13          by Luiz F.                                             */
-/*                                                                       All rights reserved  */
-/**********************************************************************************************/
 #include "Robot.h"
 #include "communication.h"
 
-// Create a robot object named corobeu for motor control
-Robot corobeu(ROBOT_MOTOR_1R, ROBOT_MOTOR_1L, ROBOT_MOTOR_2R, ROBOT_MOTOR_2L, LEFT_ENCODER_A, LEFT_ENCODER_B, RIGHT_ENCODER_A, RIGHT_ENCODER_B);
+// Variáveis de controle
+volatile int setPointRight = 0, setPointLeft = 0, directionRight = 0, directionLeft = 0;
+float controlRight = 0, controlLeft = 0;
+float integralRight = 0, integralLeft = 0;
+float fr = 0, fanteriorr = 0, fl = 0, fanteriorl = 0;
+float currentPWMRight = 0.0, currentPWMLeft = 0.0;
 
-//Initialize communication
+
+// Buffer para média móvel (armazenando as 3 últimas leituras)
+float speedRightBuffer[5] = {0, 0, 0, 0, 0};
+float speedLeftBuffer[5] = {0, 0, 0, 0, 0};
+
+// Criação do objeto do robô
+Robot corobeu(ROBOT_MOTOR_1R, ROBOT_MOTOR_1L, ROBOT_MOTOR_2R, ROBOT_MOTOR_2L,
+              LEFT_ENCODER_A, LEFT_ENCODER_B, RIGHT_ENCODER_A, RIGHT_ENCODER_B);
+
+// Comunicação Wi-Fi
 Communication messenger(NETWORK, PASSWORD, 80);
-uint32_t combinedValue = 0xFFFFFFFF;
 
-TaskHandle_t communicationTaskHandle = NULL;
-TaskHandle_t motorControlTaskHandle = NULL;
-TaskHandle_t encoderReadingTaskHandle = NULL;
-unsigned long lastUpdateTime; // Última atualização de velocidade
-volatile int setPointRight = 0;
-volatile int setPointLeft = 0;
+// Variáveis de controle de tempo
+unsigned long lastMotorUpdate = 0;
+unsigned long lastCommUpdate = 0;
+const unsigned long motorUpdateInterval = 700; // Atualiza os motores a cada 100ms
+const unsigned long commUpdateInterval = 10;   // Verifica comunicação a cada 10ms
 
-/**
- * @brief Task to handle communication with the host.
- * 
- * This task listens for incoming data from the host and stores the received value in a global variable.
- * It runs indefinitely in the background.
- * 
- * @param parameter Task parameter (not used in this case).
- */
-void communicationTask(void* parameter) {
-  while (true) {
-    // Poll for data with a reduced frequency by adding idle time
-    uint32_t receivedValue = messenger.receiveData();
-    if (receivedValue != 0xFFFFFFFF) { // Check if the value is valid
-      // Atualizar set-points com os novos dados
-      setPointRight = ((receivedValue & 0xFFFF0000) >> 16);
-      setPointLeft = ((receivedValue & 0x0000FFFF));
-      Serial.print("Received value: ");
-      Serial.println(receivedValue, HEX);
-      receivedValue = 0xFFFFFFFF;
-    }
-    vTaskDelay(10 / portTICK_PERIOD_MS); // Reduced delay to make communication more responsive
-  }
+// Função para aplicar o filtro de média móvel
+float movingAverageFilter(float newReading, float *buffer) {
+    buffer[4] = buffer[3];
+    buffer[3] = buffer[2];
+    buffer[2] = buffer[1];
+    buffer[1] = buffer[0];
+    buffer[0] = newReading;
+    
+    return ((buffer[0] + buffer[1] + buffer[2] + buffer[3] + buffer[4]) / 5.0);
 }
 
-/**
- * @brief Task to control the motors of the robot.
- * 
- * This task decodes the received combined value into speed and direction, and updates the robot's motor control accordingly.
- * It runs indefinitely in the background.
- * 
- * @param parameter Task parameter (not used in this case).
- */
-void motorControlTask(void* parameter) {
-  while (true) {
-    corobeu.encoderLeft.updateSpeed();
-    corobeu.encoderRight.updateSpeed();
-    Serial.print("RPM R: ");
-    Serial.print(corobeu.encoderRight.getRPM());
-    Serial.print("  |   RPM L: ");
-    //Serial.print(" | ");
-    Serial.println(corobeu.encoderLeft.getRPM());
-
-    // Aplicar a velocidade nos motores
-    corobeu.setMotorRight((int)setPointRight, setPointRight >= 0 ? 1 : -1); // Definir direção com base no set-point
-    corobeu.setMotorLeft((int)setPointLeft, setPointLeft >= 0 ? 1 : -1);
-  }
-  vTaskDelay(700 / portTICK_PERIOD_MS); // Delay para atualização suave
-}
-
-/**
- * @brief Setup function to initialize communication and create tasks.
- * 
- * This function is called once when the ESP32 starts. It initializes serial communication, 
- * starts WiFi communication, and creates two FreeRTOS tasks: one for communication and one for motor control.
- */
 void setup() {
-  corobeu.initializeRobot();
-  Serial.begin(19200);  // Initialize serial communication
-  messenger.begin();   // Start WiFi communication
-
-  // Create the communication task
-  xTaskCreate(
-    communicationTask,        // Task function
-    "Communication Task",     // Task name
-    2048,                     // Stack size
-    NULL,                     // Task parameter
-    2,                        // Higher priority for communication
-    &communicationTaskHandle  // Task handle
-  );
-
-  // Create the motor control task
-  xTaskCreate(
-    motorControlTask,         // Task function
-    "Motor Control Task",     // Task name
-    2048,                     // Stack size
-    NULL,                     // Task parameter
-    1,                        // Lower priority for motor control
-    &motorControlTaskHandle   // Task handle
-  );
+    corobeu.initializeRobot();
+    Serial.begin(19200);
+    messenger.begin();
 }
 
-/**
- * @brief Main loop function.
- * 
- * This loop remains empty as all operations are handled by FreeRTOS tasks in the background.
- */
 void loop() {
+    unsigned long currentTime = millis();
 
+    // Comunicação Wi-Fi
+    if (currentTime - lastCommUpdate >= commUpdateInterval) {
+        lastCommUpdate = currentTime;
+        uint32_t receivedValue = messenger.receiveData();
+        if (receivedValue != 0xFFFFFFFF) {
+            // Extrai velocidade e direção de cada motor
+            int speedRight = (receivedValue & 0x00FF0000) >> 16;
+            directionRight = (receivedValue & 0x000000FF);
+            
+            int speedLeft = (receivedValue & 0xFF000000) >> 24;
+            directionLeft = (receivedValue & 0x0000FF00) >> 8;
+
+            setPointRight = speedRight;
+            setPointLeft = speedLeft;
+
+            Serial.printf("Setpoints -> Direita: %d (Dir: %d), Esquerda: %d (Dir: %d)\n", 
+                          setPointRight, directionRight, setPointLeft, directionLeft);
+        }
+    }
+
+    // Controle dos motores
+    if (currentTime - lastMotorUpdate >= motorUpdateInterval) {
+        lastMotorUpdate = currentTime;
+        // Atualizar velocidades dos encoders
+        corobeu.encoderLeft.updateSpeed();
+        corobeu.encoderRight.updateSpeed();
+        float rawSpeedRight = corobeu.encoderRight.getRPM();
+        float rawSpeedLeft = corobeu.encoderLeft.getRPM();
+        
+        // Aplicação do filtro de média móvel
+        float currentSpeedRight = movingAverageFilter(rawSpeedRight, speedRightBuffer);
+        float currentSpeedLeft = movingAverageFilter(rawSpeedLeft, speedLeftBuffer);
+        Serial.printf("RPM R: %.2f | RPM L: %.2f\n", currentSpeedRight, currentSpeedLeft);
+        
+        corobeu.setMotorRight((int)setPointRight, (int)directionRight);
+        corobeu.setMotorLeft((int)setPointLeft, (int)directionLeft);
+    }
 }

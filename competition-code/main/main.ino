@@ -8,7 +8,7 @@
 // const float kpl = 0.938, kil = 0.6755, kdl = 3.9739;
 // const float alfal = 0.6188, umalfal = 0.3812;
 
-const float kpr = 1.4, kir = 0.813, kdr = 0.0632;
+const float kpr = 4.5277, kir = 1.507, kdr = 0.8199;
 const float alfar = 1, umalfar = 0;
 
 const float kpl = 1.4958, kil = 0.816, kdl = 0.0632;
@@ -23,6 +23,10 @@ float integralRight = 0, integralLeft = 0;
 float fr = 0, fanteriorr = 0, fl = 0, fanteriorl = 0;
 float currentPWMRight = 0.0, currentPWMLeft = 0.0;
 
+// Buffer para média móvel (armazenando as 3 últimas leituras)
+float speedRightBuffer[5] = {0, 0, 0, 0, 0};
+float speedLeftBuffer[5] = {0, 0, 0, 0, 0};
+
 // Criação do objeto do robô
 Robot corobeu(ROBOT_MOTOR_1R, ROBOT_MOTOR_1L, ROBOT_MOTOR_2R, ROBOT_MOTOR_2L,
               LEFT_ENCODER_A, LEFT_ENCODER_B, RIGHT_ENCODER_A, RIGHT_ENCODER_B);
@@ -35,6 +39,17 @@ unsigned long lastMotorUpdate = 0;
 unsigned long lastCommUpdate = 0;
 const unsigned long motorUpdateInterval = 700; // Atualiza os motores a cada 100ms
 const unsigned long commUpdateInterval = 10;   // Verifica comunicação a cada 10ms
+
+// Função para aplicar o filtro de média móvel
+float movingAverageFilter(float newReading, float *buffer) {
+    buffer[4] = buffer[3];
+    buffer[3] = buffer[2];
+    buffer[2] = buffer[1];
+    buffer[1] = buffer[0];
+    buffer[0] = newReading;
+    
+    return ((buffer[0] + buffer[1] + buffer[2] + buffer[3] + buffer[4]) / 5.0);
+}
 
 void setup() {
     corobeu.initializeRobot();
@@ -74,12 +89,14 @@ void loop() {
         corobeu.encoderRight.updateSpeed();
         float currentSpeedRight = corobeu.encoderRight.getRPM();
         float currentSpeedLeft = corobeu.encoderLeft.getRPM();
-        // if (currentSpeedRight == 0){
-        //   currentSpeedRight = 50;
-        // }
-        // if (currentSpeedLeft == 0){
-        //   currentSpeedLeft = 50;
-        // }
+        // Leitura dos encoders
+        // float rawSpeedRight = corobeu.encoderRight.getRPM();
+        // float rawSpeedLeft = corobeu.encoderLeft.getRPM();
+        
+        // // Aplicação do filtro de média móvel
+        // float currentSpeedRight = movingAverageFilter(rawSpeedRight, speedRightBuffer);
+        // float currentSpeedLeft = movingAverageFilter(rawSpeedLeft, speedLeftBuffer);
+
         Serial.printf("RPM R: %.2f | RPM L: %.2f\n", currentSpeedRight, currentSpeedLeft);
         // Controle PID para motor direito
         if (setPointRight == 0 || abs(setPointRight) < 70) {

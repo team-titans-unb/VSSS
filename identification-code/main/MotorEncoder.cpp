@@ -7,16 +7,18 @@ MotorEncoder::MotorEncoder(uint8_t pinA, uint8_t pinB)
 // Rotina de interrupção estática
 void IRAM_ATTR MotorEncoder::handleInterrupt(void* arg) {
     MotorEncoder* instance = static_cast<MotorEncoder*>(arg);
-    int bState = digitalRead(instance->encoderPinB);
-    instance->direction = (bState == HIGH) ? 1 : -1;
-    instance->pulseCount++;
+    if(!digitalRead(instance->encoderPinA)) {
+      int bState = digitalRead(instance->encoderPinB);
+      instance->direction = (bState == HIGH) ? 1 : -1;
+      instance->pulseCount++;    
+    }
 }
 
 // Inicializa o encoder
 void MotorEncoder::begin() {
     pinMode(encoderPinA, INPUT_PULLUP);
     pinMode(encoderPinB, INPUT_PULLUP);
-    attachInterruptArg(digitalPinToInterrupt(encoderPinA), handleInterrupt, this, RISING);
+    attachInterruptArg(digitalPinToInterrupt(encoderPinA), handleInterrupt, this, FALLING);
     lastUpdateTime = millis();
 }
 
@@ -31,9 +33,9 @@ void MotorEncoder::updateSpeed() {
         pulseCount = 0;
         interrupts();
 
-        // Calcula a velocidade em RPM
+        // Calcula a velocidade em RPS
         rpm = (count / (float)pulsesPerRevolution) * (60000.0 / elapsedTime);
-
+        // Serial.println(count);
         if(count == 0){
             direction = 0;
         }

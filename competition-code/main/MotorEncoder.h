@@ -11,7 +11,7 @@ private:
     volatile int direction; //Direção de rotação: 1 = horária, -1 = anti-horária
     unsigned long lastUpdateTime; // Última atualização de velocidade
     float rpm; // Rotação por minuto (RPM)
-    static constexpr int pulsesPerRevolution = 12; // Pulsos por rotação do encoder
+    static constexpr int pulsesPerRevolution = 24; // Pulsos por rotação do encoder
     static void IRAM_ATTR handleInterrupt(void* arg); // Rotina de interrupção estática
 
 public:
