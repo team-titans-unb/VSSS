@@ -54,14 +54,17 @@ class Corobeu:
         return None, None, None
     
     def speed_control(self, U, omega):
-        limiar_min = 68
-        sat_omega = abs(((limiar_min*6.4) - (2*U))/7.5)
+        limiar_min = 110
+        sat_omega = abs(((limiar_min*3) - (2*U))/7.5)
         omega = max(min(omega, sat_omega), -sat_omega)
-        vr = (2 * U + omega * 6.5) / 3.2
-        vl = (2 * U - omega * 6.5) / 3.2
+        vr = (2 * U + omega * 7.5) / 3
+        vl = (2 * U - omega * 7.5) / 3
         print(f"Prev: {vr}, {vl}")
         vr = max(min(vr, self.v_max), self.v_min)
         vl = max(min(vl, self.v_max), self.v_min)
+        
+        if math.isnan(vr) or math.isnan(vl):
+            vr, vl = 0, 0
         
         return int(vl), int(vr)
     
@@ -152,7 +155,7 @@ class Corobeu:
     
     def pid_controller(self, kp, ki, kd, deltaT, error, interror, fant, Integral_part):
         Integral_saturation = 5
-        raizes = np.roots([kd, kp, ki])
+        raizes = math.sqrt(kd), math.sqrt(kp), math.sqrt(ki)
         Filter_e = 1 / (max(raizes) * 10)   
         unomenosalfaana = math.exp(-(deltaT / Filter_e))
         alfaana = 1 - unomenosalfaana
@@ -192,11 +195,11 @@ if __name__ == "__main__":
     ROBOT_PORT = 80
     ROBOT_ID = 4
 
-    Kp = 25         #20
-    Ki = 5          #5
-    Kd = 3
+    Kp = 30       
+    Ki = 15   
+    Kd = 7
 
     vision_sock = init_vision_socket(VISION_IP, VISION_PORT)
     crb01 = Corobeu(ROBOT_IP, ROBOT_PORT, ROBOT_ID, vision_sock, Kp, Ki, Kd)
-    crb01.follow_path(0.7, 0, (0.7, 0))
+    crb01.follow_path(0.4, 0.4, (0.4, 0.4))
     crb01.plot_response()
