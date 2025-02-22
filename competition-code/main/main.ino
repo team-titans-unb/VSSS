@@ -2,17 +2,11 @@
 #include "communication.h"
 
 // Configurações do controle PID
-// const float kpr = 0.961, kir = 0.6306, kdr = 4.6676;
-// const float alfar = 0.4326, umalfar = 0.5674;
-
-// const float kpl = 0.938, kil = 0.6755, kdl = 3.9739;
-// const float alfal = 0.6188, umalfal = 0.3812;
-
-const float kpr = 4.5277, kir = 1.507, kdr = 0.8199;
-const float alfar = 1, umalfar = 0;
-
-const float kpl = 1.4958, kil = 0.816, kdl = 0.0632;
+const float kpl = 0.8394, kil = 0.1528, kdl = 0.0;
 const float alfal = 1, umalfal = 0;
+
+const float kpr = 0.8302, kir = 0.1508, kdr = 0.0;
+const float alfar = 1, umalfar = 0;
 
 const float INTEGRAL_LIMIT = 2500.0;
 
@@ -109,17 +103,17 @@ void loop() {
             // Serial.println(integralRight);
             integralRight = constrain(integralRight, -INTEGRAL_LIMIT, INTEGRAL_LIMIT);
             fr = umalfar * fanteriorr + alfar * errorRight;
-            float derivativeRight = 1.4285714286 * (fr - fanteriorr);
+            float derivativeRight = 1.42857 * (fr - fanteriorr);
             fanteriorr = fr;
 
             float pidOutputRight = (kpr * errorRight) + (kir * integralRight) + (kdr * derivativeRight);
-            pidOutputRight = constrain(pidOutputRight, 70, 255);
+            pidOutputRight = constrain(pidOutputRight, 0, 165);
 
-            corobeu.setMotorRight((int)pidOutputRight, (int)directionRight);
-            // corobeu.setMotorRight((int)setPointRight, (int)directionRight);
+            corobeu.setMotorRight(((int)pidOutputRight + 70), (int)directionRight);
+           // corobeu.setMotorRight((int)setPointRight, (int)directionRight);
         }
 
-        //Controle PID para motor esquerdo
+        // //Controle PID para motor esquerdo
         if (setPointLeft == 0 || abs(setPointLeft) < 70) {
             controlLeft = integralLeft = currentPWMLeft = 0;
             corobeu.setMotorLeft(0, 0);
@@ -128,14 +122,14 @@ void loop() {
             integralLeft += 0.7 * errorLeft;
             integralLeft = constrain(integralLeft, -INTEGRAL_LIMIT, INTEGRAL_LIMIT);
             fl = umalfal * fanteriorl + alfal * errorLeft;
-            float derivativeLeft = 1.4285714286 * (fl - fanteriorl);
+            float derivativeLeft = 1.42857 * (fl - fanteriorl);
             fanteriorl = fl;
 
             float pidOutputLeft = (kpl * errorLeft) + (kil * integralLeft) + (kdl * derivativeLeft);
-            pidOutputLeft = constrain(pidOutputLeft, 70, 255);
+            pidOutputLeft = constrain(pidOutputLeft, 0, 165);
 
-            corobeu.setMotorLeft((int)pidOutputLeft, (int)directionLeft);
-            // corobeu.setMotorLeft((int)setPointLeft, (int)directionLeft);
+            corobeu.setMotorLeft(((int)pidOutputLeft + 70), (int)directionLeft);
+           // corobeu.setMotorLeft((int)setPointLeft, (int)directionLeft);
         }
     }
 }

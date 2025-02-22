@@ -4,21 +4,57 @@
 MotorEncoder::MotorEncoder(uint8_t pinA, uint8_t pinB)
     : encoderPinA(pinA), encoderPinB(pinB), pulseCount(0), direction(0), lastUpdateTime(0), rpm(0.0) {}
 
-// Rotina de interrupção estática
-void IRAM_ATTR MotorEncoder::handleInterrupt(void* arg) {
+// Interrupção para borda de subida no pino A
+void IRAM_ATTR MotorEncoder::handleInterruptA_Rising(void* arg) {
     MotorEncoder* instance = static_cast<MotorEncoder*>(arg);
-    if(!digitalRead(instance->encoderPinA)) {
-      int bState = digitalRead(instance->encoderPinB);
-      instance->direction = (bState == HIGH) ? 1 : -1;
-      instance->pulseCount++;    
+    if(digitalRead(instance->encoderPinA)){
+      int stateB = digitalRead(instance->encoderPinB);
+      instance->direction = (stateB == HIGH) ? 1 : -1; 
+      instance->pulseCount++;
     }
 }
 
-// Inicializa o encoder
+// Interrupção para borda de descida no pino A
+void IRAM_ATTR MotorEncoder::handleInterruptA_Falling(void* arg) {
+    MotorEncoder* instance = static_cast<MotorEncoder*>(arg);
+    if(!digitalRead(instance->encoderPinA)){
+      int stateB = digitalRead(instance->encoderPinB);
+      instance->direction = (stateB == LOW) ? 1 : -1;  
+      instance->pulseCount++;
+    }
+}
+
+// Interrupção para borda de subida no pino B
+void IRAM_ATTR MotorEncoder::handleInterruptB_Rising(void* arg) {
+    MotorEncoder* instance = static_cast<MotorEncoder*>(arg);
+    if(digitalRead(instance->encoderPinB)){
+      // int stateA = digitalRead(instance->encoderPinA);
+      // instance->direction = (stateA == LOW) ? 1 : -1;  
+      instance->pulseCount++;
+    }
+}
+
+// Interrupção para borda de descida no pino B
+void IRAM_ATTR MotorEncoder::handleInterruptB_Falling(void* arg) {
+    MotorEncoder* instance = static_cast<MotorEncoder*>(arg);
+    if(!digitalRead(instance->encoderPinB)){
+      // int stateA = digitalRead(instance->encoderPinA);
+      // instance->direction = (stateA == HIGH) ? 1 : -1;  
+      instance->pulseCount++;
+    }
+    
+}
+
+// Inicializa o encoder e configura as interrupções
 void MotorEncoder::begin() {
-    pinMode(encoderPinA, INPUT_PULLUP);
-    pinMode(encoderPinB, INPUT_PULLUP);
-    attachInterruptArg(digitalPinToInterrupt(encoderPinA), handleInterrupt, this, CHANGE);
+    pinMode(encoderPinA, INPUT);
+    pinMode(encoderPinB, INPUT);
+
+    attachInterruptArg(digitalPinToInterrupt(encoderPinA), handleInterruptA_Rising, this, RISING);
+    attachInterruptArg(digitalPinToInterrupt(encoderPinA), handleInterruptA_Falling, this, FALLING);
+    attachInterruptArg(digitalPinToInterrupt(encoderPinB), handleInterruptB_Rising, this, RISING);
+    attachInterruptArg(digitalPinToInterrupt(encoderPinB), handleInterruptB_Falling, this, FALLING);
+
     lastUpdateTime = millis();
 }
 
@@ -26,21 +62,22 @@ void MotorEncoder::begin() {
 void MotorEncoder::updateSpeed() {
     unsigned long currentTime = millis();
     unsigned long elapsedTime = currentTime - lastUpdateTime;
+    // static int lastCount = 0;
 
-    if (elapsedTime >= 700) { // Atualiza a cada 100 ms
+    if (elapsedTime >= 700) { // Atualiza a cada 500 ms
         noInterrupts();
-        int count = pulseCount;
+        int count = pulseCount; // - lastCount;
         pulseCount = 0;
         interrupts();
 
-        // Calcula a velocidade em RPS
-        rpm = (count / (float)pulsesPerRevolution) * (60000.0 / elapsedTime);
-        // Serial.println(count);
-        if(count == 0){
+        rpm = (2 * count / (float)pulsesPerRevolution) * (60000.0 / elapsedTime);
+
+        if (count == 0) {
             direction = 0;
         }
 
         lastUpdateTime = currentTime;
+        // lastCount = count;
     }
 }
 
@@ -49,6 +86,7 @@ float MotorEncoder::getRPM() {
     return rpm;
 }
 
-int MotorEncoder::getDirection(){
+// Retorna a direção de rotação
+int MotorEncoder::getDirection() {
     return direction;
 }

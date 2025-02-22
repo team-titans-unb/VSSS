@@ -13,8 +13,12 @@ goleiro_ip = '192.168.0.103' #robo azul-+
 # goleiro_ip = '192.168.137.70'
 #send_data(Direito, Esquero, direção, direção, IP)
 
-send_data(0, 255, 1, 1, goleiro_ip) # é aqui que vocês devem controlar o pwm.
-time.sleep(20)
+# send_data(150, 0, 1, 1, goleiro_ip) # é aqui que vocês devem controlar o pwm.
+# time.sleep(20)
+# send_data(150, 0, 1, 1, goleiro_ip) # é aqui que vocês devem controlar o pwm.
+# time.sleep(10)
+send_data(182, 182, 1, 1, goleiro_ip) # é aqui que vocês devem controlar o pwm.
+time.sleep(50)
 # send_data(0, 255, 1, 1, goleiro_ip) 
 # time.sleep(3)
 # send_data(255, 0, 1, 1, goleiro_ip) 

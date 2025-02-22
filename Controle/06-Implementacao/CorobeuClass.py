@@ -1,6 +1,7 @@
 import socket
 import time
 import math
+import numpy as np
 import struct
 import signal
 import matplotlib.pyplot as plt
@@ -56,8 +57,8 @@ class Corobeu:
         limiar_min = 68
         sat_omega = abs(((limiar_min*6.4) - (2*U))/7.5)
         omega = max(min(omega, sat_omega), -sat_omega)
-        vr = (2 * U + omega * 7.5) / (2 * 3.2)
-        vl = (2 * U - omega * 7.5) / (2 * 3.2)
+        vr = (2 * U + omega * 6.5) / 3.2
+        vl = (2 * U - omega * 6.5) / 3.2
         print(f"Prev: {vr}, {vl}")
         vr = max(min(vr, self.v_max), self.v_min)
         vl = max(min(vl, self.v_max), self.v_min)
@@ -81,6 +82,9 @@ class Corobeu:
         a = 1
         interror_phi = Integral_part_phi = fant_phi = 0
         phi_obs = 0
+        omega_ant = 0
+        angulo_anterior_phid = 0
+        angulo_anterior_phi_robot = 0
         
         while a == 1:
             # x, y, _ = self.get_position()
@@ -93,6 +97,30 @@ class Corobeu:
             self.y_log.append(y)
 
             phid = math.atan2((pathY - y), (pathX - x))
+            if phid > 3.15:
+                phid = phid - 6.2832
+
+            # Calcula la diferencia entre el ángulo actual y el anterior
+            diferencia_phid = phid - angulo_anterior_phid
+            diferencia_phi  = self.phi - angulo_anterior_phi_robot
+            # Si la diferencia es mayor que π, ajusta restando 2π
+            if diferencia_phid > math.pi:
+                phid -= 2 * math.pi
+            # Si la diferencia es menor que -π, ajusta sumando 2π
+            elif diferencia_phid < -math.pi:
+                phid += 2 * math.pi
+            
+            # Si la diferencia es mayor que π, ajusta restando 2π
+            if diferencia_phi > math.pi:
+                self.phi -= 2 * math.pi
+            # Si la diferencia es menor que -π, ajusta sumando 2π
+            elif diferencia_phi < -math.pi:
+                self.phi += 2 * math.pi
+            
+            # Actualiza el ángulo anterior
+            angulo_anterior_phid = phid
+            angulo_anterior_phi_robot = self.phi
+
             error_phi = phid - phi_obs
             omega, fant_phi, interror_phi, Integral_part_phi = self.pid_controller(self.kp, self.ki, self.kd, deltaT, error_phi, interror_phi, fant_phi, Integral_part_phi)
             
@@ -124,7 +152,7 @@ class Corobeu:
     
     def pid_controller(self, kp, ki, kd, deltaT, error, interror, fant, Integral_part):
         Integral_saturation = 5
-        raizes = math.sqrt(kd), math.sqrt(kp), math.sqrt(ki)
+        raizes = np.roots([kd, kp, ki])
         Filter_e = 1 / (max(raizes) * 10)   
         unomenosalfaana = math.exp(-(deltaT / Filter_e))
         alfaana = 1 - unomenosalfaana

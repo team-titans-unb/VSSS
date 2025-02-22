@@ -1,7 +1,7 @@
 clc; clear;
 
 % Carregar os dados do arquivo CSV gerado anteriormente
-filePath = 'Rampa_PWM_180_180.csv';
+filePath = 'Rampa.csv';
 data = readmatrix(filePath);
 
 % Definir o tempo de amostragem
@@ -10,33 +10,67 @@ numSamples = size(data, 1);
 time = (0:numSamples-1) * Ts; % Vetor de tempo
 
 % Extrair dados das colunas
-pwm_right  = data(:,1); % PWM como set-point do motor direito
-pwm_left   = data(:,2); % PWM como set-point do motor esquerdo
+pwm_right  = data(:,1) * 100 / 255; % PWM como set-point do motor direito em porcentagem
+pwm_left   = data(:,2) * 100 / 255; % PWM como set-point do motor esquerdo em porcentagem
 rpm_right  = data(:,3); % Velocidade medida pelo encoder direito
 rpm_left   = data(:,4); % Velocidade medida pelo encoder esquerdo
 
-% Criar a figura com dois subgráficos
+%% Cálculo da média de velocidade para cada PWM, separadamente para cada motor
+
+% PWM únicos para cada motor
+pwm_unique_right = unique(pwm_right);
+pwm_unique_left  = unique(pwm_left);
+
+% Inicializar vetores de média
+rpm_medio_right = zeros(size(pwm_unique_right));
+rpm_medio_left  = zeros(size(pwm_unique_left));
+
+% Média da velocidade para cada PWM no motor direito
+for i = 1:length(pwm_unique_right)
+    indices = (pwm_right == pwm_unique_right(i));
+    rpm_medio_right(i) = mean(rpm_right(indices), 'omitnan');
+end
+
+% Média da velocidade para cada PWM no motor esquerdo
+for i = 1:length(pwm_unique_left)
+    indices = (pwm_left == pwm_unique_left(i));
+    rpm_medio_left(i) = mean(rpm_left(indices), 'omitnan');
+end
+
+data_left = iddata(rpm_medio_left, pwm_unique_left, Ts);
+data_right = iddata(rpm_medio_right, pwm_unique_left, Ts);
+%% Gráficos
+
+% Gráficos PWM vs. Velocidade Medida ao longo do tempo
 figure;
 subplot(2,1,1);
 plot(time, pwm_right, 'r', 'LineWidth', 1.5); hold on;
 plot(time, rpm_right, 'b', 'LineWidth', 1.5);
-plot(time, (pwm_right+9), 'r:', 'LineWidth', 1.5); hold on;
-plot(time, (pwm_right-9), 'r:', 'LineWidth', 1.5); hold on;
 xlabel('Tempo (s)'); ylabel('Velocidade (RPM)');
 title('Resposta do Motor Direito');
-legend('Set-Point (PWM Direito)', 'Velocidade Medida (Encoder Direito)');
-xlim([0, 60])
+legend('Set-Point (PWM Right)', 'Velocidade Medida (Encoder Right)');
 grid on;
 
 subplot(2,1,2);
 plot(time, pwm_left, 'r', 'LineWidth', 1.5); hold on;
 plot(time, rpm_left, 'b', 'LineWidth', 1.5);
-plot(time, (pwm_left+9), 'r:', 'LineWidth', 1.5); hold on;
-plot(time, (pwm_left-9), 'r:', 'LineWidth', 1.5); hold on;
 xlabel('Tempo (s)'); ylabel('Velocidade (RPM)');
 title('Resposta do Motor Esquerdo');
-legend('Set-Point (PWM Esquerdo)', 'Velocidade Medida (Encoder Esquerdo)');
-xlim([0, 60])
+legend('Set-Point (PWM Left)', 'Velocidade Medida (Encoder Left)');
+grid on;
+
+% Gráficos da relação PWM vs. Velocidade Média para cada motor
+figure;
+subplot(2,1,1);
+plot(pwm_unique_right, rpm_medio_right, 'ko-', 'LineWidth', 1.5, 'MarkerFaceColor', 'k');
+xlabel('PWM (%)'); ylabel('Velocidade Média (RPM)');
+title('Relação PWM vs. Velocidade Média - Motor Direito');
+grid on;
+
+subplot(2,1,2);
+plot(pwm_unique_left, rpm_medio_left, 'bo-', 'LineWidth', 1.5, 'MarkerFaceColor', 'b');
+xlabel('PWM (%)'); ylabel('Velocidade Média (RPM)');
+title('Relação PWM vs. Velocidade Média - Motor Esquerdo');
 grid on;
 
 %% Análise de desempenho

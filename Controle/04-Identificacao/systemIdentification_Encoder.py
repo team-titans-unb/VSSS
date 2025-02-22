@@ -4,7 +4,7 @@ import csv
 import serial
 
 # Configuração da comunicação
-ROBOT_IP = "192.168.0.103"
+ROBOT_IP = "192.168.137.190"
 ROBOT_PORT = 80
 SERIAL_PORT = "COM3"
 SERIAL_BAUDRATE = 19200
@@ -60,37 +60,42 @@ def main(pwm_right=100, pwm_left=100, duration=20, CSV_FILENAME="identification.
 
         print("Stopping robot...")
         send_pwm(0, 0, ROBOT_IP, ROBOT_PORT)
+        time.sleep(2)  # Pequeno delay para garantir que o robô parou
     
     append_average_to_csv(CSV_FILENAME)
     print(f"Experiment completed. Data saved to {CSV_FILENAME}")
 
 if __name__ == "__main__":
     PWM_STEP = 5
-    PWM_MAX = 255
-    PWM_INI = 75
+    PWM_MAX = 180
+    PWM_INI = 180
     Max_iter = int((PWM_MAX - PWM_INI)/PWM_STEP)
-    CSV_FILENAME = "Rampa.csv"
-    with open(CSV_FILENAME, mode='a', newline='') as csvfile:
-        csv_writer = csv.writer(csvfile)
-        csv_writer.writerow(["PWM_Right", "PWM_Left", "RPM_Right", "RPM_Left"])
-        serial_port = serial.Serial(SERIAL_PORT, SERIAL_BAUDRATE, timeout=1) 
-        for i in range(Max_iter+1):
-
-            pwm_left = PWM_INI + i * PWM_STEP
-            pwm_right = PWM_INI + i * PWM_STEP
+    
+    serial_port = serial.Serial(SERIAL_PORT, SERIAL_BAUDRATE, timeout=1) 
+    
+    for i in range(Max_iter+1):
+        pwm_left = PWM_INI # + i * PWM_STEP
+        pwm_right = PWM_INI # + i * PWM_STEP
+        CSV_FILENAME = f"Rampa_PWM_{pwm_left}_{pwm_right}.csv"
+        
+        with open(CSV_FILENAME, mode='a', newline='') as csvfile:
+            csv_writer = csv.writer(csvfile)
+            csv_writer.writerow(["PWM_Right", "PWM_Left", "RPM_Right", "RPM_Left", "Timestamp"])
 
             print("Sending PWM values to robot...")
             send_pwm(pwm_right, pwm_left, ROBOT_IP, ROBOT_PORT)
             start_time = time.time()
-
-            while time.time() - start_time < 5:
+            
+            last_time = start_time
+            while time.time() - start_time < 60:
                 rpm_right, rpm_left = read_rpm(serial_port)
-                timestamp = time.time() - start_time
-                if rpm_right != 0: 
-                    csv_writer.writerow([pwm_right, pwm_left, rpm_right, rpm_left])
+                current_time = time.time()
+                timestamp = current_time - last_time
+                last_time = current_time
+                if rpm_right is not None and rpm_left is not None:
+                    csv_writer.writerow([pwm_right, pwm_left, rpm_right, rpm_left, timestamp])   
 
-        print("Stopping robot...")
-        send_pwm(0, 0, ROBOT_IP, ROBOT_PORT)
+            print("Stopping robot...")
+            send_pwm(0, 0, ROBOT_IP, ROBOT_PORT)
         
-        # append_average_to_csv(CSV_FILENAME)
-        print(f"Experiment completed. Data saved to {CSV_FILENAME}")
+        print(f"Data for PWM {pwm_left}, {pwm_right} saved to {CSV_FILENAME}")
