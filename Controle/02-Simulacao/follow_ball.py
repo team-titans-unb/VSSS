@@ -369,37 +369,7 @@ class Corobeu():
                     if self.sel_position == 1:
                         error_distance = math.sqrt((ballPos[1] - positiona[1]) ** 2 + (ballPos[0] - positiona[0]) ** 2)
                     elif self.sel_position == 0:
-                        error_distance = math.sqrt((ballPos[1] - positiona[1]) ** 2 + ((self.ideal_goleiro_x) - positiona[0]) ** 2)
-
-                    if omega >= 100 or omega <= -100:
-                        omega = omega_ant
-                    else:
-                        omega_ant = omega
-                    
-
-                    ### Acumulative distance error ###
-
-                    self.posError.append(error_distance)
-
-                    ### Implement the PID controller ###
-
-                    ### Update the phi robot value ###
-
-                    # self.phi = self.phi + omega * deltaT
-
-                    ### Calculate the speed right and left based on the topology robot ###
-
-                    vl, vd, a = self.Speed_CRB(self.v_linear, omega, error_distance, signed)
-
-
-                    ### Send the speed values to coppeliasim simulato ###
-
-                    sim.simxSetJointTargetVelocity(clientID, motorE, vl, sim.simx_opmode_blocking)
-                    sim.simxSetJointTargetVelocity(clientID, motorD, vd, sim.simx_opmode_blocking)
-
-                    ### update the time simulation and the simulation iteration
-
-                Number_Iterations = Number_Iterations + 1
+                        error_distance = math.sqrt((ballPos[1] - positiona[1]) ** 2 + ((self.ideal_goleiro_x) - positiona[0]) ** 2)1
                 Time_Sample.append(Number_Iterations * deltaT)
                 # time.sleep(0.5)
         ### Save the robot position ###ç

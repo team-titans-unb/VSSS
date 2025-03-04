@@ -18,8 +18,9 @@ rpm_left   = data(:,4); % Velocidade medida pelo encoder esquerdo
 % Criar a figura com dois subgráficos
 figure;
 subplot(2,1,1);
+plot(time, yout, 'g', 'LineWidth', 1.5); hold on;
 plot(time, pwm_right, 'r', 'LineWidth', 1.5); hold on;
-plot(time, rpm_right, 'b', 'LineWidth', 1.5);
+plot(time, rpm_right, 'b', 'LineWidth', 1.5); hold on;
 plot(time, (pwm_right+9), 'r:', 'LineWidth', 1.5); hold on;
 plot(time, (pwm_right-9), 'r:', 'LineWidth', 1.5); hold on;
 xlabel('Tempo (s)'); ylabel('Velocidade (RPM)');
@@ -29,8 +30,9 @@ xlim([0, 60])
 grid on;
 
 subplot(2,1,2);
+plot(time, yout, 'g', 'LineWidth', 1.5); hold on;
 plot(time, pwm_left, 'r', 'LineWidth', 1.5); hold on;
-plot(time, rpm_left, 'b', 'LineWidth', 1.5);
+plot(time, rpm_left, 'b', 'LineWidth', 1.5); hold on;
 plot(time, (pwm_left+9), 'r:', 'LineWidth', 1.5); hold on;
 plot(time, (pwm_left-9), 'r:', 'LineWidth', 1.5); hold on;
 xlabel('Tempo (s)'); ylabel('Velocidade (RPM)');
