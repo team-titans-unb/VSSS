@@ -1,14 +1,14 @@
-Source PCB Design panelizado.PcbDoc contains embedded board array. It is recomended to generate individual BOM for each embedded board PCB design.
+Source PCB Design panelizado_33.PcbDoc contains embedded board array. It is recomended to generate individual BOM for each embedded board PCB design.
 
 Output: NC Drill Files
 Type  : NC Drill
 From  : Project [PCB_VSSS.PrjPcb]
-   Generated File[panelizado.TXT]
-   Generated File[panelizado.LDP]
-   Generated File[panelizado.DRR]
+   Generated File[panelizado_33.TXT]
+   Generated File[panelizado_33.LDP]
+   Generated File[panelizado_33.DRR]
 
 
 Files Generated   : 3
 Documents Printed : 0
 
-Finished Output Generation At 20:30:18 On 22/11/2024
+Finished Output Generation At 18:09:33 On 11/06/2025

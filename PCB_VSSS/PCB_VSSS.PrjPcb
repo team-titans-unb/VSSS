@@ -203,23 +203,6 @@ GenerateClassCluster=0
 DocumentUniqueId=
 
 [Document10]
-DocumentPath=panelizado.PcbDoc
-AnnotationEnabled=1
-AnnotateStartValue=1
-AnnotationIndexControlEnabled=0
-AnnotateSuffix=
-AnnotateScope=All
-AnnotateOrder=-1
-DoLibraryUpdate=1
-DoDatabaseUpdate=1
-ClassGenCCAutoEnabled=1
-ClassGenCCAutoRoomEnabled=0
-ClassGenNCAutoScope=None
-DItemRevisionGUID=
-GenerateClassCluster=0
-DocumentUniqueId=GKHTFMFX
-
-[Document11]
 DocumentPath=panelizado.Cam
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -236,7 +219,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document12]
+[Document11]
 DocumentPath=panelizado2.Cam
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -253,7 +236,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document13]
+[Document12]
 DocumentPath=CAMtastic4.Cam
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -270,7 +253,7 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=
 
-[Document14]
+[Document13]
 DocumentPath=PCB1.PcbDoc
 AnnotationEnabled=1
 AnnotateStartValue=1
@@ -287,188 +270,635 @@ DItemRevisionGUID=
 GenerateClassCluster=0
 DocumentUniqueId=FMVHBUCB
 
+[Document14]
+DocumentPath=PCB2.PcbDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=OSDZSTDW
+
+[Document15]
+DocumentPath=panelizado_33.PcbDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=TEPMYMLM
+
+[Document16]
+DocumentPath=panelizado_34.PcbDoc
+AnnotationEnabled=1
+AnnotateStartValue=1
+AnnotationIndexControlEnabled=0
+AnnotateSuffix=
+AnnotateScope=All
+AnnotateOrder=-1
+DoLibraryUpdate=1
+DoDatabaseUpdate=1
+ClassGenCCAutoEnabled=1
+ClassGenCCAutoRoomEnabled=0
+ClassGenNCAutoScope=None
+DItemRevisionGUID=
+GenerateClassCluster=0
+DocumentUniqueId=TZQQORUO
+
 [GeneratedDocument1]
-DocumentPath=Project Outputs for PCB_VSSS\Design Rule Check - PCB1.html
+DocumentPath=Project Outputs for PCB_VSSS\Design Rule Check - panelizado_33.html
 DItemRevisionGUID=
 
 [GeneratedDocument2]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado.DRR
+DocumentPath=Project Outputs for PCB_VSSS\Design Rule Check - panelizado_34.html
 DItemRevisionGUID=
 
 [GeneratedDocument3]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado.EXTREP
+DocumentPath=Project Outputs for PCB_VSSS\Design Rule Check - PCB1.html
 DItemRevisionGUID=
 
 [GeneratedDocument4]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado.LDP
+DocumentPath=Project Outputs for PCB_VSSS\Design Rule Check - PCB2.html
 DItemRevisionGUID=
 
 [GeneratedDocument5]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado.REP
+DocumentPath=Project Outputs for PCB_VSSS\Design Rule Check - PCB3.html
 DItemRevisionGUID=
 
 [GeneratedDocument6]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado.TXT
+DocumentPath=Project Outputs for PCB_VSSS\panelizado.DRR
 DItemRevisionGUID=
 
 [GeneratedDocument7]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado_Copper_Signal_Bot.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado.EXTREP
 DItemRevisionGUID=
 
 [GeneratedDocument8]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado_Copper_Signal_Top.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado.LDP
 DItemRevisionGUID=
 
 [GeneratedDocument9]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado_Drawing_1.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado.REP
 DItemRevisionGUID=
 
 [GeneratedDocument10]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado_Drillmap_1.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado.TXT
 DItemRevisionGUID=
 
 [GeneratedDocument11]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado_Keep-out.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33.DRR
 DItemRevisionGUID=
 
 [GeneratedDocument12]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado_Legend_Bot.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33.EXTREP
 DItemRevisionGUID=
 
 [GeneratedDocument13]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado_Legend_Top.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33.LDP
 DItemRevisionGUID=
 
 [GeneratedDocument14]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado_Mechanical_1.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33.REP
 DItemRevisionGUID=
 
 [GeneratedDocument15]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado_Mechanical_13.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33.TXT
 DItemRevisionGUID=
 
 [GeneratedDocument16]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado_Mechanical_15.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33_Copper_Signal_Bot.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument17]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado_Other.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33_Copper_Signal_Top.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument18]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado_Other_1.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33_Drawing_1.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument19]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado_Pads_Bot.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33_Drillmap_1.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument20]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado_Pads_Top.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33_Keep-out.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument21]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado_Paste_Bot.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33_Legend_Bot.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument22]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado_Paste_Top.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33_Legend_Top.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument23]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado_Profile.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33_Mechanical_1.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument24]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado_Soldermask_Bot.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33_Mechanical_13.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument25]
-DocumentPath=Project Outputs for PCB_VSSS\panelizado_Soldermask_Top.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33_Mechanical_15.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument26]
-DocumentPath=Project Outputs for PCB_VSSS\PCB1.EXTREP
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33_Other.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument27]
-DocumentPath=Project Outputs for PCB_VSSS\PCB1.REP
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33_Other_1.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument28]
-DocumentPath=Project Outputs for PCB_VSSS\PCB1_Copper_Signal_Bot.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33_Pads_Bot.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument29]
-DocumentPath=Project Outputs for PCB_VSSS\PCB1_Copper_Signal_Top.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33_Pads_Top.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument30]
-DocumentPath=Project Outputs for PCB_VSSS\PCB1_Drawing_1.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33_Paste_Bot.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument31]
-DocumentPath=Project Outputs for PCB_VSSS\PCB1_Drillmap_1.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33_Paste_Top.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument32]
-DocumentPath=Project Outputs for PCB_VSSS\PCB1_Keep-out.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33_Profile.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument33]
-DocumentPath=Project Outputs for PCB_VSSS\PCB1_Legend_Bot.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33_Soldermask_Bot.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument34]
-DocumentPath=Project Outputs for PCB_VSSS\PCB1_Legend_Top.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_33_Soldermask_Top.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument35]
-DocumentPath=Project Outputs for PCB_VSSS\PCB1_Mechanical_1.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34.DRR
 DItemRevisionGUID=
 
 [GeneratedDocument36]
-DocumentPath=Project Outputs for PCB_VSSS\PCB1_Mechanical_13.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34.EXTREP
 DItemRevisionGUID=
 
 [GeneratedDocument37]
-DocumentPath=Project Outputs for PCB_VSSS\PCB1_Mechanical_15.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34.LDP
 DItemRevisionGUID=
 
 [GeneratedDocument38]
-DocumentPath=Project Outputs for PCB_VSSS\PCB1_Other.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34.REP
 DItemRevisionGUID=
 
 [GeneratedDocument39]
-DocumentPath=Project Outputs for PCB_VSSS\PCB1_Other_1.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34.TXT
 DItemRevisionGUID=
 
 [GeneratedDocument40]
-DocumentPath=Project Outputs for PCB_VSSS\PCB1_Pads_Bot.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34_Copper_Signal_Bot.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument41]
-DocumentPath=Project Outputs for PCB_VSSS\PCB1_Pads_Top.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34_Copper_Signal_Top.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument42]
-DocumentPath=Project Outputs for PCB_VSSS\PCB1_Paste_Bot.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34_Drawing_1.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument43]
-DocumentPath=Project Outputs for PCB_VSSS\PCB1_Paste_Top.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34_Drillmap_1.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument44]
-DocumentPath=Project Outputs for PCB_VSSS\PCB1_Profile.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34_Keep-out.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument45]
-DocumentPath=Project Outputs for PCB_VSSS\PCB1_Soldermask_Bot.gbr
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34_Legend_Bot.gbr
 DItemRevisionGUID=
 
 [GeneratedDocument46]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34_Legend_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument47]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34_Mechanical_1.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument48]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34_Mechanical_13.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument49]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34_Mechanical_15.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument50]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34_Other.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument51]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34_Other_1.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument52]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34_Pads_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument53]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34_Pads_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument54]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34_Paste_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument55]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34_Paste_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument56]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34_Profile.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument57]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34_Soldermask_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument58]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_34_Soldermask_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument59]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_Copper_Signal_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument60]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_Copper_Signal_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument61]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_Drawing_1.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument62]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_Drillmap_1.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument63]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_Keep-out.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument64]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_Legend_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument65]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_Legend_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument66]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_Mechanical_1.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument67]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_Mechanical_13.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument68]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_Mechanical_15.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument69]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_Other.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument70]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_Other_1.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument71]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_Pads_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument72]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_Pads_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument73]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_Paste_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument74]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_Paste_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument75]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_Profile.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument76]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_Soldermask_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument77]
+DocumentPath=Project Outputs for PCB_VSSS\panelizado_Soldermask_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument78]
+DocumentPath=Project Outputs for Free Documents\NC Drill\PCB1.DRR
+DItemRevisionGUID=
+
+[GeneratedDocument79]
+DocumentPath=Project Outputs for PCB_VSSS\NC Drill\PCB1.DRR
+DItemRevisionGUID=
+
+[GeneratedDocument80]
+DocumentPath=Project Outputs for PCB_VSSS\PCB1.DRR
+DItemRevisionGUID=
+
+[GeneratedDocument81]
+DocumentPath=Project Outputs for Free Documents\Gerber\PCB1.EXTREP
+DItemRevisionGUID=
+
+[GeneratedDocument82]
+DocumentPath=Project Outputs for PCB_VSSS\Gerber\PCB1.EXTREP
+DItemRevisionGUID=
+
+[GeneratedDocument83]
+DocumentPath=Project Outputs for PCB_VSSS\PCB1.EXTREP
+DItemRevisionGUID=
+
+[GeneratedDocument84]
+DocumentPath=Project Outputs for Free Documents\NC Drill\PCB1.LDP
+DItemRevisionGUID=
+
+[GeneratedDocument85]
+DocumentPath=Project Outputs for PCB_VSSS\NC Drill\PCB1.LDP
+DItemRevisionGUID=
+
+[GeneratedDocument86]
+DocumentPath=Project Outputs for PCB_VSSS\PCB1.LDP
+DItemRevisionGUID=
+
+[GeneratedDocument87]
+DocumentPath=Project Outputs for Free Documents\Gerber\PCB1.REP
+DItemRevisionGUID=
+
+[GeneratedDocument88]
+DocumentPath=Project Outputs for PCB_VSSS\Gerber\PCB1.REP
+DItemRevisionGUID=
+
+[GeneratedDocument89]
+DocumentPath=Project Outputs for PCB_VSSS\PCB1.REP
+DItemRevisionGUID=
+
+[GeneratedDocument90]
+DocumentPath=Project Outputs for Free Documents\NC Drill\PCB1.TXT
+DItemRevisionGUID=
+
+[GeneratedDocument91]
+DocumentPath=Project Outputs for PCB_VSSS\NC Drill\PCB1.TXT
+DItemRevisionGUID=
+
+[GeneratedDocument92]
+DocumentPath=Project Outputs for PCB_VSSS\PCB1.TXT
+DItemRevisionGUID=
+
+[GeneratedDocument93]
+DocumentPath=Project Outputs for PCB_VSSS\PCB1_Copper_Signal_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument94]
+DocumentPath=Project Outputs for PCB_VSSS\PCB1_Copper_Signal_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument95]
+DocumentPath=Project Outputs for PCB_VSSS\PCB1_Drawing_1.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument96]
+DocumentPath=Project Outputs for PCB_VSSS\PCB1_Drillmap_1.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument97]
+DocumentPath=Project Outputs for PCB_VSSS\PCB1_Keep-out.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument98]
+DocumentPath=Project Outputs for PCB_VSSS\PCB1_Legend_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument99]
+DocumentPath=Project Outputs for PCB_VSSS\PCB1_Legend_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument100]
+DocumentPath=Project Outputs for PCB_VSSS\PCB1_Mechanical_1.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument101]
+DocumentPath=Project Outputs for PCB_VSSS\PCB1_Mechanical_13.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument102]
+DocumentPath=Project Outputs for PCB_VSSS\PCB1_Mechanical_15.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument103]
+DocumentPath=Project Outputs for PCB_VSSS\PCB1_Other.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument104]
+DocumentPath=Project Outputs for PCB_VSSS\PCB1_Other_1.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument105]
+DocumentPath=Project Outputs for PCB_VSSS\PCB1_Pads_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument106]
+DocumentPath=Project Outputs for PCB_VSSS\PCB1_Pads_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument107]
+DocumentPath=Project Outputs for PCB_VSSS\PCB1_Paste_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument108]
+DocumentPath=Project Outputs for PCB_VSSS\PCB1_Paste_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument109]
+DocumentPath=Project Outputs for PCB_VSSS\PCB1_Profile.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument110]
+DocumentPath=Project Outputs for PCB_VSSS\PCB1_Soldermask_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument111]
 DocumentPath=Project Outputs for PCB_VSSS\PCB1_Soldermask_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument112]
+DocumentPath=Project Outputs for Free Documents\NC Drill\PCB2.DRR
+DItemRevisionGUID=
+
+[GeneratedDocument113]
+DocumentPath=Project Outputs for PCB_VSSS\NC Drill\PCB2.DRR
+DItemRevisionGUID=
+
+[GeneratedDocument114]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2.DRR
+DItemRevisionGUID=
+
+[GeneratedDocument115]
+DocumentPath=Project Outputs for Free Documents\Gerber\PCB2.EXTREP
+DItemRevisionGUID=
+
+[GeneratedDocument116]
+DocumentPath=Project Outputs for PCB_VSSS\Gerber\PCB2.EXTREP
+DItemRevisionGUID=
+
+[GeneratedDocument117]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2.EXTREP
+DItemRevisionGUID=
+
+[GeneratedDocument118]
+DocumentPath=Project Outputs for Free Documents\NC Drill\PCB2.LDP
+DItemRevisionGUID=
+
+[GeneratedDocument119]
+DocumentPath=Project Outputs for PCB_VSSS\NC Drill\PCB2.LDP
+DItemRevisionGUID=
+
+[GeneratedDocument120]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2.LDP
+DItemRevisionGUID=
+
+[GeneratedDocument121]
+DocumentPath=Project Outputs for Free Documents\Gerber\PCB2.REP
+DItemRevisionGUID=
+
+[GeneratedDocument122]
+DocumentPath=Project Outputs for PCB_VSSS\Gerber\PCB2.REP
+DItemRevisionGUID=
+
+[GeneratedDocument123]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2.REP
+DItemRevisionGUID=
+
+[GeneratedDocument124]
+DocumentPath=Project Outputs for Free Documents\NC Drill\PCB2.TXT
+DItemRevisionGUID=
+
+[GeneratedDocument125]
+DocumentPath=Project Outputs for PCB_VSSS\NC Drill\PCB2.TXT
+DItemRevisionGUID=
+
+[GeneratedDocument126]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2.TXT
+DItemRevisionGUID=
+
+[GeneratedDocument127]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2_Copper_Signal_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument128]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2_Copper_Signal_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument129]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2_Drawing_1.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument130]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2_Drillmap_1.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument131]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2_Keep-out.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument132]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2_Legend_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument133]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2_Legend_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument134]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2_Mechanical_1.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument135]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2_Mechanical_13.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument136]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2_Mechanical_15.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument137]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2_Other.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument138]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2_Other_1.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument139]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2_Pads_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument140]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2_Pads_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument141]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2_Paste_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument142]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2_Paste_Top.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument143]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2_Profile.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument144]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2_Soldermask_Bot.gbr
+DItemRevisionGUID=
+
+[GeneratedDocument145]
+DocumentPath=Project Outputs for PCB_VSSS\PCB2_Soldermask_Top.gbr
 DItemRevisionGUID=
 
 [Configuration1]
@@ -494,8 +924,8 @@ AddNetNetLabels=-1
 AddNetPorts=-1
 ShowComponentParameters=-1
 GlobalBookmarks=0
-ExportBOM=0
-TemplateFilename=
+ExportBOM=-1
+TemplateFilename=Board Stack Report.XLT
 TemplateStoreRelative=-1
 PCB_PrintColor=1
 SCH_PrintColor=0
@@ -510,14 +940,15 @@ SCH_ShowNoteCollapsed=-1
 Wir_PrintColor=0
 Ldr_PrintColor=0
 SCH_ExpandLogicalToPhysical=-1
-SCH_VariantName=
+SCH_VariantName=[No Variations]
 SCH_ExpandComponentDesignators=-1
 SCH_ExpandNetlabels=0
 SCH_ExpandPorts=0
 SCH_ExpandSheetNumber=0
 SCH_ExpandDocumentNumber=0
-SCH_HasExpandLogicalToPhysicalSheets=0
+SCH_HasExpandLogicalToPhysicalSheets=-1
 SaveSettingsToOutJob=-1
+Esd_PrintColor=0
 
 [OutputGroup1]
 Name=Netlist Outputs
@@ -757,99 +1188,99 @@ Name=Fabrication Outputs
 Description=
 TargetPrinter=HPD85566 (HP Officejet Pro 8600)
 PrinterOptions=Record=PrinterOptions|Copies=1|Duplex=1|TrueTypeOptions=3|Collate=1|PrintJobKind=1|PrintWhat=1
-OutputType1=CompositeDrill
-OutputName1=Composite Drill Drawing
+OutputType1=NC Drill
+OutputName1=NC Drill Files
 OutputDocumentPath1=
-OutputVariantName1=[No Variations]
+OutputVariantName1=
 OutputDefault1=0
-PageOptions1=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=2.95|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
 Configuration1_Name1=ForceUpdateSettings
 Configuration1_Item1=False
 Configuration1_Name2=OutputConfigurationParameter1
-Configuration1_Item2=DesignatorDisplayMode=Physical|PrintArea=DesignExtent|PrintAreaLowerLeftCornerX=0|PrintAreaLowerLeftCornerY=0|PrintAreaUpperRightCornerX=0|PrintAreaUpperRightCornerY=0|Record=PcbPrintView|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
-Configuration1_Name3=OutputConfigurationParameter2
-Configuration1_Item3=IncludeBoardCutouts=False|IncludeBottomLayerComponents=True|IncludeMultiLayerComponents=True|IncludeTopLayerComponents=True|IncludeViewports=True|Index=0|Mirror=False|Name=Combination Drill Guide For (Top Layer - Bottom Layer)|PadNumberFontSize=14|Record=PcbPrintOut|ShowHoles=False|ShowPadNets=False|ShowPadNumbers=False|SubstituteFonts=False|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
-Configuration1_Name4=OutputConfigurationParameter3
-Configuration1_Item4=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CRegion=Full|CText=Full|CTrack=Full|CVia=Full|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|DrillType=Regular|FArc=Full|FFill=Full|FPad=Full|FRegion=Full|FText=Full|FTrack=Full|FVia=Full|Layer=DrillDrawing|Polygon=Full|PrintOutIndex=0|Record=PcbPrintLayer|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
-Configuration1_Name5=OutputConfigurationParameter4
-Configuration1_Item5=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CRegion=Full|CText=Full|CTrack=Full|CVia=Full|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|DrillType=Regular|FArc=Full|FFill=Full|FPad=Full|FRegion=Full|FText=Full|FTrack=Full|FVia=Full|Layer=DrillGuide|Polygon=Full|PrintOutIndex=0|Record=PcbPrintLayer|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
-Configuration1_Name6=OutputConfigurationParameter5
-Configuration1_Item6=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CRegion=Full|CText=Full|CTrack=Full|CVia=Full|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|DrillType=Regular|FArc=Full|FFill=Full|FPad=Full|FRegion=Full|FText=Full|FTrack=Full|FVia=Full|Layer=Mechanical1|Polygon=Full|PrintOutIndex=0|Record=PcbPrintLayer|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
-OutputType2=Drill
-OutputName2=Drill Drawing/Guides
+Configuration1_Item2=BoardEdgeRoutToolDia=2000000|GenerateBoardEdgeRout=False|GenerateDrilledSlotsG85=False|GenerateEIADrillFile=False|GenerateSeparatePlatedNonPlatedFiles=False|GenerateSeparateViaTypeFiles=False|GenerateToolsByDrillSymbols=False|NumberOfDecimals=4|NumberOfUnits=4|OptimizeChangeLocationCommands=True|OriginPosition=Relative|Record=DrillView|Units=Metric|ZeroesMode=SuppressTrailingZeroes|DocumentPath=C:\Users\Matheus\Documents\Faculdade\Titans\VSSS\VSSS\PCB_VSSS\panelizado_33.PcbDoc
+OutputType2=Mask
+OutputName2=Solder/Paste Mask Prints
 OutputDocumentPath2=
 OutputVariantName2=[No Variations]
 OutputDefault2=0
-PageOptions2=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=2.95|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
-Configuration2_Name1=ForceUpdateSettings
-Configuration2_Item1=False
-Configuration2_Name2=OutputConfigurationParameter1
-Configuration2_Item2=DesignatorDisplayMode=Physical|PrintArea=DesignExtent|PrintAreaLowerLeftCornerX=0|PrintAreaLowerLeftCornerY=0|PrintAreaUpperRightCornerX=0|PrintAreaUpperRightCornerY=0|Record=PcbPrintView|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
-Configuration2_Name3=OutputConfigurationParameter2
-Configuration2_Item3=IncludeBoardCutouts=False|IncludeBottomLayerComponents=True|IncludeMultiLayerComponents=True|IncludeTopLayerComponents=True|IncludeViewports=True|Index=0|Mirror=False|Name=Drill Drawing For (Top Layer - Bottom Layer)|PadNumberFontSize=14|Record=PcbPrintOut|ShowHoles=False|ShowPadNets=False|ShowPadNumbers=False|SubstituteFonts=False|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
-Configuration2_Name4=OutputConfigurationParameter3
-Configuration2_Item4=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CRegion=Full|CText=Full|CTrack=Full|CVia=Full|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|DrillType=Regular|FArc=Full|FFill=Full|FPad=Full|FRegion=Full|FText=Full|FTrack=Full|FVia=Full|Layer=DrillDrawing|Polygon=Full|PrintOutIndex=0|Record=PcbPrintLayer|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
-Configuration2_Name5=OutputConfigurationParameter4
-Configuration2_Item5=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CRegion=Full|CText=Full|CTrack=Full|CVia=Full|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|DrillType=Regular|FArc=Full|FFill=Full|FPad=Full|FRegion=Full|FText=Full|FTrack=Full|FVia=Full|Layer=Mechanical1|Polygon=Full|PrintOutIndex=0|Record=PcbPrintLayer|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
-Configuration2_Name6=OutputConfigurationParameter5
-Configuration2_Item6=IncludeBoardCutouts=False|IncludeBottomLayerComponents=True|IncludeMultiLayerComponents=True|IncludeTopLayerComponents=True|IncludeViewports=True|Index=1|Mirror=False|Name=Drill Guide For (Top Layer - Bottom Layer)|PadNumberFontSize=14|Record=PcbPrintOut|ShowHoles=False|ShowPadNets=False|ShowPadNumbers=False|SubstituteFonts=False|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
-Configuration2_Name7=OutputConfigurationParameter6
-Configuration2_Item7=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CRegion=Full|CText=Full|CTrack=Full|CVia=Full|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|DrillType=Regular|FArc=Full|FFill=Full|FPad=Full|FRegion=Full|FText=Full|FTrack=Full|FVia=Full|Layer=DrillGuide|Polygon=Full|PrintOutIndex=1|Record=PcbPrintLayer|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
-Configuration2_Name8=OutputConfigurationParameter7
-Configuration2_Item8=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CRegion=Full|CText=Full|CTrack=Full|CVia=Full|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|DrillType=Regular|FArc=Full|FFill=Full|FPad=Full|FRegion=Full|FText=Full|FTrack=Full|FVia=Full|Layer=Mechanical1|Polygon=Full|PrintOutIndex=1|Record=PcbPrintLayer|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
-OutputType3=Board Stack Report
-OutputName3=Report Board Stack
+PageOptions2=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=1.00|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
+OutputType3=IPC2581
+OutputName3=IPC-2581 Files
 OutputDocumentPath3=
-OutputVariantName3=
+OutputVariantName3=[No Variations]
 OutputDefault3=0
-PageOptions3=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=1.00|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
-OutputType4=Final
-OutputName4=Final Artwork Prints
+OutputType4=Test Points
+OutputName4=Test Point Report
 OutputDocumentPath4=
-OutputVariantName4=[No Variations]
+OutputVariantName4=
 OutputDefault4=0
-PageOptions4=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=1.00|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
-OutputType5=Gerber X2
-OutputName5=Gerber X2 Files
+OutputType5=Plane
+OutputName5=Power-Plane Prints
 OutputDocumentPath5=
 OutputVariantName5=[No Variations]
 OutputDefault5=0
+PageOptions5=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=1.00|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
 OutputType6=ODB
 OutputName6=ODB++ Files
 OutputDocumentPath6=
 OutputVariantName6=[No Variations]
 OutputDefault6=0
-OutputType7=Mask
-OutputName7=Solder/Paste Mask Prints
+OutputType7=Drill
+OutputName7=Drill Drawing/Guides
 OutputDocumentPath7=
 OutputVariantName7=[No Variations]
 OutputDefault7=0
-PageOptions7=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=1.00|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
-OutputType8=NC Drill
-OutputName8=NC Drill Files
+PageOptions7=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=2.95|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
+Configuration7_Name1=ForceUpdateSettings
+Configuration7_Item1=False
+Configuration7_Name2=OutputConfigurationParameter1
+Configuration7_Item2=DesignatorDisplayMode=Physical|PrintArea=DesignExtent|PrintAreaLowerLeftCornerX=0|PrintAreaLowerLeftCornerY=0|PrintAreaUpperRightCornerX=0|PrintAreaUpperRightCornerY=0|Record=PcbPrintView|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
+Configuration7_Name3=OutputConfigurationParameter2
+Configuration7_Item3=IncludeBoardCutouts=False|IncludeBottomLayerComponents=True|IncludeMultiLayerComponents=True|IncludeTopLayerComponents=True|IncludeViewports=True|Index=0|Mirror=False|Name=Drill Drawing For (Top Layer - Bottom Layer)|PadNumberFontSize=14|Record=PcbPrintOut|ShowHoles=False|ShowPadNets=False|ShowPadNumbers=False|SubstituteFonts=False|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
+Configuration7_Name4=OutputConfigurationParameter3
+Configuration7_Item4=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CRegion=Full|CText=Full|CTrack=Full|CVia=Full|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|DrillType=Regular|FArc=Full|FFill=Full|FPad=Full|FRegion=Full|FText=Full|FTrack=Full|FVia=Full|Layer=DrillDrawing|Polygon=Full|PrintOutIndex=0|Record=PcbPrintLayer|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
+Configuration7_Name5=OutputConfigurationParameter4
+Configuration7_Item5=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CRegion=Full|CText=Full|CTrack=Full|CVia=Full|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|DrillType=Regular|FArc=Full|FFill=Full|FPad=Full|FRegion=Full|FText=Full|FTrack=Full|FVia=Full|Layer=Mechanical1|Polygon=Full|PrintOutIndex=0|Record=PcbPrintLayer|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
+Configuration7_Name6=OutputConfigurationParameter5
+Configuration7_Item6=IncludeBoardCutouts=False|IncludeBottomLayerComponents=True|IncludeMultiLayerComponents=True|IncludeTopLayerComponents=True|IncludeViewports=True|Index=1|Mirror=False|Name=Drill Guide For (Top Layer - Bottom Layer)|PadNumberFontSize=14|Record=PcbPrintOut|ShowHoles=False|ShowPadNets=False|ShowPadNumbers=False|SubstituteFonts=False|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
+Configuration7_Name7=OutputConfigurationParameter6
+Configuration7_Item7=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CRegion=Full|CText=Full|CTrack=Full|CVia=Full|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|DrillType=Regular|FArc=Full|FFill=Full|FPad=Full|FRegion=Full|FText=Full|FTrack=Full|FVia=Full|Layer=DrillGuide|Polygon=Full|PrintOutIndex=1|Record=PcbPrintLayer|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
+Configuration7_Name8=OutputConfigurationParameter7
+Configuration7_Item8=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CRegion=Full|CText=Full|CTrack=Full|CVia=Full|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|DrillType=Regular|FArc=Full|FFill=Full|FPad=Full|FRegion=Full|FText=Full|FTrack=Full|FVia=Full|Layer=Mechanical1|Polygon=Full|PrintOutIndex=1|Record=PcbPrintLayer|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
+OutputType8=CompositeDrill
+OutputName8=Composite Drill Drawing
 OutputDocumentPath8=
-OutputVariantName8=
+OutputVariantName8=[No Variations]
 OutputDefault8=0
+PageOptions8=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=2.95|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
 Configuration8_Name1=ForceUpdateSettings
 Configuration8_Item1=False
 Configuration8_Name2=OutputConfigurationParameter1
-Configuration8_Item2=BoardEdgeRoutToolDia=2000000|GenerateBoardEdgeRout=False|GenerateDrilledSlotsG85=False|GenerateEIADrillFile=False|GenerateSeparatePlatedNonPlatedFiles=False|GenerateSeparateViaTypeFiles=False|GenerateToolsByDrillSymbols=False|NumberOfDecimals=4|NumberOfUnits=4|OptimizeChangeLocationCommands=True|OriginPosition=Relative|Record=DrillView|Units=Metric|ZeroesMode=SuppressTrailingZeroes|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
-OutputType9=IPC2581
-OutputName9=IPC-2581 Files
+Configuration8_Item2=DesignatorDisplayMode=Physical|PrintArea=DesignExtent|PrintAreaLowerLeftCornerX=0|PrintAreaLowerLeftCornerY=0|PrintAreaUpperRightCornerX=0|PrintAreaUpperRightCornerY=0|Record=PcbPrintView|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
+Configuration8_Name3=OutputConfigurationParameter2
+Configuration8_Item3=IncludeBoardCutouts=False|IncludeBottomLayerComponents=True|IncludeMultiLayerComponents=True|IncludeTopLayerComponents=True|IncludeViewports=True|Index=0|Mirror=False|Name=Combination Drill Guide For (Top Layer - Bottom Layer)|PadNumberFontSize=14|Record=PcbPrintOut|ShowHoles=False|ShowPadNets=False|ShowPadNumbers=False|SubstituteFonts=False|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
+Configuration8_Name4=OutputConfigurationParameter3
+Configuration8_Item4=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CRegion=Full|CText=Full|CTrack=Full|CVia=Full|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|DrillType=Regular|FArc=Full|FFill=Full|FPad=Full|FRegion=Full|FText=Full|FTrack=Full|FVia=Full|Layer=DrillDrawing|Polygon=Full|PrintOutIndex=0|Record=PcbPrintLayer|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
+Configuration8_Name5=OutputConfigurationParameter4
+Configuration8_Item5=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CRegion=Full|CText=Full|CTrack=Full|CVia=Full|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|DrillType=Regular|FArc=Full|FFill=Full|FPad=Full|FRegion=Full|FText=Full|FTrack=Full|FVia=Full|Layer=DrillGuide|Polygon=Full|PrintOutIndex=0|Record=PcbPrintLayer|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
+Configuration8_Name6=OutputConfigurationParameter5
+Configuration8_Item6=CArc=Full|CFill=Full|Comment=Full|Coordinate=Full|CPad=Full|CRegion=Full|CText=Full|CTrack=Full|CVia=Full|Designator=Full|Dimension=Full|DLayer1=TopLayer|DLayer2=BottomLayer|DrillType=Regular|FArc=Full|FFill=Full|FPad=Full|FRegion=Full|FText=Full|FTrack=Full|FVia=Full|Layer=Mechanical1|Polygon=Full|PrintOutIndex=0|Record=PcbPrintLayer|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
+OutputType9=Board Stack Report
+OutputName9=Report Board Stack
 OutputDocumentPath9=
-OutputVariantName9=[No Variations]
+OutputVariantName9=
 OutputDefault9=0
-OutputType10=Plane
-OutputName10=Power-Plane Prints
+PageOptions9=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=1.00|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
+OutputType10=Gerber X2
+OutputName10=Gerber X2 Files
 OutputDocumentPath10=
 OutputVariantName10=[No Variations]
 OutputDefault10=0
-PageOptions10=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=1.00|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
-OutputType11=Test Points
-OutputName11=Test Point Report
+OutputType11=Final
+OutputName11=Final Artwork Prints
 OutputDocumentPath11=
-OutputVariantName11=
+OutputVariantName11=[No Variations]
 OutputDefault11=0
+PageOptions11=Record=PageOptions|CenterHorizontal=True|CenterVertical=True|PrintScale=1.00|XCorrection=1.00|YCorrection=1.00|PrintKind=1|BorderSize=5000000|LeftOffset=0|BottomOffset=0|Orientation=2|PaperLength=1000|PaperWidth=1000|Scale=100|PaperSource=7|PrintQuality=-3|MediaType=1|DitherType=10|PrintScaleMode=1|PaperKind=A4|PaperIndex=9
 OutputType12=Gerber
 OutputName12=Gerber Files
 OutputDocumentPath12=
@@ -858,7 +1289,7 @@ OutputDefault12=0
 Configuration12_Name1=ForceUpdateSettings
 Configuration12_Item1=False
 Configuration12_Name2=OutputConfigurationParameter1
-Configuration12_Item2=AddToAllLayerClasses.Set= |AddToAllPlots.Set=SerializeLayerHash.Version~2,ClassName~TPlotLayerStateArray|BoardID=GKHTFMFX|CentrePlots=False|DrillDrawingSymbol=GraphicsSymbol|DrillDrawingSymbolSize=500000|EmbeddedApertures=True|FilmBorderSize=10000000|FilmXSize=200000000|FilmYSize=160000000|FlashAllFills=False|FlashPadShapes=True|G54OnApertureChange=False|GenerateDRCRulesFile=False|GenerateDRCRulesFile=False|GenerateReliefShapes=True|GenerateReports=True|GerberUnit=Metric|GerberUnit=Metric|IncludeUnconnectedMidLayerPads=True|LayerClassesMirror.Set= |LayerClassesPlot.Set="All Layers","Component Layers","Signal Layers","Electrical Layers"|LeadingAndTrailingZeroesMode=SuppressLeadingZeroes|MaxApertureSize=2500000|MergePadAndRegion=False|MinusApertureTolerance=50|MinusApertureTolerance=50|Mirror.Set=SerializeLayerHash.Version~2,ClassName~TPlotLayerStateArray|MirrorDrillDrawingPlots=False|MirrorDrillGuidePlots=False|NoRegularPolygons=False|NumberOfDecimals=4|NumberOfDecimals=4|OptimizeChangeLocationCommands=True|OptimizeChangeLocationCommands=True|OriginPosition=Relative|OutputFormat=Single|Panelize=False|Plot.Set=SerializeLayerHash.Version~2,ClassName~TPlotLayerStateArray,16777217~1,16842751~1,16973830~1,16973831~1,16973834~1,16973835~1,16973832~1,16973833~1,16908289~1,16908301~1,16908303~1,16973837~1,16973848~1,16973849~1|PlotBoardProfile=True|PlotBoardProfileFileName= |PlotDrillDrawingLayerPair0_Backdrill=False|PlotDrillDrawingLayerPair0_Checked=True|PlotDrillDrawingLayerPair0_DrillType=Regular|PlotDrillDrawingLayerPair0_FileName= |PlotDrillDrawingLayerPair0_HighLayer=Bottom Layer|PlotDrillDrawingLayerPair0_LowLayer=Top Layer|PlotDrillGuideLayerPair0_Backdrill=False|PlotDrillGuideLayerPair0_Checked=True|PlotDrillGuideLayerPair0_DrillType=Regular|PlotDrillGuideLayerPair0_FileName= |PlotDrillGuideLayerPair0_HighLayer=Bottom Layer|PlotDrillGuideLayerPair0_LowLayer=Top Layer|PlotPositivePlaneLayers=False|PlotUsedDrillDrawingLayerPairs=False|PlotUsedDrillGuideLayerPairs=False|PlusApertureTolerance=50|PlusApertureTolerance=50|Record=GerberView|SoftwareArcs=False|Sorted=False|Sorted=False|DocumentPath=D:\Documents\Titans\VSSS\PCB_VSSS\panelizado.PcbDoc
+Configuration12_Item2=AddToAllLayerClasses.Set= |AddToAllPlots.Set=SerializeLayerHash.Version~2,ClassName~TPlotLayerStateArray|BoardID=TEPMYMLM|CentrePlots=False|DrillDrawingSymbol=GraphicsSymbol|DrillDrawingSymbolSize=500000|EmbeddedApertures=True|FilmBorderSize=10000000|FilmXSize=200000000|FilmYSize=160000000|FlashAllFills=False|FlashPadShapes=True|G54OnApertureChange=False|GenerateDRCRulesFile=False|GenerateDRCRulesFile=False|GenerateReliefShapes=True|GenerateReports=True|GerberUnit=Metric|GerberUnit=Metric|IncludeUnconnectedMidLayerPads=True|LayerClassesMirror.Set= |LayerClassesPlot.Set="All Layers","Component Layers","Signal Layers","Electrical Layers"|LeadingAndTrailingZeroesMode=SuppressLeadingZeroes|MaxApertureSize=2500000|MergePadAndRegion=False|MinusApertureTolerance=50|MinusApertureTolerance=50|Mirror.Set=SerializeLayerHash.Version~2,ClassName~TPlotLayerStateArray|MirrorDrillDrawingPlots=False|MirrorDrillGuidePlots=False|NoRegularPolygons=False|NumberOfDecimals=4|NumberOfDecimals=4|OptimizeChangeLocationCommands=True|OptimizeChangeLocationCommands=True|OriginPosition=Relative|OutputFormat=Single|Panelize=False|Plot.Set=SerializeLayerHash.Version~2,ClassName~TPlotLayerStateArray,16777217~1,16973830~1,16973834~1,16973835~1,16973832~1,16973833~1,16908289~1,16973848~1,16973849~1,16842751~1,16973831~1,16908301~1,16908303~1,16973837~1|PlotBoardProfile=True|PlotBoardProfileFileName= |PlotDrillDrawingLayerPair0_Backdrill=False|PlotDrillDrawingLayerPair0_Checked=True|PlotDrillDrawingLayerPair0_DrillType=Regular|PlotDrillDrawingLayerPair0_FileName= |PlotDrillDrawingLayerPair0_HighLayer=Bottom Layer|PlotDrillDrawingLayerPair0_LowLayer=Top Layer|PlotDrillGuideLayerPair0_Backdrill=False|PlotDrillGuideLayerPair0_Checked=True|PlotDrillGuideLayerPair0_DrillType=Regular|PlotDrillGuideLayerPair0_FileName= |PlotDrillGuideLayerPair0_HighLayer=Bottom Layer|PlotDrillGuideLayerPair0_LowLayer=Top Layer|PlotPositivePlaneLayers=False|PlotUsedDrillDrawingLayerPairs=False|PlotUsedDrillGuideLayerPairs=False|PlusApertureTolerance=50|PlusApertureTolerance=50|Record=GerberView|SoftwareArcs=False|Sorted=False|Sorted=False|DocumentPath=C:\Users\Matheus\Documents\Faculdade\Titans\VSSS\VSSS\PCB_VSSS\panelizado_33.PcbDoc
 
 [OutputGroup6]
 Name=Report Outputs
@@ -1199,6 +1630,7 @@ Type147=1
 Type148=1
 Type149=1
 Type150=1
+Type151=1
 
 [Difference Levels]
 Type1=1
@@ -1282,6 +1714,7 @@ Type78=1
 Type79=1
 Type80=1
 Type81=1
+Type82=1
 
 [Electrical Rules Check]
 Type1=1
@@ -1438,6 +1871,13 @@ Type151=2
 Type152=1
 Type153=1
 Type154=0
+Type155=0
+Type156=0
+Type157=0
+Type158=0
+Type159=0
+Type160=0
+Type161=0
 
 [ERC Connection Matrix]
 L1=NNNNNNNNNNNWNNNWW

@@ -1,0 +1,57 @@
+Add Component: Footprint Not Found CAPR5-4X5
+Add Component: Footprint Not Found CAPR5-4X5
+Add Component: Footprint Not Found LTST-LTL-1CHG-2
+Add Component: Footprint Not Found PololuEncoder
+Add Component: Footprint Not Found PololuEncoder
+Add Component: Footprint Not Found N20-Motor_Encaixe
+Add Component: Footprint Not Found N20-Motor_Encaixe
+Add Component: Footprint Not Found JST-B3P-VH(LF)(SN)-3_V
+Add Component: Footprint Not Found JST-B2P-VH(LF)(SN)_V
+Added Component: Designator=P3(HDR1X8)
+Add component (AddParameter): Name = "LatestRevisionDate"; Value = "17-Jul-2002"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "LatestRevisionNote"; Value = "Re-released for DXP Platform."; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "Publisher"; Value = "Altium Limited"; VariantName = "[No Variations]"
+Add Component: Footprint Not Found RESA60-630X240
+Added Component: Designator=U1(TO-263_L)
+Add component (AddParameter): Name = "ComponentLink1Description"; Value = "Manufacturer URL"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink1URL"; Value = "http://www.st.com"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2Description"; Value = "Datasheet"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "ComponentLink2URL"; Value = "http://www.st.com/internet/com/TECHNICAL_RESOURCES/TECHNICAL_LITERATURE/DATASHEET/CD00000444.pdf"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "DatasheetVersion"; Value = "16/11/2011"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageDescription"; Value = "3-Pin Transistor Outline Package 2.54 mm Pitch, 15.4 mm Lead Span (D2PAK)"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageReference"; Value = "TO-263"; VariantName = "[No Variations]"
+Add component (AddParameter): Name = "PackageVersion"; Value = "2011"; VariantName = "[No Variations]"
+Add Component: Footprint Not Found ESP32DEVKIT
+Add Component: Footprint Not Found MX1616H-Module
+Added Pin To Net: NetName=3V3 Pin=P3-1
+Added Net: Name=3V3
+Added Pin To Net: NetName=5V Pin=U1-3
+Added Net: Name=5V
+Added Pin To Net: NetName=7V4 Pin=U1-1
+Added Net: Name=7V4
+Added Pin To Net: NetName=GND Pin=P3-2
+Added Pin To Net: NetName=GND Pin=U1-4
+Added Net: Name=GND
+Added Net: Name=NetD1_2
+Added Net: Name=NetE1_3
+Added Net: Name=NetE1_4
+Added Net: Name=NetE2_3
+Added Net: Name=NetE2_4
+Added Net: Name=NetMTR1_1
+Added Net: Name=NetMTR1_2
+Added Net: Name=NetMTR2_1
+Added Net: Name=NetMTR2_2
+Added Net: Name=NetP1_2
+Added Pin To Net: NetName=NetP3_3 Pin=P3-3
+Added Net: Name=NetP3_3
+Added Pin To Net: NetName=NetP3_4 Pin=P3-4
+Added Net: Name=NetP3_4
+Added Net: Name=NetU2_22
+Added Net: Name=NetU2_23
+Added Net: Name=NetU2_24
+Added Net: Name=NetU2_25
+Added Class: Name=Sheet1
+Added Rule: Name=Schematic Supply Nets
+Added Rule: Name=Schematic Supply Nets_1
+Added Rule: Name=Schematic Supply Nets_2
+Added Rule: Name=Schematic Supply Nets_3
