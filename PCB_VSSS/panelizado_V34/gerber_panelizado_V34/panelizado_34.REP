@@ -2,15 +2,18 @@
 FileName = panelizado_34.GBR
 AutoAperture = True
 *************************************************************
-Generating : Bottom Pad Master
-      File : panelizado_34_Pads_Bot.gbr
+Generating : Top Layer
+      File : panelizado_34_Copper_Signal_Top.gbr
 
-    Adding Layer      : Bottom Layer
+    Adding Layer      : Top Layer
 
     Adding Layer      : Multi-Layer
 
 
 Used DCodes :
+    D10
+    D11
+    D12
     D13
     D14
     D15
@@ -24,6 +27,7 @@ Used DCodes :
     D23
     D24
     D25
+    D26
 *************************************************************
 
 *************************************************************
@@ -54,8 +58,8 @@ Used DCodes :
 *************************************************************
 
 *************************************************************
-Generating : Bottom Layer
-      File : panelizado_34_Copper_Signal_Bot.gbr
+Generating : Bottom Pad Master
+      File : panelizado_34_Pads_Bot.gbr
 
     Adding Layer      : Bottom Layer
 
@@ -63,7 +67,6 @@ Generating : Bottom Layer
 
 
 Used DCodes :
-    D12
     D13
     D14
     D15
@@ -77,36 +80,6 @@ Used DCodes :
     D23
     D24
     D25
-    D26
-*************************************************************
-
-*************************************************************
-Generating : Top Layer
-      File : panelizado_34_Copper_Signal_Top.gbr
-
-    Adding Layer      : Top Layer
-
-    Adding Layer      : Multi-Layer
-
-
-Used DCodes :
-    D10
-    D11
-    D12
-    D13
-    D14
-    D15
-    D16
-    D17
-    D18
-    D19
-    D20
-    D21
-    D22
-    D23
-    D24
-    D25
-    D26
 *************************************************************
 
 *************************************************************
@@ -219,7 +192,7 @@ Generating : Bottom Overlay
 
 
 Used DCodes :
-    D27
+    D28
     D47
     D48
 *************************************************************
@@ -232,7 +205,7 @@ Generating : Mechanical 1
 
 
 Used DCodes :
-    D27
+    D28
     D49
 *************************************************************
 
@@ -326,7 +299,7 @@ Generating : Drill Guide
 
 
 Used DCodes :
-    D52
+    D53
 *************************************************************
 
 *************************************************************
@@ -336,5 +309,32 @@ Generating : Profile
 
 Used DCodes :
     D54
+*************************************************************
+
+*************************************************************
+Generating : Bottom Layer
+      File : panelizado_34_Copper_Signal_Bot.gbr
+
+    Adding Layer      : Bottom Layer
+
+    Adding Layer      : Multi-Layer
+
+
+Used DCodes :
+    D12
+    D13
+    D14
+    D15
+    D16
+    D17
+    D18
+    D19
+    D20
+    D21
+    D22
+    D23
+    D24
+    D25
+    D26
 *************************************************************
 

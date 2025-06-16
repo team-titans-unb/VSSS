@@ -1,5 +1,5 @@
 ----------------------------------------------------------------------------------------------------------------------------------
-NCDrill File Report For: panelizado_34.PcbDoc   11/06/2025  18:02:31
+NCDrill File Report For: panelizado_34.PcbDoc   16/06/2025  05:37:26
 ----------------------------------------------------------------------------------------------------------------------------------
 
 Layer Pair : Top Layer to Bottom Layer
@@ -7,13 +7,13 @@ ASCII RoundHoles File : panelizado_34.TXT
 
 Tool       Hole Size               Hole Tolerance               Hole Type       Hole Count   Plated         Tool Travel
 ----------------------------------------------------------------------------------------------------------------------------------
-T1      0.711mm (28mil)                                           Round             24        PTH        390.99mm (15.39inch)
-T2      0.8mm (31mil)                                             Round             16        PTH        217.88mm (8.58inch)
-T3      0.85mm (33mil)                                            Round             8         PTH        199.48mm (7.85inch)
-T4      0.9mm (35mil)                                             Round             88        PTH        766.87mm (30.19inch)
-T5      1.16mm (46mil)                                            Round             160       PTH        676.03mm (26.62inch)
-T6      1.65mm (65mil)                                            Round             20        PTH        213.23mm (8.40inch)
+T1      0.711mm (28mil)                                           Round             12        PTH        165.63mm (6.52inch)
+T2      0.8mm (31mil)                                             Round             8         PTH        70.71mm (2.78inch)
+T3      0.85mm (33mil)                                            Round             4         PTH        64.01mm (2.52inch)
+T4      0.9mm (35mil)                                             Round             44        PTH        292.69mm (11.52inch)
+T5      1.16mm (46mil)                                            Round             80        PTH        352.26mm (13.87inch)
+T6      1.65mm (65mil)                                            Round             10        PTH        79.18mm (3.12inch)
 ----------------------------------------------------------------------------------------------------------------------------------
-Totals                                                                              316
+Totals                                                                              158
 
 Total Processing Time (hh:mm:ss) : 00:00:00
